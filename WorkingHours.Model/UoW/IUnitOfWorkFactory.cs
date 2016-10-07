@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WorkingHours.Model
+namespace WorkingHours.Model.UoW
 {
-    public class Class1
+    public interface IUnitOfWorkFactory
     {
+        IUnitOfWork GetUoW();
     }
 }
