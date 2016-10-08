@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
+using Ninject;
 
 namespace WorkingHours.Web.App_Start
 {
@@ -18,7 +19,7 @@ namespace WorkingHours.Web.App_Start
                 AllowInsecureHttp = true,
                 TokenEndpointPath = new PathString("/token"),
                 AccessTokenExpireTimeSpan = TimeSpan.FromDays(14),
-                Provider = new SimpleAuthorizationServerProvider()
+                Provider = WebApiConfig.Kernel.Get<SimpleAuthorizationServerProvider>()
             };
 
             // Token Generation

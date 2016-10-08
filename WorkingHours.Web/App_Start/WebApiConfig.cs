@@ -11,7 +11,7 @@ namespace WorkingHours.Web
 {
     public static class WebApiConfig
     {
-        private static IKernel Kernel { get; } = new StandardKernel(new WebModule());
+        public static IKernel Kernel { get; } = new StandardKernel(new WebModule());
 
         public static void Register(HttpConfiguration config)
         {

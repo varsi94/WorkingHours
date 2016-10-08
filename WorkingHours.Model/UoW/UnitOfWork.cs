@@ -16,10 +16,19 @@ namespace WorkingHours.Model.UoW
 
         public IUserRepository Users { get; }
 
+        public IRepository<Project> Projects { get; }
+
+        public IRepository<Issue> Issues { get; }
+
+        public IRepository<WorkItem> WorkItems { get; }
+
         public UnitOfWork(AppDbContext dbContext)
         {
             DbContext = dbContext;
             Users = new UserRepository(dbContext);
+            Projects = new GenericRepository<Project>(dbContext);
+            Issues = new GenericRepository<Issue>(dbContext);
+            WorkItems = new GenericRepository<WorkItem>(dbContext);
         }
 
         public void SaveChanges()

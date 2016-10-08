@@ -2,6 +2,7 @@
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,7 +11,18 @@ namespace WorkingHours.Model.DbContext
 {
     internal class AppDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, int, ApplicationUserLogin, ApplicationUserRole, ApplicationUserClaim>
     {
+        static AppDbContext()
+        {
+            Database.SetInitializer(new AppDbInitializer());
+        }
+
         public UserManager<ApplicationUser, int> UserManager { get; }
+
+        public DbSet<Project> Projects { get; set; }
+
+        public DbSet<Issue> Issues { get; set; }
+
+        public DbSet<WorkItem> WorkItems { get; set; }
 
         public AppDbContext() : base("AppContextConnStr")
         {

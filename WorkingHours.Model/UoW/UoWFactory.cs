@@ -7,7 +7,7 @@ using WorkingHours.Model.DbContext;
 
 namespace WorkingHours.Model.UoW
 {
-    public class UoWFactory : IUnitOfWorkFactory
+    internal class UoWFactory : IUnitOfWorkFactory
     {
         public IUnitOfWork GetUoW()
         {

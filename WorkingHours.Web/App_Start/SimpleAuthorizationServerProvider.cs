@@ -3,11 +3,21 @@ using Microsoft.Owin.Security.OAuth;
 using WorkingHours.Model.UoW;
 using WorkingHours.Model.DbContext;
 using System.Security.Claims;
+using System.Linq;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace WorkingHours.Web.App_Start
 {
     internal class SimpleAuthorizationServerProvider : OAuthAuthorizationServerProvider
     {
+        private IUnitOfWorkFactory UoWFactory { get; }
+
+        public SimpleAuthorizationServerProvider(IUnitOfWorkFactory uowFactory)
+        {
+            UoWFactory = uowFactory;
+        }
+        
         public override Task ValidateClientAuthentication(OAuthValidateClientAuthenticationContext context)
         {
             context.Validated();
@@ -17,10 +27,9 @@ namespace WorkingHours.Web.App_Start
         public override Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
         {
             context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] { "*" });
-
-            var factory = new UoWFactory();
             ApplicationUser user = null;
-            using (var uow = factory.GetUoW())
+            IList<string> roles = null;
+            using (var uow = UoWFactory.GetUoW())
             {
                 user = uow.Users.Get(context.UserName, context.Password);
 
@@ -29,13 +38,21 @@ namespace WorkingHours.Web.App_Start
                     context.SetError("invalid_grant", "The user name or password is incorrect.");
                     return Task.FromResult<object>(null);
                 }
+
+                roles = uow.Users.GetRoles(user);
             }
 
             var identity = new ClaimsIdentity(context.Options.AuthenticationType);
             identity.AddClaim(new Claim(ClaimTypes.Name, user.UserName));
             identity.AddClaim(new Claim("FullName", user.FullName));
-            //TODO
-            identity.AddClaim(new Claim("role", "user"));
+            identity.AddClaim(new Claim(ClaimTypes.Email, user.Email));
+            if (roles != null)
+            {
+                foreach (var role in roles)
+                {
+                    identity.AddClaim(new Claim(ClaimTypes.Role, role));
+                }
+            }
 
             context.Validated(identity);
             return Task.FromResult<object>(null);

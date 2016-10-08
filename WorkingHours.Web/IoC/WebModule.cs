@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using WorkingHours.Bll.IoC;
+using WorkingHours.Web.App_Start;
 using WorkingHours.Web.Controllers;
 
 namespace WorkingHours.Web.IoC
@@ -13,6 +14,7 @@ namespace WorkingHours.Web.IoC
         {
             base.Load();
             Bind<AccountController>().To<AccountController>().InTransientScope();
+            Bind<SimpleAuthorizationServerProvider>().To<SimpleAuthorizationServerProvider>().InTransientScope();
         }
     }
 }

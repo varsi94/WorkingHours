@@ -39,5 +39,10 @@ namespace WorkingHours.Model.Repository
         {
             DbContext.UserManager.Create(user, password);
         }
+
+        public IList<string> GetRoles(ApplicationUser user)
+        {
+            return DbContext.UserManager.GetRoles(user.Id);
+        }
     }
 }

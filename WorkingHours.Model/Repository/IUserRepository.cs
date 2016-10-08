@@ -11,6 +11,8 @@ namespace WorkingHours.Model.Repository
     {
         ApplicationUser Get(string userName, string password);
 
+        IList<string> GetRoles(ApplicationUser user);
+
         void Add(ApplicationUser user, string password);
     }
 }

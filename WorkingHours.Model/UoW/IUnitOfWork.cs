@@ -10,6 +10,13 @@ namespace WorkingHours.Model.UoW
     public interface IUnitOfWork : IDisposable
     {
         IUserRepository Users { get; }
+
+        IRepository<Project> Projects { get; }
+
+        IRepository<Issue> Issues { get; }
+
+        IRepository<WorkItem> WorkItems { get; }
+
         void SaveChanges();
     }
 }
