@@ -1,0 +1,18 @@
+﻿<Window x:Class="WorkingHours.Desktop.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WorkingHours.Desktop"
+        xmlns:ioc="clr-namespace:WorkingHours.Desktop.IoC"
+        xmlns:vm="clr-namespace:WorkingHours.Desktop.Interfaces.ViewModels"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="525">
+    <Grid DataContext="{ioc:ViewModel ViewModelType={x:Type vm:ILoginViewModel}}">
+        <StackPanel>
+            <TextBox Text="{Binding UserName}" Margin="10" />
+            <TextBox Text="{Binding Password}" Margin="10" />
+            <Button Command="{Binding LoginCommand}" Margin="10">Belépés</Button>
+        </StackPanel>
+    </Grid>
+</Window>

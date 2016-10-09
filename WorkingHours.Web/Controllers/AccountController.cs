@@ -7,6 +7,7 @@ using System.Web.Http;
 using WorkingHours.Bll.Interfaces;
 using WorkingHours.Model.DbContext;
 using WorkingHours.Model.Exceptions;
+using WorkingHours.Web.Extensions;
 using WorkingHours.Web.Models;
 
 namespace WorkingHours.Web.Controllers
@@ -21,7 +22,7 @@ namespace WorkingHours.Web.Controllers
         }
 
         [HttpPost]
-        [Route("api/account/")]
+        [Route("api/account/signup")]
         public IHttpActionResult CreateAccount([FromBody] UserModel user)
         {
             if (!ModelState.IsValid)
@@ -48,9 +49,15 @@ namespace WorkingHours.Web.Controllers
 
         [Authorize]
         [Route("api/account/whoami")]
-        public string GetAccount()
+        public IHttpActionResult GetAccount()
         {
-            return User.Identity.Name;
+            var result = new UserData
+            {
+                Email = User.Identity.GetEmail(),
+                FullName = User.Identity.GetFullName(),
+                UserName = User.Identity.Name
+            };
+            return Ok(result);
         }
     }
 }
