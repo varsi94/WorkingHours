@@ -16,6 +16,8 @@ namespace WorkingHours.Model
 
         public Project Project { get; set; }
 
+        public bool IsClosed { get; set; }
+
         public DateTime? Deadline { get; set; }
 
         [Timestamp]

@@ -19,6 +19,8 @@ namespace WorkingHours.Model
 
         public ICollection<UserProject> AssociatedMembers { get; set; }
 
+        public bool IsClosed { get; set; }
+
         [Timestamp]
         public byte[] RowVersion { get; set; }
 

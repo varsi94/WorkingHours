@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace WorkingHours.Model.DbContext
 {
-    internal class AppDbInitializer : CreateDatabaseIfNotExists<AppDbContext>
+    internal class AppDbInitializer : DropCreateDatabaseIfModelChanges<AppDbContext>
     {
         protected override void Seed(AppDbContext context)
         {
