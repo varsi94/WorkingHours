@@ -12,7 +12,7 @@ namespace WorkingHours.Client.Managers
 {
     public class LoginManager : ILoginManager
     {
-        private IEnumerable<string> roles;
+        private IEnumerable<Roles> roles;
 
         private IConfigurationManager ConfigurationManager { get; }
 
@@ -26,16 +26,18 @@ namespace WorkingHours.Client.Managers
 
         public string UserName { get; private set; }
 
-        public bool IsEmployee => roles.Any(x => x == Roles.Employee.ToString());
+        public bool IsEmployee => roles.Any(x => x == Model.Roles.Employee);
 
-        public bool IsManager => roles.Any(x => x == Roles.Manager.ToString());
+        public bool IsManager => roles.Any(x => x == Model.Roles.Manager);
+
+        public IEnumerable<Roles> Roles => roles;
 
         public LoginManager(IConfigurationManager configManager)
         {
             ConfigurationManager = configManager;
         }
 
-        public async Task<bool> Login(string username, string password)
+        public async Task<bool> LoginAsync(string username, string password)
         {
             using (var client = new HttpClient())
             {
@@ -62,7 +64,7 @@ namespace WorkingHours.Client.Managers
                     UserName = userDataResult.UserName;
                     Email = userDataResult.Email;
                     FullName = userDataResult.FullName;
-                    roles = userDataResult.Roles;
+                    roles = userDataResult.Roles.Select(x => (Roles)Enum.Parse(typeof(Roles), x));
                     return true;
                 }
             }

@@ -6,13 +6,36 @@
         xmlns:local="clr-namespace:WorkingHours.Desktop"
         xmlns:ioc="clr-namespace:WorkingHours.Desktop.IoC"
         xmlns:vm="clr-namespace:WorkingHours.Desktop.Interfaces.ViewModels"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        xmlns:behaviors="clr-namespace:WorkingHours.Desktop.Behaviors"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid DataContext="{ioc:ViewModel ViewModelType={x:Type vm:ILoginViewModel}}">
-        <StackPanel>
-            <TextBox Text="{Binding UserName}" Margin="10" />
-            <TextBox Text="{Binding Password}" Margin="10" />
-            <Button Command="{Binding LoginCommand}" Margin="10">Belépés</Button>
+        Title="MainWindow"
+        Height="350"
+        Width="525">
+    <Grid DataContext="{ioc:ViewModel ViewModelType={x:Type vm:IMainViewModel}}">
+        <StackPanel Visibility="{Binding IsLoginVisible, Converter={StaticResource InverseBooleanToVisibilityConverter}}">
+            <TextBlock Text="{Binding DisplayedName}"
+                       HorizontalAlignment="Right" />
+            <TextBlock Text="{Binding Email}"
+                       HorizontalAlignment="Right" />
+            <TextBlock Text="{Binding Roles}"
+                       HorizontalAlignment="Right" />
+        </StackPanel>
+        <StackPanel DataContext="{ioc:ViewModel ViewModelType={x:Type vm:ILoginViewModel}}"
+                    Visibility="{Binding DataContext.IsLoginVisible, Converter={StaticResource BooleanToVisibilityConverter}, RelativeSource={RelativeSource AncestorType=Grid}}">
+            <TextBlock FontSize="20">Login</TextBlock>
+            <TextBlock Margin="10">Username:</TextBlock>
+            <TextBox Text="{Binding UserName}"
+                     Margin="10" />
+
+            <TextBlock Margin="10">Password:</TextBlock>
+            <PasswordBox Margin="10">
+                <i:Interaction.Behaviors>
+                    <behaviors:PasswordBoxBehavior Password="{Binding Password, Mode=TwoWay}" />
+                </i:Interaction.Behaviors>
+            </PasswordBox>
+            <Button Command="{Binding LoginCommand}"
+                    Margin="10">Log in!</Button>
         </StackPanel>
     </Grid>
 </Window>

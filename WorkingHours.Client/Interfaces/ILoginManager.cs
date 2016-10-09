@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WorkingHours.Client.Model;
 
 namespace WorkingHours.Client.Interfaces
 {
@@ -18,12 +19,14 @@ namespace WorkingHours.Client.Interfaces
 
         string Token { get; }
 
-        Task<bool> Login(string username, string password);
+        Task<bool> LoginAsync(string username, string password);
 
         void Logout();
 
         bool IsManager { get; }
 
         bool IsEmployee { get; }
+
+        IEnumerable<Roles> Roles { get; }
     }
 }

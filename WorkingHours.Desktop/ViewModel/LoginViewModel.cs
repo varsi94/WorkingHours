@@ -1,5 +1,6 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
+using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using WorkingHours.Client.Interfaces;
+using WorkingHours.Desktop.Common;
 using WorkingHours.Desktop.Interfaces.ViewModels;
 
 namespace WorkingHours.Desktop.ViewModel
@@ -42,8 +44,15 @@ namespace WorkingHours.Desktop.ViewModel
 
         private async void ExecuteLoginCommand()
         {
-            var result = await LoginManager.Login(UserName, Password);
-            MessageBox.Show(LoginManager.FullName);
+            var result = await LoginManager.LoginAsync(UserName, Password);
+            if (!result)
+            {
+                MessageBox.Show("Nem sikerült a bejelentkezés!");
+            }
+            else
+            {
+                MessengerInstance.Send(new NotificationMessage(null), MessageTokens.LoginNotification);
+            }
         }
     }
 }

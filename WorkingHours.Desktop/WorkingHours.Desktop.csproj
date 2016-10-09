@@ -80,7 +80,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Behaviors\PasswordBoxBehavior.cs" />
+    <Compile Include="Common\MessageTokens.cs" />
+    <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
+    <Compile Include="Interfaces\ViewModels\IMainViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
+    <Compile Include="ViewModel\MainViewModel.cs" />
+    <Page Include="Converters\Converters.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -89,7 +98,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Interfaces\ViewModels\ILoginViewMOdel.cs" />
+    <Compile Include="Interfaces\ViewModels\ILoginViewModel.cs" />
     <Compile Include="Interfaces\ViewModels\IViewModel.cs" />
     <Compile Include="IoC\DesktopModule.cs" />
     <Compile Include="IoC\ServiceLocator.cs" />

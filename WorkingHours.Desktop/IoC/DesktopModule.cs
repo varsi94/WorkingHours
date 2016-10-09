@@ -20,6 +20,7 @@ namespace WorkingHours.Desktop.IoC
         private void LoadViewModels()
         {
             Bind<ILoginViewModel>().To<LoginViewModel>().InTransientScope();
+            Bind<IMainViewModel>().To<MainViewModel>().InTransientScope();
         }
     }
 }
