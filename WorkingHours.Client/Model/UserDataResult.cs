@@ -12,11 +12,14 @@ namespace WorkingHours.Client.Model
         [JsonProperty("fullName")]
         public string FullName { get; set; }
 
-        [JsonProperty("Email")]
+        [JsonProperty("email")]
         public string Email { get; set; }
 
-        [JsonProperty("UserName")]
+        [JsonProperty("userName")]
         public string UserName { get; set; }
+
+        [JsonProperty("roles")]
+        public IEnumerable<string> Roles { get; set; }
     }
 
 }

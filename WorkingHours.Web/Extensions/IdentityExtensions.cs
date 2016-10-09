@@ -18,5 +18,13 @@ namespace WorkingHours.Web.Extensions
         {
             return (identity as ClaimsIdentity).Claims.SingleOrDefault(x => x.Type == "FullName").Value;
         }
+
+        public static IEnumerable<string> GetRoles(this IIdentity identity)
+        {
+            return (identity as ClaimsIdentity).Claims
+                .Where(c => c.Type == ClaimTypes.Role)
+                .Select(c => c.Value)
+                .ToList();
+        }
     }
 }

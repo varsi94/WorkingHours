@@ -35,14 +35,19 @@ namespace WorkingHours.Model.Repository
             DbContext.UserManager.Update(obj);
         }
 
-        public void Add(ApplicationUser user, string password)
+        public IdentityResult Add(ApplicationUser user, string password)
         {
-            DbContext.UserManager.Create(user, password);
+            return DbContext.UserManager.Create(user, password);
         }
 
         public IList<string> GetRoles(ApplicationUser user)
         {
             return DbContext.UserManager.GetRoles(user.Id);
+        }
+
+        public IdentityResult AddToRole(ApplicationUser user, Roles role)
+        {
+            return DbContext.UserManager.AddToRole(user.Id, role.ToString());
         }
     }
 }

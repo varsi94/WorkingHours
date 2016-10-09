@@ -12,6 +12,8 @@ namespace WorkingHours.Client.Managers
 {
     public class LoginManager : ILoginManager
     {
+        private IEnumerable<string> roles;
+
         private IConfigurationManager ConfigurationManager { get; }
 
         public string Email { get; private set; }
@@ -23,6 +25,10 @@ namespace WorkingHours.Client.Managers
         public string Token { get; private set; }
 
         public string UserName { get; private set; }
+
+        public bool IsEmployee => roles.Any(x => x == Roles.Employee.ToString());
+
+        public bool IsManager => roles.Any(x => x == Roles.Manager.ToString());
 
         public LoginManager(IConfigurationManager configManager)
         {
@@ -56,6 +62,7 @@ namespace WorkingHours.Client.Managers
                     UserName = userDataResult.UserName;
                     Email = userDataResult.Email;
                     FullName = userDataResult.FullName;
+                    roles = userDataResult.Roles;
                     return true;
                 }
             }

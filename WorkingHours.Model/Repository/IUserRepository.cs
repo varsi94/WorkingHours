@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,6 +14,8 @@ namespace WorkingHours.Model.Repository
 
         IList<string> GetRoles(ApplicationUser user);
 
-        void Add(ApplicationUser user, string password);
+        IdentityResult AddToRole(ApplicationUser user, Roles role);
+
+        IdentityResult Add(ApplicationUser user, string password);
     }
 }

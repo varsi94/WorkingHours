@@ -21,5 +21,9 @@ namespace WorkingHours.Client.Interfaces
         Task<bool> Login(string username, string password);
 
         void Logout();
+
+        bool IsManager { get; }
+
+        bool IsEmployee { get; }
     }
 }

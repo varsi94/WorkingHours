@@ -37,13 +37,13 @@ namespace WorkingHours.Web.Controllers
                 {
                     FullName = user.FullName,
                     UserName = user.UserName,
-                    Email = user.Email 
+                    Email = user.Email
                 }, user.Password);
                 return Ok();
             }
-            catch (ConcurrencyException)
+            catch (ArgumentException e)
             {
-                return InternalServerError();
+                return BadRequest(e.Message);
             }
         }
 
@@ -55,7 +55,8 @@ namespace WorkingHours.Web.Controllers
             {
                 Email = User.Identity.GetEmail(),
                 FullName = User.Identity.GetFullName(),
-                UserName = User.Identity.Name
+                UserName = User.Identity.Name,
+                Roles = User.Identity.GetRoles()
             };
             return Ok(result);
         }

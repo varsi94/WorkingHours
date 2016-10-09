@@ -59,6 +59,7 @@
     <Compile Include="Managers\AppSettingsManager.cs" />
     <Compile Include="Managers\LoginManager.cs" />
     <Compile Include="Model\LoginResult.cs" />
+    <Compile Include="Model\Roles.cs" />
     <Compile Include="Model\UserDataResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
