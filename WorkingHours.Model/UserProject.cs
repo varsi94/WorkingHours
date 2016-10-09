@@ -9,22 +9,23 @@ using WorkingHours.Model.Repository;
 
 namespace WorkingHours.Model
 {
-    public class Project : IDbEntity
+    public class UserProject : IDbEntity
     {
         public int Id { get; set; }
 
-        public string Name { get; set; }
+        public ApplicationUser User { get; set; }
 
-        public DateTime? Deadline { get; set; }
+        public int UserId { get; set; }
 
-        public ICollection<UserProject> AssociatedMembers { get; set; }
+        public Project Project { get; set; }
+
+        public int ProjectId { get; set; }
+
+        public ApplicationRole Role { get; set; }
+
+        public int RoleId { get; set; }
 
         [Timestamp]
         public byte[] RowVersion { get; set; }
-
-        public Project()
-        {
-            AssociatedMembers = new HashSet<UserProject>();
-        }
     }
 }

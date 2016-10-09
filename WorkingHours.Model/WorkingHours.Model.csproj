@@ -83,6 +83,7 @@
     <Compile Include="UoW\UnitOfWork.cs" />
     <Compile Include="Repository\UserRepository.cs" />
     <Compile Include="UoW\UoWFactory.cs" />
+    <Compile Include="UserProject.cs" />
     <Compile Include="WorkItem.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -22,6 +22,8 @@ namespace WorkingHours.Model.DbContext
 
         public DbSet<Issue> Issues { get; set; }
 
+        public DbSet<UserProject> UserProjects { get; set; }
+
         public DbSet<WorkItem> WorkItems { get; set; }
 
         public AppDbContext() : base("AppContextConnStr")

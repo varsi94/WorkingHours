@@ -10,14 +10,14 @@ namespace WorkingHours.Model.DbContext
     {
         public string FullName { get; set; }
 
-        public ICollection<Project> Projects { get; set; }
+        public ICollection<UserProject> Projects { get; set; }
 
         [Timestamp]
         public byte[] RowVersion { get; set; }
 
         public ApplicationUser()
         {
-            Projects = new HashSet<Project>();
+            Projects = new HashSet<UserProject>();
         }
     }
 }
