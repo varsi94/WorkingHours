@@ -22,6 +22,7 @@ namespace WorkingHours.Bll.Managers
             try
             {
                 UoW.Users.ChangePassword(userId, oldPassword, newPassword);
+                UoW.SaveChanges();
             }
             catch (InvalidOperationException)
             {
