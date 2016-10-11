@@ -19,6 +19,8 @@ namespace WorkingHours.Model
 
         public ICollection<UserProject> AssociatedMembers { get; set; }
 
+        public ICollection<Issue> Issues { get; set; }
+
         public bool IsClosed { get; set; }
 
         [Timestamp]
@@ -27,6 +29,7 @@ namespace WorkingHours.Model
         public Project()
         {
             AssociatedMembers = new HashSet<UserProject>();
+            Issues = new HashSet<Issue>();
         }
     }
 }
