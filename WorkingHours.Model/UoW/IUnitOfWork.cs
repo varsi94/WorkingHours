@@ -7,7 +7,7 @@ using WorkingHours.Model.Repository;
 
 namespace WorkingHours.Model.UoW
 {
-    public interface IUnitOfWork : IDisposable
+    public interface IUnitOfWork
     {
         IUserRepository Users { get; }
 

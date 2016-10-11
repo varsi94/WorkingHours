@@ -79,10 +79,8 @@
     <Compile Include="Roles.cs" />
     <Compile Include="UoW\IUnitOfWork.cs" />
     <Compile Include="Repository\IUserRepository.cs" />
-    <Compile Include="UoW\IUnitOfWorkFactory.cs" />
     <Compile Include="UoW\UnitOfWork.cs" />
     <Compile Include="Repository\UserRepository.cs" />
-    <Compile Include="UoW\UoWFactory.cs" />
     <Compile Include="UserProject.cs" />
     <Compile Include="WorkItem.cs" />
   </ItemGroup>

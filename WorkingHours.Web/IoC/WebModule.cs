@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Ninject.Web.Common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using WorkingHours.Bll.IoC;
+using WorkingHours.Model.DbContext;
 using WorkingHours.Web.App_Start;
 using WorkingHours.Web.Controllers;
 
@@ -13,8 +15,8 @@ namespace WorkingHours.Web.IoC
         public override void Load()
         {
             base.Load();
-            Bind<AccountController>().To<AccountController>().InTransientScope();
-            Bind<SimpleAuthorizationServerProvider>().To<SimpleAuthorizationServerProvider>().InTransientScope();
+            Bind<AccountController>().To<AccountController>().InRequestScope();
+            Bind<AppDbContext>().ToSelf().InRequestScope();
         }
     }
 }

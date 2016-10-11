@@ -19,7 +19,7 @@ namespace WorkingHours.Web.App_Start
                 AllowInsecureHttp = true,
                 TokenEndpointPath = new PathString("/api/token"),
                 AccessTokenExpireTimeSpan = TimeSpan.FromDays(14),
-                Provider = WebApiConfig.Kernel.Get<SimpleAuthorizationServerProvider>()
+                Provider = new SimpleAuthorizationServerProvider()
             };
 
             // Token Generation

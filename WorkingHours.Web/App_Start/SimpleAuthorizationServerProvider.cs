@@ -10,14 +10,7 @@ using System.Collections.Generic;
 namespace WorkingHours.Web.App_Start
 {
     internal class SimpleAuthorizationServerProvider : OAuthAuthorizationServerProvider
-    {
-        private IUnitOfWorkFactory UoWFactory { get; }
-
-        public SimpleAuthorizationServerProvider(IUnitOfWorkFactory uowFactory)
-        {
-            UoWFactory = uowFactory;
-        }
-        
+    {   
         public override Task ValidateClientAuthentication(OAuthValidateClientAuthenticationContext context)
         {
             context.Validated();
@@ -29,8 +22,9 @@ namespace WorkingHours.Web.App_Start
             context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] { "*" });
             ApplicationUser user = null;
             IList<string> roles = null;
-            using (var uow = UoWFactory.GetUoW())
+            using (var ctx = new AppDbContext())
             {
+                var uow = new UnitOfWork(ctx);
                 user = uow.Users.Get(context.UserName, context.Password);
 
                 if (user == null)

@@ -12,7 +12,7 @@ namespace WorkingHours.Model.IoC
     {
         public override void Load()
         {
-            Bind<IUnitOfWorkFactory>().To<UoWFactory>().InTransientScope();
+            Bind<IUnitOfWork>().To<UnitOfWork>();
         }
     }
 }

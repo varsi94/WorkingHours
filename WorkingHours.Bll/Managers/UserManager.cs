@@ -12,25 +12,22 @@ namespace WorkingHours.Bll.Managers
 {
     public class UserManager : IUserManager
     {
-        private IUnitOfWorkFactory UoWFactory { get; }
+        private IUnitOfWork UoW { get; }
 
-        public UserManager(IUnitOfWorkFactory uowFactory)
+        public UserManager(IUnitOfWork uow)
         {
-            UoWFactory = uowFactory;
+            UoW = uow;
         }
 
         public void CreateUser(ApplicationUser user, string password)
         {
-            using (var uow = UoWFactory.GetUoW())
+            var result = UoW.Users.Add(user, password);
+            if (!result.Succeeded)
             {
-                var result = uow.Users.Add(user, password);
-                if (!result.Succeeded)
-                {
-                    throw new ArgumentException("Username is already taken!");
-                }
-                uow.Users.AddToRole(user, Roles.Employee);
-                uow.SaveChanges();
+                throw new ArgumentException("Username is already taken!");
             }
+            UoW.Users.AddToRole(user, Roles.Employee);
+            UoW.SaveChanges();
         }
     }
 }

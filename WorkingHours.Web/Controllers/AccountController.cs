@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -7,6 +8,7 @@ using System.Web.Http;
 using WorkingHours.Bll.Interfaces;
 using WorkingHours.Model.DbContext;
 using WorkingHours.Model.Exceptions;
+using WorkingHours.Model.UoW;
 using WorkingHours.Web.Extensions;
 using WorkingHours.Web.Models;
 
@@ -16,9 +18,13 @@ namespace WorkingHours.Web.Controllers
     {
         private IUserManager UserManager { get; }
 
-        public AccountController(IUserManager userManager)
+        private Guid Guid { get; }
+
+        public AccountController(IUserManager userManager, IUnitOfWork uow)
         {
             UserManager = userManager;
+            Guid = Guid.NewGuid();
+            Debug.WriteLine("AccountController created: " + Guid.ToString());
         }
 
         [HttpPost]
@@ -59,6 +65,12 @@ namespace WorkingHours.Web.Controllers
                 Roles = User.Identity.GetRoles()
             };
             return Ok(result);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+            Debug.WriteLine("AccountController disposed: " + Guid.ToString());
         }
     }
 }

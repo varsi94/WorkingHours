@@ -11,8 +11,6 @@ namespace WorkingHours.Web
 {
     public static class WebApiConfig
     {
-        public static IKernel Kernel { get; } = new StandardKernel(new WebModule());
-
         public static void Register(HttpConfiguration config)
         {
             // Web API configuration and services
@@ -28,8 +26,6 @@ namespace WorkingHours.Web
 
             var jsonFormatter = config.Formatters.OfType<JsonMediaTypeFormatter>().First();
             jsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-            
-            GlobalConfiguration.Configuration.DependencyResolver = new NinjectResolver(Kernel);
         }
     }
 }

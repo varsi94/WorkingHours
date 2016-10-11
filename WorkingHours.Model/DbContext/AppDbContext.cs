@@ -3,14 +3,17 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace WorkingHours.Model.DbContext
 {
-    internal class AppDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, int, ApplicationUserLogin, ApplicationUserRole, ApplicationUserClaim>
+    public class AppDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, int, ApplicationUserLogin, ApplicationUserRole, ApplicationUserClaim>
     {
+        private Guid Guid { get; }
+
         static AppDbContext()
         {
             Database.SetInitializer(new AppDbInitializer());
@@ -34,6 +37,9 @@ namespace WorkingHours.Model.DbContext
                 new UserStore
                     <ApplicationUser, ApplicationRole, int, ApplicationUserLogin, ApplicationUserRole,
                         ApplicationUserClaim>(this));
+
+            Guid = Guid.NewGuid();
+            Debug.WriteLine("DbContext created: " + Guid.ToString());
         }
 
         protected override void Dispose(bool disposing)
@@ -42,6 +48,7 @@ namespace WorkingHours.Model.DbContext
             {
                 UserManager.Dispose();
             }
+            Debug.WriteLine("DbContext disposed: " + Guid.ToString());
 
             base.Dispose(disposing);
         }
