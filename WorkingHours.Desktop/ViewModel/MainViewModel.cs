@@ -15,7 +15,26 @@ namespace WorkingHours.Desktop.ViewModel
 {
     public class MainViewModel : ViewModelBase, IMainViewModel
     {
-        private readonly ILoginManager loginManager;
+        private readonly IAccountManager accountManager;
+
+
+        private bool isMainPageVisible;
+
+        public bool IsMainPageVisible
+        {
+            get { return isMainPageVisible; }
+
+            set { Set(ref isMainPageVisible, value); }
+        }
+        
+        private bool isSignUpVisible;
+
+        public bool IsSignUpVisible
+        {
+            get { return isSignUpVisible; }
+
+            set { Set(ref isSignUpVisible, value); }
+        }
 
         private string displayedName;
 
@@ -42,7 +61,7 @@ namespace WorkingHours.Desktop.ViewModel
             set { Set(ref isLoginVisible, value); }
         }
 
-        public ICommand LogoutCommand => new RelayCommand(ExecuteLogoutCommand);
+        public ICommand LogoutCommand { get; }
         
         private string roles;
         public string Roles
@@ -52,24 +71,41 @@ namespace WorkingHours.Desktop.ViewModel
             set { Set(ref roles, value); }
         }
         
-        public MainViewModel(ILoginManager loginManager)
+        public MainViewModel(IAccountManager accountManager)
         {
-            this.loginManager = loginManager;
+            this.accountManager = accountManager;
             MessengerInstance.Register<NotificationMessage>(this, MessageTokens.LoginNotification, UpdateUserData);
+            MessengerInstance.Register<NotificationMessage>(this, MessageTokens.SignUpCompleted, ExecuteSignUpCompleted);
+            MessengerInstance.Register<NotificationMessage>(this, MessageTokens.StartSignUp, ExecuteStartSignUp);
             IsLoginVisible = true;
+
+            LogoutCommand = new RelayCommand(ExecuteLogoutCommand);
+        }
+
+        private void ExecuteStartSignUp(NotificationMessage obj)
+        {
+            IsLoginVisible = false;
+            IsSignUpVisible = true;
+        }
+
+        private void ExecuteSignUpCompleted(NotificationMessage obj)
+        {
+            IsLoginVisible = true;
+            IsSignUpVisible = false;
         }
 
         private void UpdateUserData(NotificationMessage obj)
         {
-            Roles = string.Join(", ", loginManager.Roles.Select(x => x.ToString()));
-            DisplayedName = $"{loginManager.FullName} ({loginManager.UserName})";
-            Email = loginManager.Email;
+            Roles = string.Join(", ", accountManager.Roles.Select(x => x.ToString()));
+            DisplayedName = $"{accountManager.FullName} ({accountManager.UserName})";
+            Email = accountManager.Email;
             IsLoginVisible = false;
+            IsMainPageVisible = true;
         }
 
         private void ExecuteLogoutCommand()
         {
-            loginManager.Logout();
+            accountManager.Logout();
             IsLoginVisible = true;
         }
     }

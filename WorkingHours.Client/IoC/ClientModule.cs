@@ -13,7 +13,7 @@ namespace WorkingHours.Client.IoC
     {
         public override void Load()
         {
-            Bind<ILoginManager>().To<LoginManager>().InSingletonScope();
+            Bind<IAccountManager>().To<AccountManager>().InSingletonScope();
             Bind<IConfigurationManager>().To<AppSettingsManager>().InSingletonScope();
         }
     }

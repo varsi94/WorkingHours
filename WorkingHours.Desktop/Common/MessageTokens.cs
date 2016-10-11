@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace WorkingHours.Desktop.Common
 {
-    internal static class MessageTokens
+    public static class MessageTokens
     {
         public static object LoginNotification { get; } = new object();
+        public static object SignUpCompleted { get; } = new object();
+        public static object StartSignUp { get; } = new object();
     }
 }

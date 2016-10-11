@@ -7,7 +7,7 @@ using WorkingHours.Client.Model;
 
 namespace WorkingHours.Client.Interfaces
 {
-    public interface ILoginManager
+    public interface IAccountManager
     {
         bool IsLoggedIn { get; }
 
@@ -19,14 +19,16 @@ namespace WorkingHours.Client.Interfaces
 
         string Token { get; }
 
-        Task<bool> LoginAsync(string username, string password);
-
-        void Logout();
-
         bool IsManager { get; }
 
         bool IsEmployee { get; }
 
         IEnumerable<Roles> Roles { get; }
+        
+        Task<bool> LoginAsync(string username, string password);
+
+        void Logout();
+
+        Task SignUpAsync(SignUpRequest request);
     }
 }

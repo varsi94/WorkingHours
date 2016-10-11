@@ -18,22 +18,18 @@ namespace WorkingHours.Web.Controllers
     {
         private IUserManager UserManager { get; }
 
-        private Guid Guid { get; }
-
-        public AccountController(IUserManager userManager, IUnitOfWork uow)
+        public AccountController(IUserManager userManager)
         {
             UserManager = userManager;
-            Guid = Guid.NewGuid();
-            Debug.WriteLine("AccountController created: " + Guid.ToString());
         }
 
         [HttpPost]
         [Route("api/account/signup")]
-        public IHttpActionResult CreateAccount([FromBody] UserModel user)
+        public IHttpActionResult CreateAccount([FromBody] SignUpModel user)
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest();
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState));
             }
 
             try
@@ -47,9 +43,9 @@ namespace WorkingHours.Web.Controllers
                 }, user.Password);
                 return Ok();
             }
-            catch (ArgumentException e)
+            catch (ArgumentException)
             {
-                return BadRequest(e.Message);
+                return this.Conflict();
             }
         }
 
@@ -65,12 +61,6 @@ namespace WorkingHours.Web.Controllers
                 Roles = User.Identity.GetRoles()
             };
             return Ok(result);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            base.Dispose(disposing);
-            Debug.WriteLine("AccountController disposed: " + Guid.ToString());
         }
     }
 }

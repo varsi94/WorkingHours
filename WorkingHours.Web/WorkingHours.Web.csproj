@@ -174,7 +174,7 @@
     </Compile>
     <Compile Include="IoC\WebModule.cs" />
     <Compile Include="Models\UserData.cs" />
-    <Compile Include="Models\UserModel.cs" />
+    <Compile Include="Models\SignUpModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

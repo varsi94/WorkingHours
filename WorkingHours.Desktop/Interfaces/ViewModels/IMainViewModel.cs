@@ -10,7 +10,11 @@ namespace WorkingHours.Desktop.Interfaces.ViewModels
 {
     public interface IMainViewModel : IViewModel
     {
+        bool IsMainPageVisible { get; set; }
+
         bool IsLoginVisible { get; set; }
+
+        bool IsSignUpVisible { get; set; }
 
         string DisplayedName { get; set; }
         

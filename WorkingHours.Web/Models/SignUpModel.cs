@@ -6,7 +6,7 @@ using System.Web;
 
 namespace WorkingHours.Web.Models
 {
-    public class UserModel
+    public class SignUpModel
     {
         [Required]
         public string UserName { get; set; }

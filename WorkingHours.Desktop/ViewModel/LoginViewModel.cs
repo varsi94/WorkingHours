@@ -17,9 +17,11 @@ namespace WorkingHours.Desktop.ViewModel
 {
     public class LoginViewModel : ViewModelBase, ILoginViewModel
     {
-        private ILoginManager LoginManager { get; }
+        private IAccountManager AccountManager { get; }
 
-        public ICommand LoginCommand => new RelayCommand(ExecuteLoginCommand);
+        public ICommand LoginCommand { get; }
+
+        public ICommand SignUpCommand { get; }
 
         private string password;
 
@@ -37,14 +39,21 @@ namespace WorkingHours.Desktop.ViewModel
             set { Set(ref username, value); }
         }
 
-        public LoginViewModel(ILoginManager loginManager)
+        public LoginViewModel(IAccountManager accountManager)
         {
-            LoginManager = loginManager;
+            AccountManager = accountManager;
+            LoginCommand = new RelayCommand(ExecuteLoginCommand);
+            SignUpCommand = new RelayCommand(ExecuteSignUpCommand);
+        }
+
+        private void ExecuteSignUpCommand()
+        {
+            MessengerInstance.Send(new NotificationMessage(null), MessageTokens.StartSignUp);
         }
 
         private async void ExecuteLoginCommand()
         {
-            var result = await LoginManager.LoginAsync(UserName, Password);
+            var result = await AccountManager.LoginAsync(UserName, Password);
             if (!result)
             {
                 MessageBox.Show("Nem sikerült a bejelentkezés!");

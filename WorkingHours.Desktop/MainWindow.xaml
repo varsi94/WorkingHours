@@ -8,12 +8,13 @@
         xmlns:vm="clr-namespace:WorkingHours.Desktop.Interfaces.ViewModels"
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:behaviors="clr-namespace:WorkingHours.Desktop.Behaviors"
+        xmlns:controls="clr-namespace:WorkingHours.Desktop.Controls"
         mc:Ignorable="d"
         Title="MainWindow"
         Height="350"
         Width="525">
     <Grid DataContext="{ioc:ViewModel ViewModelType={x:Type vm:IMainViewModel}}">
-        <StackPanel Visibility="{Binding IsLoginVisible, Converter={StaticResource InverseBooleanToVisibilityConverter}}">
+        <StackPanel Visibility="{Binding IsMainPageVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
             <TextBlock Text="{Binding DisplayedName}"
                        HorizontalAlignment="Right" />
             <TextBlock Text="{Binding Email}"
@@ -21,21 +22,7 @@
             <TextBlock Text="{Binding Roles}"
                        HorizontalAlignment="Right" />
         </StackPanel>
-        <StackPanel DataContext="{ioc:ViewModel ViewModelType={x:Type vm:ILoginViewModel}}"
-                    Visibility="{Binding DataContext.IsLoginVisible, Converter={StaticResource BooleanToVisibilityConverter}, RelativeSource={RelativeSource AncestorType=Grid}}">
-            <TextBlock FontSize="20">Login</TextBlock>
-            <TextBlock Margin="10">Username:</TextBlock>
-            <TextBox Text="{Binding UserName}"
-                     Margin="10" />
-
-            <TextBlock Margin="10">Password:</TextBlock>
-            <PasswordBox Margin="10">
-                <i:Interaction.Behaviors>
-                    <behaviors:PasswordBoxBehavior Password="{Binding Password, Mode=TwoWay}" />
-                </i:Interaction.Behaviors>
-            </PasswordBox>
-            <Button Command="{Binding LoginCommand}"
-                    Margin="10">Log in!</Button>
-        </StackPanel>
+        <controls:LoginControl Visibility="{Binding IsLoginVisible, Converter={StaticResource BooleanToVisibilityConverter}}" />
+        <controls:SignUpControl Visibility="{Binding IsSignUpVisible, Converter={StaticResource BooleanToVisibilityConverter}}"></controls:SignUpControl>
     </Grid>
 </Window>
