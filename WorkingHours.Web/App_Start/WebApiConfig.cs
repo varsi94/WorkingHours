@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Formatting;
 using System.Web.Http;
+using WorkingHours.Web.Extensions;
 using WorkingHours.Web.IoC;
 
 namespace WorkingHours.Web
@@ -26,6 +27,8 @@ namespace WorkingHours.Web
 
             var jsonFormatter = config.Formatters.OfType<JsonMediaTypeFormatter>().First();
             jsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+
+            config.Filters.Add(new BllExceptionFilterAttribute());
         }
     }
 }

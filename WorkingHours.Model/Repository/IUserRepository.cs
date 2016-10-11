@@ -14,8 +14,9 @@ namespace WorkingHours.Model.Repository
 
         IList<string> GetRoles(ApplicationUser user);
 
-        IdentityResult AddToRole(ApplicationUser user, Roles role);
+        IdentityResult AddToRole(int userId, Roles role);
 
         IdentityResult Add(ApplicationUser user, string password);
+        void ChangePassword(int userId, string oldPassword, string newPassword);
     }
 }

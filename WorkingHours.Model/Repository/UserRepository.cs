@@ -45,9 +45,36 @@ namespace WorkingHours.Model.Repository
             return DbContext.UserManager.GetRoles(user.Id);
         }
 
-        public IdentityResult AddToRole(ApplicationUser user, Roles role)
+        public IdentityResult AddToRole(int userId, Roles role)
         {
-            return DbContext.UserManager.AddToRole(user.Id, role.ToString());
+            try
+            {
+                var currentRoleStr = DbContext.UserManager.GetRoles(userId).FirstOrDefault();
+                if (currentRoleStr != null)
+                {
+                    Roles currentRole;
+                    Enum.TryParse(currentRoleStr, out currentRole);
+                    if (currentRole == role)
+                    {
+                        return IdentityResult.Success;
+                    }
+                    DbContext.UserManager.RemoveFromRole(userId, currentRole.ToString());
+                }
+                return DbContext.UserManager.AddToRole(userId, role.ToString());
+            }
+            catch (InvalidOperationException)
+            {
+                return IdentityResult.Failed("User id not found!");
+            }
+        }
+
+        public void ChangePassword(int userId, string oldPassword, string newPassword)
+        {
+            var result = DbContext.UserManager.ChangePassword(userId, oldPassword, newPassword);
+            if (!result.Succeeded)
+            {
+                throw new ArgumentException();
+            }
         }
     }
 }

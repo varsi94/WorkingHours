@@ -11,12 +11,12 @@ namespace WorkingHours.Web.Extensions
     {
         public static string GetEmail(this IIdentity identity)
         {
-            return (identity as ClaimsIdentity).Claims.SingleOrDefault(x => x.Type == ClaimTypes.Email).Value;
+            return (identity as ClaimsIdentity).Claims.Single(x => x.Type == ClaimTypes.Email).Value;
         }
 
         public static string GetFullName(this IIdentity identity)
         {
-            return (identity as ClaimsIdentity).Claims.SingleOrDefault(x => x.Type == "FullName").Value;
+            return (identity as ClaimsIdentity).Claims.Single(x => x.Type == "FullName").Value;
         }
 
         public static IEnumerable<string> GetRoles(this IIdentity identity)
@@ -25,6 +25,11 @@ namespace WorkingHours.Web.Extensions
                 .Where(c => c.Type == ClaimTypes.Role)
                 .Select(c => c.Value)
                 .ToList();
+        }
+
+        public static int GetUserId(this IIdentity identity)
+        {
+            return int.Parse((identity as ClaimsIdentity).Claims.Single(c => c.Type == "UserId").Value);
         }
     }
 }

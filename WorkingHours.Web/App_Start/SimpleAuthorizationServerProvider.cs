@@ -40,6 +40,7 @@ namespace WorkingHours.Web.App_Start
             identity.AddClaim(new Claim(ClaimTypes.Name, user.UserName));
             identity.AddClaim(new Claim("FullName", user.FullName));
             identity.AddClaim(new Claim(ClaimTypes.Email, user.Email));
+            identity.AddClaim(new Claim("UserId", user.Id.ToString()));
             if (roles != null)
             {
                 foreach (var role in roles)

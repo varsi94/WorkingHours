@@ -6,20 +6,13 @@ using System.Web;
 
 namespace WorkingHours.Web.Models
 {
-    public class SignUpModel
+    public class PasswordChangeModel
     {
         [Required]
-        public string UserName { get; set; }
+        public string OldPassword { get; set; }
 
         [Required]
         [StringLength(100, MinimumLength = 6)]
-        public string Password { get; set; }
-
-        [Required]
-        public string FullName { get; set; }
-
-        [EmailAddress]
-        [Required]
-        public string Email { get; set; }
+        public string NewPassword { get; set; }
     }
 }

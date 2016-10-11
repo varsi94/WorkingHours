@@ -61,8 +61,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Exceptions\BllException.cs" />
+    <Compile Include="Exceptions\InternalServerException.cs" />
+    <Compile Include="Exceptions\NotFoundException.cs" />
+    <Compile Include="Exceptions\UnauthorizedException.cs" />
     <Compile Include="Interfaces\IUserManager.cs" />
     <Compile Include="IoC\BllModule.cs" />
+    <Compile Include="Managers\ManagerBase.cs" />
     <Compile Include="Managers\UserManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -1,0 +1,15 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace WorkingHours.Bll.Exceptions
+{
+    public class InternalServerException : BllException
+    {
+        public InternalServerException(string message) : base(message)
+        {
+        }
+    }
+}

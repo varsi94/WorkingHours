@@ -6,6 +6,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using WorkingHours.Bll.Interfaces;
+using WorkingHours.Model;
 using WorkingHours.Model.DbContext;
 using WorkingHours.Model.Exceptions;
 using WorkingHours.Model.UoW;
@@ -51,6 +52,7 @@ namespace WorkingHours.Web.Controllers
 
         [Authorize]
         [Route("api/account/whoami")]
+        [HttpGet]
         public IHttpActionResult GetAccount()
         {
             var result = new UserData
@@ -61,6 +63,29 @@ namespace WorkingHours.Web.Controllers
                 Roles = User.Identity.GetRoles()
             };
             return Ok(result);
+        }
+
+        [AuthorizeRoles(Roles.Manager)]
+        [Route("api/account/updateRoles")]
+        [HttpPost]
+        public IHttpActionResult UpdateRoles([FromBody] Dictionary<int, Roles> rolesToUpdate)
+        {
+            UserManager.UpdateRoles(rolesToUpdate);
+            return Ok();
+        }
+
+        [Authorize]
+        [Route("api/account/changePassword")]
+        [HttpPost]
+        public IHttpActionResult ChangePassword([FromBody] PasswordChangeModel pwdChange)
+        {
+            if (!ModelState.IsValid)
+            {
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState));
+            }
+
+            UserManager.ChangePassword(User.Identity.GetUserId(), pwdChange.OldPassword, pwdChange.NewPassword);
+            return Ok();
         }
     }
 }
