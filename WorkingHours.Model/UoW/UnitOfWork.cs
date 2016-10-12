@@ -20,7 +20,7 @@ namespace WorkingHours.Model.UoW
 
         public IRepository<Issue> Issues { get; }
 
-        public IRepository<WorkItem> WorkItems { get; }
+        public IRepository<WorkTime> WorkTimeLog { get; }
 
         public UnitOfWork(AppDbContext dbContext)
         {
@@ -28,7 +28,7 @@ namespace WorkingHours.Model.UoW
             Users = new UserRepository(dbContext);
             Projects = new GenericRepository<Project>(dbContext);
             Issues = new GenericRepository<Issue>(dbContext);
-            WorkItems = new GenericRepository<WorkItem>(dbContext);
+            WorkTimeLog = new GenericRepository<WorkTime>(dbContext);
         }
 
         public void SaveChanges()

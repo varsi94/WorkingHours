@@ -9,7 +9,7 @@ using WorkingHours.Model.Repository;
 
 namespace WorkingHours.Model
 {
-    public class WorkItem : IDbEntity
+    public class WorkTime : IDbEntity
     {
         public int Id { get; set; }
 

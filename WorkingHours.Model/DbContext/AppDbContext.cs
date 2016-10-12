@@ -25,7 +25,7 @@ namespace WorkingHours.Model.DbContext
 
         public DbSet<UserProject> UserProjects { get; set; }
 
-        public DbSet<WorkItem> WorkItems { get; set; }
+        public DbSet<WorkTime> WorkTimeLog { get; set; }
 
         public AppDbContext() : base("AppContextConnStr")
         {
@@ -35,6 +35,12 @@ namespace WorkingHours.Model.DbContext
                 new UserStore
                     <ApplicationUser, ApplicationRole, int, ApplicationUserLogin, ApplicationUserRole,
                         ApplicationUserClaim>(this));
+        }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<WorkTime>().ToTable("WorkTimeLog");
+            base.OnModelCreating(modelBuilder);
         }
 
         protected override void Dispose(bool disposing)

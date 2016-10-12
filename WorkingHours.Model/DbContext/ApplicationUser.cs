@@ -12,7 +12,7 @@ namespace WorkingHours.Model.DbContext
 
         public ICollection<UserProject> Projects { get; set; }
 
-        public ICollection<WorkItem> WorkItems { get; set; }
+        public ICollection<WorkTime> WorkItems { get; set; }
 
         [Timestamp]
         public byte[] RowVersion { get; set; }
@@ -20,7 +20,7 @@ namespace WorkingHours.Model.DbContext
         public ApplicationUser()
         {
             Projects = new HashSet<UserProject>();
-            WorkItems = new HashSet<WorkItem>();
+            WorkItems = new HashSet<WorkTime>();
         }
     }
 }

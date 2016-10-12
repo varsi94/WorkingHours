@@ -82,7 +82,7 @@
     <Compile Include="UoW\UnitOfWork.cs" />
     <Compile Include="Repository\UserRepository.cs" />
     <Compile Include="UserProject.cs" />
-    <Compile Include="WorkItem.cs" />
+    <Compile Include="WorkTime.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

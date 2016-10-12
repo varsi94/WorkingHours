@@ -15,7 +15,7 @@ namespace WorkingHours.Model.UoW
 
         IRepository<Issue> Issues { get; }
 
-        IRepository<WorkItem> WorkItems { get; }
+        IRepository<WorkTime> WorkTimeLog { get; }
 
         void SaveChanges();
     }
