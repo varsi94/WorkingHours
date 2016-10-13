@@ -13,13 +13,17 @@ using WorkingHours.Client.Exceptions;
 using GalaSoft.MvvmLight.Messaging;
 using WorkingHours.Desktop.Common;
 using WorkingHours.Desktop.Interfaces.Services;
+using WorkingHours.Desktop.Services;
 
 namespace WorkingHours.Desktop.ViewModel
 {
     public class SignUpViewModel : ViewModelBase, ISignUpViewModel
     {
         private IAccountManager AccountManager { get; }
+
         private IDialogService DialogService { get; }
+
+        private ILoadingService LoadingService { get; }
 
         private string email;
         public string Email
@@ -65,10 +69,11 @@ namespace WorkingHours.Desktop.ViewModel
             set { Set(ref userName, value); }
         }
 
-        public SignUpViewModel(IAccountManager accountManager, IDialogService dialogService)
+        public SignUpViewModel(IAccountManager accountManager, IDialogService dialogService, ILoadingService loadingService)
         {
             AccountManager = accountManager;
             DialogService = dialogService;
+            LoadingService = loadingService;
             SignUpCommand = new RelayCommand(ExecuteSignUpCommand);
             BackToLoginCommand = new RelayCommand(ExecuteBackToLoginCommand);
         }
@@ -90,6 +95,7 @@ namespace WorkingHours.Desktop.ViewModel
 
             try
             {
+                LoadingService.ShowIndicator("Signin up...");
                 await AccountManager.SignUpAsync(signUp);
                 MessengerInstance.Send(new NotificationMessage(null), MessageTokens.SignUpCompleted);
             }
@@ -100,6 +106,10 @@ namespace WorkingHours.Desktop.ViewModel
             catch (ServerException)
             {
                 DialogService.ShowError("Signup error", "Username is already taken! Please choose another one!");
+            }
+            finally
+            {
+                LoadingService.HideIndicator();
             }
         }
     }

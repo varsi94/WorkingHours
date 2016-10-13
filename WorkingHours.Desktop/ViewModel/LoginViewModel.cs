@@ -7,10 +7,10 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Input;
 using WorkingHours.Client.Interfaces;
 using WorkingHours.Desktop.Common;
+using WorkingHours.Desktop.Interfaces.Services;
 using WorkingHours.Desktop.Interfaces.ViewModels;
 
 namespace WorkingHours.Desktop.ViewModel
@@ -18,6 +18,10 @@ namespace WorkingHours.Desktop.ViewModel
     public class LoginViewModel : ViewModelBase, ILoginViewModel
     {
         private IAccountManager AccountManager { get; }
+
+        private ILoadingService LoadingService { get; }
+
+        private IDialogService DialogService { get; }
 
         public ICommand LoginCommand { get; }
 
@@ -39,9 +43,11 @@ namespace WorkingHours.Desktop.ViewModel
             set { Set(ref username, value); }
         }
 
-        public LoginViewModel(IAccountManager accountManager)
+        public LoginViewModel(IAccountManager accountManager, ILoadingService loadingService, IDialogService dialogService)
         {
             AccountManager = accountManager;
+            LoadingService = loadingService;
+            DialogService = dialogService;
             LoginCommand = new RelayCommand(ExecuteLoginCommand);
             SignUpCommand = new RelayCommand(ExecuteSignUpCommand);
         }
@@ -53,15 +59,17 @@ namespace WorkingHours.Desktop.ViewModel
 
         private async void ExecuteLoginCommand()
         {
+            LoadingService.ShowIndicator("Logging in...");
             var result = await AccountManager.LoginAsync(UserName, Password);
             if (!result)
             {
-                MessageBox.Show("Nem sikerült a bejelentkezés!");
+                DialogService.ShowError("Login error", "Invalid username or password!");
             }
             else
             {
                 MessengerInstance.Send(new NotificationMessage(null), MessageTokens.LoginNotification);
             }
+            LoadingService.HideIndicator();
         }
     }
 }

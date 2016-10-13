@@ -9,8 +9,9 @@
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:behaviors="clr-namespace:WorkingHours.Desktop.Behaviors"
         xmlns:controls="clr-namespace:WorkingHours.Desktop.Controls"
+        xmlns:mahapps="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         mc:Ignorable="d"
-        Title="MainWindow"
+        Title="Working hours"
         Height="350"
         Width="525">
     <Grid DataContext="{ioc:ViewModel ViewModelType={x:Type vm:IMainViewModel}}">
@@ -23,6 +24,15 @@
                        HorizontalAlignment="Right" />
         </StackPanel>
         <controls:LoginControl Visibility="{Binding IsLoginVisible, Converter={StaticResource BooleanToVisibilityConverter}}" />
-        <controls:SignUpControl Visibility="{Binding IsSignUpVisible, Converter={StaticResource BooleanToVisibilityConverter}}"></controls:SignUpControl>
+        <controls:SignUpControl Visibility="{Binding IsSignUpVisible, Converter={StaticResource BooleanToVisibilityConverter}}" />
+        <Grid Background="#AAC6C6C6"
+              x:Name="LoadingGrid"
+              x:FieldModifier="public"
+              Visibility="Collapsed">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                <mahapps:ProgressRing IsActive="True" Margin="10" />
+                <TextBlock x:Name="LoadingMessage" x:FieldModifier="public" Margin="10" />
+            </StackPanel>
+        </Grid>
     </Grid>
 </Window>
