@@ -7,5 +7,5 @@
 
     <local:BooleanToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter"
                                         FalseValue="Visible"
-                                        TrueValue="Collapsed"/>
+                                        TrueValue="Collapsed" />
 </ResourceDictionary>

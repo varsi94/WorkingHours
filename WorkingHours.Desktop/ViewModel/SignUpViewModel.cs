@@ -14,10 +14,11 @@ using GalaSoft.MvvmLight.Messaging;
 using WorkingHours.Desktop.Common;
 using WorkingHours.Desktop.Interfaces.Services;
 using WorkingHours.Desktop.Services;
+using System.ComponentModel.DataAnnotations;
 
 namespace WorkingHours.Desktop.ViewModel
 {
-    public class SignUpViewModel : ViewModelBase, ISignUpViewModel
+    public class SignUpViewModel : ValidatableViewModelBase, ISignUpViewModel
     {
         private IAccountManager AccountManager { get; }
 
@@ -26,6 +27,9 @@ namespace WorkingHours.Desktop.ViewModel
         private ILoadingService LoadingService { get; }
 
         private string email;
+
+        [Required(ErrorMessage = "Email address is required!")]
+        [EmailAddress(ErrorMessage = "Email address is not valid!")]
         public string Email
         {
             get { return email; }
@@ -34,6 +38,8 @@ namespace WorkingHours.Desktop.ViewModel
         }
 
         private string fullName;
+
+        [Required(ErrorMessage = "Full name is required!")]
         public string FullName
         {
             get { return fullName; }
@@ -42,6 +48,9 @@ namespace WorkingHours.Desktop.ViewModel
         }
 
         private string password;
+
+        [Required(ErrorMessage = "Password is required!")]
+        [StringLength(100, MinimumLength = 6, ErrorMessage = "Password length must be between 6 and 100!")]
         public string Password
         {
             get { return password; }
@@ -50,6 +59,10 @@ namespace WorkingHours.Desktop.ViewModel
         }
 
         private string passwordConfirmed;
+
+        [Required(ErrorMessage = "Password is required!")]
+        [StringLength(100, MinimumLength = 6, ErrorMessage = "Password length must be between 6 and 100!")]
+        [Compare(nameof(Password), ErrorMessage = "Passwords must match each other!")]
         public string PasswordConfirmed
         {
             get { return passwordConfirmed; }
@@ -62,6 +75,8 @@ namespace WorkingHours.Desktop.ViewModel
         public ICommand BackToLoginCommand { get; }
 
         private string userName;
+
+        [Required(ErrorMessage = "User name is required!")]
         public string UserName
         {
             get { return userName; }
@@ -69,7 +84,27 @@ namespace WorkingHours.Desktop.ViewModel
             set { Set(ref userName, value); }
         }
 
-        public SignUpViewModel(IAccountManager accountManager, IDialogService dialogService, ILoadingService loadingService)
+
+        private string passwordError;
+
+        public string PasswordError
+        {
+            get { return passwordError; }
+
+            set { Set(ref passwordError, value); }
+        }
+
+
+        private string passwordConfirmationError;
+
+        public string PasswordConfirmationError
+        {
+            get { return passwordConfirmationError; }
+
+            set { Set(ref passwordConfirmationError, value); }
+        }
+
+        public SignUpViewModel(IAccountManager accountManager, IDialogService dialogService, ILoadingService loadingService) : base()
         {
             AccountManager = accountManager;
             DialogService = dialogService;
@@ -95,7 +130,7 @@ namespace WorkingHours.Desktop.ViewModel
 
             try
             {
-                LoadingService.ShowIndicator("Signin up...");
+                LoadingService.ShowIndicator("Signing up...");
                 await AccountManager.SignUpAsync(signUp);
                 MessengerInstance.Send(new NotificationMessage(null), MessageTokens.SignUpCompleted);
             }
@@ -110,6 +145,27 @@ namespace WorkingHours.Desktop.ViewModel
             finally
             {
                 LoadingService.HideIndicator();
+            }
+        }
+
+        protected override void FillInProperties()
+        {
+            PropertiesToValidate.Add(nameof(Email), () => Email);
+            PropertiesToValidate.Add(nameof(UserName), () => UserName);
+            PropertiesToValidate.Add(nameof(Password), () => Password);
+            PropertiesToValidate.Add(nameof(PasswordConfirmed), () => PasswordConfirmed);
+            PropertiesToValidate.Add(nameof(FullName), () => FullName);
+        }
+
+        protected override void OnValidation(string propertyName, string value)
+        {
+            if (propertyName == nameof(PasswordConfirmed))
+            {
+                PasswordConfirmationError = value;
+            }
+            else if (propertyName == nameof(Password))
+            {
+                PasswordError = value;
             }
         }
     }

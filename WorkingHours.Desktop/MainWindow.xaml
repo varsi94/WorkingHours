@@ -12,8 +12,8 @@
         xmlns:mahapps="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         mc:Ignorable="d"
         Title="Working hours"
-        Height="350"
-        Width="525">
+        Height="483"
+        Width="774">
     <Grid DataContext="{ioc:ViewModel ViewModelType={x:Type vm:IMainViewModel}}">
         <StackPanel Visibility="{Binding IsMainPageVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
             <TextBlock Text="{Binding DisplayedName}"
@@ -23,15 +23,25 @@
             <TextBlock Text="{Binding Roles}"
                        HorizontalAlignment="Right" />
         </StackPanel>
-        <controls:LoginControl Visibility="{Binding IsLoginVisible, Converter={StaticResource BooleanToVisibilityConverter}}" />
-        <controls:SignUpControl Visibility="{Binding IsSignUpVisible, Converter={StaticResource BooleanToVisibilityConverter}}" />
+        <controls:LoginControl Visibility="{Binding IsLoginVisible, Converter={StaticResource BooleanToVisibilityConverter}}"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               Width="300"/>
+        <controls:SignUpControl Visibility="{Binding IsSignUpVisible, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Width="300"/>
         <Grid Background="#AAC6C6C6"
               x:Name="LoadingGrid"
               x:FieldModifier="public"
               Visibility="Collapsed">
-            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                <mahapps:ProgressRing IsActive="True" Margin="10" />
-                <TextBlock x:Name="LoadingMessage" x:FieldModifier="public" Margin="10" />
+            <StackPanel HorizontalAlignment="Center"
+                        VerticalAlignment="Center">
+                <mahapps:ProgressRing IsActive="True"
+                                      Margin="10" />
+                <TextBlock x:Name="LoadingMessage"
+                           x:FieldModifier="public"
+                           Margin="10" />
             </StackPanel>
         </Grid>
     </Grid>
