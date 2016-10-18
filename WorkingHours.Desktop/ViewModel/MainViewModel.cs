@@ -10,14 +10,15 @@ using GalaSoft.MvvmLight.CommandWpf;
 using WorkingHours.Client.Interfaces;
 using GalaSoft.MvvmLight.Messaging;
 using WorkingHours.Desktop.Common;
+using WorkingHours.Client.Model;
 
 namespace WorkingHours.Desktop.ViewModel
 {
     public class MainViewModel : ViewModelBase, IMainViewModel
     {
+        private readonly LoginInfo loginInfo;
         private readonly IAccountManager accountManager;
-
-
+        
         private bool isMainPageVisible;
 
         public bool IsMainPageVisible
@@ -71,9 +72,10 @@ namespace WorkingHours.Desktop.ViewModel
             set { Set(ref roles, value); }
         }
         
-        public MainViewModel(IAccountManager accountManager)
+        public MainViewModel(LoginInfo loginInfo, IAccountManager accountManager)
         {
             this.accountManager = accountManager;
+            this.loginInfo = loginInfo;
             MessengerInstance.Register<NotificationMessage>(this, MessageTokens.LoginNotification, UpdateUserData);
             MessengerInstance.Register<NotificationMessage>(this, MessageTokens.SignUpCompleted, ExecuteSignUpCompleted);
             MessengerInstance.Register<NotificationMessage>(this, MessageTokens.StartSignUp, ExecuteStartSignUp);
@@ -96,9 +98,9 @@ namespace WorkingHours.Desktop.ViewModel
 
         private void UpdateUserData(NotificationMessage obj)
         {
-            Roles = string.Join(", ", accountManager.Roles.Select(x => x.ToString()));
-            DisplayedName = $"{accountManager.FullName} ({accountManager.UserName})";
-            Email = accountManager.Email;
+            Roles = string.Join(", ", loginInfo.Roles.Select(x => x.ToString()));
+            DisplayedName = $"{loginInfo.FullName} ({loginInfo.UserName})";
+            Email = loginInfo.Email;
             IsLoginVisible = false;
             IsMainPageVisible = true;
         }

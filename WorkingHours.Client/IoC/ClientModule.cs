@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WorkingHours.Client.Interfaces;
 using WorkingHours.Client.Managers;
+using WorkingHours.Client.Model;
 
 namespace WorkingHours.Client.IoC
 {
@@ -13,7 +14,8 @@ namespace WorkingHours.Client.IoC
     {
         public override void Load()
         {
-            Bind<IAccountManager>().To<AccountManager>().InSingletonScope();
+            Bind<IAccountManager>().To<AccountManager>().InTransientScope();
+            Bind<LoginInfo>().ToSelf().InSingletonScope();
             Bind<IConfigurationManager>().To<AppSettingsManager>().InSingletonScope();
         }
     }
