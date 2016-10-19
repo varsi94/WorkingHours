@@ -15,7 +15,7 @@ namespace WorkingHours.Client.Managers
 {
     public class AccountManager : ManagerBase, IAccountManager
     {
-        public AccountManager(LoginInfo loginInfo, IConfigurationManager configManager) : base(loginInfo, configManager)
+        public AccountManager(LoginInfo loginInfo, IAppSettingsManager configManager) : base(loginInfo, configManager)
         {
         }
 

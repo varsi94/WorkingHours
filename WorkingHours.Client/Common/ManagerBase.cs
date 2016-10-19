@@ -13,9 +13,9 @@ namespace WorkingHours.Client.Common
     {
         protected LoginInfo LoginInfo { get; }
 
-        protected IConfigurationManager ConfigurationManager { get; }
+        protected IAppSettingsManager ConfigurationManager { get; }
 
-        public ManagerBase(LoginInfo loginInfo, IConfigurationManager configurationManager)
+        public ManagerBase(LoginInfo loginInfo, IAppSettingsManager configurationManager)
         {
             LoginInfo = loginInfo;
             ConfigurationManager = configurationManager;

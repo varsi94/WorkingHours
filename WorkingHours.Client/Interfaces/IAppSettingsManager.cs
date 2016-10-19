@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WorkingHours.Client.Interfaces
 {
-    public interface IConfigurationManager
+    public interface IAppSettingsManager
     {
         string ApiBaseAddress { get; }
     }
