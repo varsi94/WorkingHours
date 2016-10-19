@@ -84,26 +84,6 @@ namespace WorkingHours.Desktop.ViewModel
             set { Set(ref userName, value); }
         }
 
-
-        private string passwordError;
-
-        public string PasswordError
-        {
-            get { return passwordError; }
-
-            set { Set(ref passwordError, value); }
-        }
-
-
-        private string passwordConfirmationError;
-
-        public string PasswordConfirmationError
-        {
-            get { return passwordConfirmationError; }
-
-            set { Set(ref passwordConfirmationError, value); }
-        }
-
         public SignUpViewModel(IAccountManager accountManager, IDialogService dialogService, ILoadingService loadingService) : base()
         {
             AccountManager = accountManager;
@@ -155,18 +135,6 @@ namespace WorkingHours.Desktop.ViewModel
             PropertiesToValidate.Add(nameof(Password), () => Password);
             PropertiesToValidate.Add(nameof(PasswordConfirmed), () => PasswordConfirmed);
             PropertiesToValidate.Add(nameof(FullName), () => FullName);
-        }
-
-        protected override void OnValidation(string propertyName, string value)
-        {
-            if (propertyName == nameof(PasswordConfirmed))
-            {
-                PasswordConfirmationError = value;
-            }
-            else if (propertyName == nameof(Password))
-            {
-                PasswordError = value;
-            }
         }
     }
 }
