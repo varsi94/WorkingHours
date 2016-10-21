@@ -33,7 +33,7 @@ namespace WorkingHours.Web.App_Start
                     return Task.FromResult<object>(null);
                 }
 
-                roles = uow.Users.GetRoles(user);
+                roles = uow.Users.GetRoles(user).Select(x => x.ToString()).ToList();
             }
 
             var identity = new ClaimsIdentity(context.Options.AuthenticationType);

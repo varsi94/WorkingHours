@@ -3,6 +3,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using WorkingHours.Model.Repository;
 using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WorkingHours.Model.DbContext
 {
@@ -16,6 +17,9 @@ namespace WorkingHours.Model.DbContext
 
         [Timestamp]
         public byte[] RowVersion { get; set; }
+
+        [NotMapped]
+        public Roles Role { get; set; }
 
         public ApplicationUser()
         {

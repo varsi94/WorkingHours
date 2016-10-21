@@ -40,9 +40,9 @@ namespace WorkingHours.Model.Repository
             return DbContext.UserManager.Create(user, password);
         }
 
-        public IList<string> GetRoles(ApplicationUser user)
+        public IList<Roles> GetRoles(ApplicationUser user)
         {
-            return DbContext.UserManager.GetRoles(user.Id);
+            return DbContext.UserManager.GetRoles(user.Id).Select(x => (Roles)Enum.Parse(typeof(Roles), x)).ToList();
         }
 
         public IdentityResult AddToRole(int userId, Roles role)

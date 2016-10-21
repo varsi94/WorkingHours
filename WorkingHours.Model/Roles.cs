@@ -8,7 +8,7 @@ namespace WorkingHours.Model
 {
     public enum Roles
     {
-        Manager,
-        Employee
+        Manager = 0,
+        Employee = 1
     }
 }

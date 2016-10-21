@@ -65,15 +65,6 @@ namespace WorkingHours.Web.Controllers
             return Ok(result);
         }
 
-        [AuthorizeRoles(Roles.Manager)]
-        [Route("api/account/updateRoles")]
-        [HttpPost]
-        public IHttpActionResult UpdateRoles([FromBody] Dictionary<int, Roles> rolesToUpdate)
-        {
-            UserManager.UpdateRoles(rolesToUpdate);
-            return Ok();
-        }
-
         [Authorize]
         [Route("api/account/changePassword")]
         [HttpPost]

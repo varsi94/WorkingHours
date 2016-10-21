@@ -12,11 +12,12 @@ namespace WorkingHours.Model.Repository
     {
         ApplicationUser Get(string userName, string password);
 
-        IList<string> GetRoles(ApplicationUser user);
+        IList<Roles> GetRoles(ApplicationUser user);
 
         IdentityResult AddToRole(int userId, Roles role);
 
         IdentityResult Add(ApplicationUser user, string password);
+
         void ChangePassword(int userId, string oldPassword, string newPassword);
     }
 }

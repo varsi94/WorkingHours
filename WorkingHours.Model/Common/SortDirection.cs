@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WorkingHours.Client.Model
+namespace WorkingHours.Model.Common
 {
-    public enum Roles
+    public enum SortDirection
     {
-        Manager = 0,
-        Employee = 1
+        Ascending = 0,
+        Descending = 1
     }
 }
