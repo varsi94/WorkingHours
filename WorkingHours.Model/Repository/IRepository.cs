@@ -13,7 +13,9 @@ namespace WorkingHours.Model.Repository
     {
         T GetById(int id);
 
-        IPagedList<T> List(Expression<Func<T, bool>> filter, int pageIndex, int pageSize, OrderInfo<T> orderInfo = null, params string[] propsToInclude);
+        IPagedList<T> ListPaged(Expression<Func<T, bool>> filter, int pageIndex, int pageSize, OrderInfo<T> orderInfo = null, params string[] propsToInclude);
+
+        IEnumerable<T> List(Expression<Func<T, bool>> filter, OrderInfo<T> orderInfo = null, params string[] propsToInclude);
 
         void Add(T obj);
 

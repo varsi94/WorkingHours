@@ -57,7 +57,7 @@ namespace WorkingHours.Bll.Managers
                 Direction = SortDirection.Ascending,
                 OrderBy = x => x.FullName
             };
-            var result = UoW.Users.List((nameFilter == null) ? null : ((Expression<Func<ApplicationUser, bool>>)(x => x.FullName.Contains(nameFilter) || x.UserName.Contains(nameFilter))),
+            var result = UoW.Users.ListPaged((nameFilter == null) ? null : ((Expression<Func<ApplicationUser, bool>>)(x => x.FullName.Contains(nameFilter) || x.UserName.Contains(nameFilter))),
                 pageIndex, pageSize, orderInfo, nameof(Roles));
             foreach (var applicationUser in result)
             {

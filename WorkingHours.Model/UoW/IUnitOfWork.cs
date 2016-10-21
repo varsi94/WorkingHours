@@ -17,6 +17,8 @@ namespace WorkingHours.Model.UoW
 
         IRepository<WorkTime> WorkTimeLog { get; }
 
+        IRoleRepository Roles { get; }
+
         void SaveChanges();
     }
 }

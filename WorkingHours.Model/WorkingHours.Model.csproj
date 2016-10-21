@@ -82,6 +82,8 @@
     <Compile Include="Repository\GenericRepository.cs" />
     <Compile Include="Repository\IDbEntity.cs" />
     <Compile Include="Repository\IRepository.cs" />
+    <Compile Include="Repository\IRoleRepository.cs" />
+    <Compile Include="Repository\RoleRepository.cs" />
     <Compile Include="Roles.cs" />
     <Compile Include="UoW\IUnitOfWork.cs" />
     <Compile Include="Repository\IUserRepository.cs" />

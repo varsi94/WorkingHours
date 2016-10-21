@@ -72,14 +72,17 @@
     <Compile Include="AutoMapperConfig\Configuration.cs" />
     <Compile Include="AutoMapperConfig\PagedListConverter.cs" />
     <Compile Include="Dto\PagedResult.cs" />
+    <Compile Include="Dto\ProjectHeader.cs" />
     <Compile Include="Dto\UserHeaderDto.cs" />
     <Compile Include="Exceptions\BllException.cs" />
     <Compile Include="Exceptions\InternalServerException.cs" />
     <Compile Include="Exceptions\NotFoundException.cs" />
     <Compile Include="Exceptions\UnauthorizedException.cs" />
+    <Compile Include="Interfaces\IProjectManager.cs" />
     <Compile Include="Interfaces\IUserManager.cs" />
     <Compile Include="IoC\BllModule.cs" />
     <Compile Include="Managers\ManagerBase.cs" />
+    <Compile Include="Managers\ProjectManager.cs" />
     <Compile Include="Managers\UserManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

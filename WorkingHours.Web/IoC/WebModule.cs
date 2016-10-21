@@ -15,7 +15,8 @@ namespace WorkingHours.Web.IoC
         public override void Load()
         {
             base.Load();
-            Bind<AccountController>().To<AccountController>().InRequestScope();
+            Bind<AccountController>().ToSelf().InRequestScope();
+            Bind<ProjectController>().ToSelf().InRequestScope();
             Bind<AppDbContext>().ToSelf().InRequestScope();
         }
     }

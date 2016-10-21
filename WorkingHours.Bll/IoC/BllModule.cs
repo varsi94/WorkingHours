@@ -15,6 +15,7 @@ namespace WorkingHours.Bll.IoC
         {
             base.Load();
             Bind<IUserManager>().To<UserManager>().InTransientScope();
+            Bind<IProjectManager>().To<ProjectManager>().InTransientScope();
         }
     }
 }

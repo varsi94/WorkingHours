@@ -22,6 +22,8 @@ namespace WorkingHours.Model.UoW
 
         public IRepository<WorkTime> WorkTimeLog { get; }
 
+        public IRoleRepository Roles { get; }
+
         public UnitOfWork(AppDbContext dbContext)
         {
             DbContext = dbContext;
@@ -29,6 +31,7 @@ namespace WorkingHours.Model.UoW
             Projects = new GenericRepository<Project>(dbContext);
             Issues = new GenericRepository<Issue>(dbContext);
             WorkTimeLog = new GenericRepository<WorkTime>(dbContext);
+            Roles = new RoleRepository(dbContext);
         }
 
         public void SaveChanges()
