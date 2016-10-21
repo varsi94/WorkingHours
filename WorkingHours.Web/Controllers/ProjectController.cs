@@ -31,15 +31,24 @@ namespace WorkingHours.Web.Controllers
                 Name = projectHeader.Name,
                 Deadline = projectHeader.Deadline
             };
-            ProjectManager.Add(project, User.Identity.GetUserId());
-            return Ok();
+            var id = ProjectManager.Add(project, User.Identity.GetUserId());
+            return Created<object>(Url.Route(nameof(GetProjectInfo), new {id = id}), null);
         }
 
         [HttpGet]
         [Route("api/projects")]
+        [Authorize]
         public IHttpActionResult ListProjects()
         {
             return Ok(ProjectManager.List(User.Identity.GetUserId()));
+        }
+
+        [HttpGet]
+        [Route("api/project/{id}", Name = nameof(GetProjectInfo))]
+        [Authorize]
+        public IHttpActionResult GetProjectInfo(int id)
+        {
+            return Ok(ProjectManager.GetProjectInfo(id, User.Identity.GetUserId()));
         }
     }
 }

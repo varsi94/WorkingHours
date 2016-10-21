@@ -11,7 +11,7 @@ namespace WorkingHours.Model.Repository
 {
     public interface IRepository<T> where T: class, IDbEntity
     {
-        T GetById(int id);
+        T GetById(int id, params string[] propsToInclude);
 
         IPagedList<T> ListPaged(Expression<Func<T, bool>> filter, int pageIndex, int pageSize, OrderInfo<T> orderInfo = null, params string[] propsToInclude);
 

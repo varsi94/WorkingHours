@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WorkingHours.Bll.Dto;
+using WorkingHours.Bll.Exceptions;
 using WorkingHours.Bll.Interfaces;
 using WorkingHours.Model;
 using WorkingHours.Model.Common;
@@ -18,7 +19,7 @@ namespace WorkingHours.Bll.Managers
         {
         }
 
-        public void Add(Project project, int managerId)
+        public int Add(Project project, int managerId)
         {
             project.IsClosed = false;
             var association = new UserProject
@@ -30,6 +31,24 @@ namespace WorkingHours.Bll.Managers
             project.AssociatedMembers.Add(association);
             UoW.Projects.Add(project);
             UoW.SaveChanges();
+            return project.Id;
+        }
+
+        public ProjectInfo GetProjectInfo(int projectId, int userId)
+        {
+            var dummy = new Project();
+            var project = UoW.Projects.GetById(projectId, nameof(dummy.AssociatedMembers), nameof(dummy.Issues), nameof(dummy.AssociatedMembers) + ".User",
+                nameof(dummy.AssociatedMembers) + ".Role");
+            if (project == null)
+            {
+                throw new NotFoundException("Project not found!");
+            }
+
+            if (!project.AssociatedMembers.Any(m => m.UserId == userId))
+            {
+                throw new UnauthorizedException("User is not associated to this project!");
+            }
+            return Mapper.Map<ProjectInfo>(project);
         }
 
         public List<ProjectHeader> List(int userId)

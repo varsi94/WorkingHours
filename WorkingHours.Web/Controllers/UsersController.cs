@@ -21,7 +21,7 @@ namespace WorkingHours.Web.Controllers
         [Route("api/users/")]
         [HttpGet]
         [AuthorizeRoles(Roles.Manager)]
-        public IHttpActionResult ListUsers([FromUri] int? pageSize, [FromUri]int? pageIndex, [FromUri]string name)
+        public IHttpActionResult ListUsers([FromUri] int? pageSize = null, [FromUri]int? pageIndex = null, [FromUri]string name = null)
         {
             return Ok(UserManager.GetUsers(pageIndex ?? 1, pageSize ?? 10, name));
         }

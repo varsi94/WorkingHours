@@ -71,8 +71,11 @@
   <ItemGroup>
     <Compile Include="AutoMapperConfig\Configuration.cs" />
     <Compile Include="AutoMapperConfig\PagedListConverter.cs" />
+    <Compile Include="AutoMapperConfig\ProjectInfoResolver.cs" />
+    <Compile Include="Dto\IssueHeader.cs" />
     <Compile Include="Dto\PagedResult.cs" />
     <Compile Include="Dto\ProjectHeader.cs" />
+    <Compile Include="Dto\ProjectInfo.cs" />
     <Compile Include="Dto\UserHeaderDto.cs" />
     <Compile Include="Exceptions\BllException.cs" />
     <Compile Include="Exceptions\InternalServerException.cs" />

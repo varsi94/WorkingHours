@@ -25,9 +25,14 @@ namespace WorkingHours.Model.Repository
             DbContext.Set<T>().Add(obj);
         }
 
-        public virtual T GetById(int id)
+        public virtual T GetById(int id, params string[] propsToInclude)
         {
-            return DbContext.Set<T>().Find(id);
+            var query = DbContext.Set<T>().AsQueryable();
+            foreach (var prop in propsToInclude)
+            {
+                query = query.Include(prop);
+            }
+            return query.SingleOrDefault(x => x.Id == id);
         }
 
         public virtual void Remove(T obj)

@@ -19,6 +19,8 @@ namespace WorkingHours.Bll.AutoMapperConfig
             CreateMap<IPagedList<ApplicationUser>, PagedResult<UserHeaderDto>>()
                 .ConvertUsing<PagedListConverter<ApplicationUser, UserHeaderDto>>();
             CreateMap<Project, ProjectHeader>();
+            CreateMap<Project, ProjectInfo>()
+                .ForMember(p => p.Members, cfg => cfg.ResolveUsing<ProjectInfoResolver>());
         }
     }
 }
