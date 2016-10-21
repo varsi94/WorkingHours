@@ -21,6 +21,7 @@ namespace WorkingHours.Bll.AutoMapperConfig
             CreateMap<Project, ProjectHeader>();
             CreateMap<Project, ProjectInfo>()
                 .ForMember(p => p.Members, cfg => cfg.ResolveUsing<ProjectInfoResolver>());
+            CreateMap<Issue, IssueHeader>();
         }
     }
 }
