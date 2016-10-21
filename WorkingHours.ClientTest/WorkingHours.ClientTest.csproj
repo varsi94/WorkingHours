@@ -54,6 +54,10 @@
       <Project>{6378ca4f-9c91-42c2-ba96-fa69fac9a5ed}</Project>
       <Name>WorkingHours.Client</Name>
     </ProjectReference>
+    <ProjectReference Include="..\WorkingHours.Shared\WorkingHours.Shared.csproj">
+      <Project>{481a1468-a254-4a08-9e16-ff396f895555}</Project>
+      <Name>WorkingHours.Shared</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

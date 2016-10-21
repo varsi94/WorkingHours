@@ -58,13 +58,16 @@
   <ItemGroup>
     <Compile Include="Common\ManagerBase.cs" />
     <Compile Include="Exceptions\ModelStateException.cs" />
+    <Compile Include="Exceptions\NotFoundException.cs" />
     <Compile Include="Exceptions\ServerException.cs" />
     <Compile Include="Interfaces\IAppSettingsManager.cs" />
     <Compile Include="Interfaces\IAccountManager.cs" />
+    <Compile Include="Interfaces\IProjectManager.cs" />
     <Compile Include="Interfaces\IUserManager.cs" />
     <Compile Include="IoC\ClientModule.cs" />
     <Compile Include="Managers\AppSettingsManager.cs" />
     <Compile Include="Managers\AccountManager.cs" />
+    <Compile Include="Managers\ProjectManager.cs" />
     <Compile Include="Managers\UserManager.cs" />
     <Compile Include="Model\LoginInfo.cs" />
     <Compile Include="Model\LoginResult.cs" />

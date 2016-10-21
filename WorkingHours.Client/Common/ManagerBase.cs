@@ -38,5 +38,32 @@ namespace WorkingHours.Client.Common
         {
             return new HttpClient {BaseAddress = new Uri(ConfigurationManager.ApiBaseAddress)};
         }
+
+        protected string BuildQueryStirng(Dictionary<string, object> param)
+        {
+            var stringBuilder = new StringBuilder();
+            bool isFirst = true;
+            foreach (var item in param)
+            {
+                if (item.Value == null)
+                {
+                    continue;
+                }
+
+                if (isFirst)
+                {
+                    stringBuilder.Append("?");
+                    isFirst = false;
+                }
+                else
+                {
+                    stringBuilder.Append("&");
+                }
+
+                stringBuilder.Append(item.Key + "=" + item.Value);
+            }
+
+            return stringBuilder.ToString();
+        }
     }
 }

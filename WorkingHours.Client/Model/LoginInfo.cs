@@ -19,6 +19,6 @@ namespace WorkingHours.Client.Model
         
         public string Token { get; internal set; }
         
-        public Roles Role { get; internal set; }
+        public Roles? Role { get; internal set; }
     }
 }

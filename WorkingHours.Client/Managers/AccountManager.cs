@@ -88,6 +88,7 @@ namespace WorkingHours.Client.Managers
             LoginInfo.UserName = null;
             LoginInfo.Token = null;
             LoginInfo.Email = null;
+            LoginInfo.Role = null;
         }
 
         public async Task SignUpAsync(SignUpModel request)

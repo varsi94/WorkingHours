@@ -9,5 +9,7 @@ namespace WorkingHours.Shared.Dto
         public string Name { get; set; }
 
         public DateTime? Deadline { get; set; }
+
+        public bool IsClosed { get; set; }
     }
 }
