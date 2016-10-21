@@ -17,6 +17,7 @@ namespace WorkingHours.Web.IoC
             base.Load();
             Bind<AccountController>().ToSelf().InRequestScope();
             Bind<ProjectController>().ToSelf().InRequestScope();
+            Bind<IssueController>().ToSelf().InRequestScope();
             Bind<AppDbContext>().ToSelf().InRequestScope();
         }
     }

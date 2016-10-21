@@ -35,6 +35,11 @@ namespace WorkingHours.Client.Managers
                     {
                         throw new UnauthorizedAccessException();
                     }
+                    else if (httpResult.StatusCode == HttpStatusCode.BadRequest)
+                    {
+                        var modelState = await httpResult.Content.ReadAsAsync<ModelState>();
+                        throw new ModelStateException("Validation failed for this project!", modelState);
+                    }
                     throw new ServerException("Internal server error occured!");
                 }
             }

@@ -17,8 +17,8 @@ namespace WorkingHours.ClientTest
             var accountManager = new AccountManager(loginInfo, new AppSettingsManager());
             accountManager.LoginAsync("varsi.marci", "123456").Wait();
 
-            var projectManager = new ProjectManager(loginInfo, new AppSettingsManager());
-            var result = projectManager.GetProjectAsync(1).Result;
+            var issueManager = new IssueManager(loginInfo, new AppSettingsManager());
+            issueManager.CreateIssueForProject(1, new IssueHeader() {Name ="Issue #2", Deadline = DateTime.UtcNow, Description = "This is created from client."}).Wait();
         }
     }
 }

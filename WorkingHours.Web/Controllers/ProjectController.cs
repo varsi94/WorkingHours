@@ -25,6 +25,11 @@ namespace WorkingHours.Web.Controllers
         [AuthorizeRoles(Roles.Manager)]
         public IHttpActionResult Create([FromBody] ProjectHeader projectHeader)
         {
+            if (!ModelState.IsValid)
+            {
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState));
+            }
+
             var project = new Project
             {
                 Name = projectHeader.Name,
