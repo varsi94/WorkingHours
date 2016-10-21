@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WorkingHours.Shared.Model;
 
 namespace WorkingHours.Client.Model
 {
@@ -18,10 +19,6 @@ namespace WorkingHours.Client.Model
         
         public string Token { get; internal set; }
         
-        public bool IsManager => Roles.Any(x => x == Model.Roles.Manager);
-
-        public bool IsEmployee => Roles.Any(x => x == Model.Roles.Employee);
-        
-        public IEnumerable<Roles> Roles { get; internal set; }
+        public Roles Role { get; internal set; }
     }
 }

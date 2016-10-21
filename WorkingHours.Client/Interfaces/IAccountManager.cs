@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WorkingHours.Client.Model;
+using WorkingHours.Shared.Dto;
 
 namespace WorkingHours.Client.Interfaces
 {
@@ -13,8 +14,8 @@ namespace WorkingHours.Client.Interfaces
 
         void Logout();
 
-        Task SignUpAsync(SignUpRequest request);
+        Task SignUpAsync(SignUpModel request);
 
-        Task ChangePasswordAsync(ChangePasswordRequest request);
+        Task ChangePasswordAsync(PasswordChangeModel request);
     }
 }

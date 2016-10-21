@@ -6,8 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace WorkingHours.Client.Model
-{
-
+{ 
     public class ModelState
     {
         [JsonProperty("message")]

@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using PagedList;
-using WorkingHours.Bll.Dto;
 using WorkingHours.Bll.Exceptions;
 using WorkingHours.Bll.Interfaces;
 using WorkingHours.Model;
@@ -13,6 +9,7 @@ using WorkingHours.Model.UoW;
 using WorkingHours.Model.Common;
 using AutoMapper;
 using System.Linq.Expressions;
+using WorkingHours.Shared.Dto;
 
 namespace WorkingHours.Bll.Managers
 {

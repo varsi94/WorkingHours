@@ -4,11 +4,10 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using WorkingHours.Bll.Dto;
 using WorkingHours.Bll.Interfaces;
 using WorkingHours.Model;
+using WorkingHours.Shared.Dto;
 using WorkingHours.Web.Extensions;
-using WorkingHours.Web.Models;
 
 namespace WorkingHours.Web.Controllers
 {

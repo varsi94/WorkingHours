@@ -10,8 +10,8 @@ using WorkingHours.Model;
 using WorkingHours.Model.DbContext;
 using WorkingHours.Model.Exceptions;
 using WorkingHours.Model.UoW;
+using WorkingHours.Shared.Dto;
 using WorkingHours.Web.Extensions;
-using WorkingHours.Web.Models;
 
 namespace WorkingHours.Web.Controllers
 {
@@ -55,12 +55,12 @@ namespace WorkingHours.Web.Controllers
         [HttpGet]
         public IHttpActionResult GetAccount()
         {
-            var result = new UserData
+            var result = new UserHeaderDto
             {
                 Email = User.Identity.GetEmail(),
                 FullName = User.Identity.GetFullName(),
-                UserName = User.Identity.Name,
-                Roles = User.Identity.GetRoles()
+                Username = User.Identity.Name,
+                Role = User.Identity.GetRoles().Single()
             };
             return Ok(result);
         }

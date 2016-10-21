@@ -10,6 +10,8 @@ using WorkingHours.Client.Common;
 using WorkingHours.Client.Exceptions;
 using WorkingHours.Client.Interfaces;
 using WorkingHours.Client.Model;
+using WorkingHours.Shared.Dto;
+using WorkingHours.Shared.Model;
 
 namespace WorkingHours.Client.Managers
 {
@@ -19,7 +21,7 @@ namespace WorkingHours.Client.Managers
         {
         }
 
-        public async Task ChangePasswordAsync(ChangePasswordRequest request)
+        public async Task ChangePasswordAsync(PasswordChangeModel request)
         {
             using (var client = GetAuthenticatedClient())
             {
@@ -57,15 +59,16 @@ namespace WorkingHours.Client.Managers
                 }
 
                 LoginInfo.Token = loginResult.AccessToken;
+                LoginInfo.IsLoggedIn = true;
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", LoginInfo.Token);
                 var userDataHttpResult = await client.GetAsync("api/account/whoami");
                 if (userDataHttpResult.IsSuccessStatusCode)
                 {
-                    var userDataResult = await userDataHttpResult.Content.ReadAsAsync<UserDataResult>();
-                    LoginInfo.UserName = userDataResult.UserName;
+                    var userDataResult = await userDataHttpResult.Content.ReadAsAsync<UserHeaderDto>();
+                    LoginInfo.UserName = userDataResult.Username;
                     LoginInfo.Email = userDataResult.Email;
                     LoginInfo.FullName = userDataResult.FullName;
-                    LoginInfo.Roles = userDataResult.Roles.Select(x => (Roles) Enum.Parse(typeof(Roles), x));
+                    LoginInfo.Role = (Roles)Enum.Parse(typeof(Roles), userDataResult.Role);
                     return true;
                 }
 
@@ -87,7 +90,7 @@ namespace WorkingHours.Client.Managers
             LoginInfo.Email = null;
         }
 
-        public async Task SignUpAsync(SignUpRequest request)
+        public async Task SignUpAsync(SignUpModel request)
         {
             using (var client = new HttpClient())
             {

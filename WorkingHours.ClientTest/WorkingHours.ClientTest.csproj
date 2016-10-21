@@ -4,15 +4,17 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{6378CA4F-9C91-42C2-BA96-FA69FAC9A5ED}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{F7A54FEA-E104-4A70-A16B-E58503758CAA}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>WorkingHours.Client</RootNamespace>
-    <AssemblyName>WorkingHours.Client</AssemblyName>
+    <RootNamespace>WorkingHours.ClientTest</RootNamespace>
+    <AssemblyName>WorkingHours.ClientTest</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -22,6 +24,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -30,54 +33,26 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
-      <HintPath>..\packages\Ninject.3.2.2.0\lib\net45-full\Ninject.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
-    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
-    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Common\ManagerBase.cs" />
-    <Compile Include="Exceptions\ModelStateException.cs" />
-    <Compile Include="Exceptions\ServerException.cs" />
-    <Compile Include="Interfaces\IAppSettingsManager.cs" />
-    <Compile Include="Interfaces\IAccountManager.cs" />
-    <Compile Include="Interfaces\IUserManager.cs" />
-    <Compile Include="IoC\ClientModule.cs" />
-    <Compile Include="Managers\AppSettingsManager.cs" />
-    <Compile Include="Managers\AccountManager.cs" />
-    <Compile Include="Managers\UserManager.cs" />
-    <Compile Include="Model\LoginInfo.cs" />
-    <Compile Include="Model\LoginResult.cs" />
-    <Compile Include="Model\ModelStateError.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\WorkingHours.Shared\WorkingHours.Shared.csproj">
-      <Project>{481A1468-A254-4A08-9E16-FF396F895555}</Project>
-      <Name>WorkingHours.Shared</Name>
+    <ProjectReference Include="..\WorkingHours.Client\WorkingHours.Client.csproj">
+      <Project>{6378ca4f-9c91-42c2-ba96-fa69fac9a5ed}</Project>
+      <Name>WorkingHours.Client</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

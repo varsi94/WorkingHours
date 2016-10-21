@@ -1,8 +1,8 @@
 ﻿using System;
 using AutoMapper;
 using PagedList;
-using WorkingHours.Bll.Dto;
 using System.Linq;
+using WorkingHours.Shared.Dto;
 
 namespace WorkingHours.Bll.AutoMapperConfig
 {

@@ -185,9 +185,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="IoC\WebModule.cs" />
-    <Compile Include="Models\PasswordChangeModel.cs" />
-    <Compile Include="Models\UserData.cs" />
-    <Compile Include="Models\SignUpModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -201,6 +198,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WorkingHours.Bll\WorkingHours.Bll.csproj">
@@ -210,6 +208,10 @@
     <ProjectReference Include="..\WorkingHours.Model\WorkingHours.Model.csproj">
       <Project>{A18D8C55-6A0D-4B48-A040-7BCF392BE5AB}</Project>
       <Name>WorkingHours.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WorkingHours.Shared\WorkingHours.Shared.csproj">
+      <Project>{481A1468-A254-4A08-9E16-FF396F895555}</Project>
+      <Name>WorkingHours.Shared</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

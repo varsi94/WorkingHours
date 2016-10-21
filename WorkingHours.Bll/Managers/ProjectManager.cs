@@ -4,12 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WorkingHours.Bll.Dto;
 using WorkingHours.Bll.Exceptions;
 using WorkingHours.Bll.Interfaces;
 using WorkingHours.Model;
 using WorkingHours.Model.Common;
 using WorkingHours.Model.UoW;
+using WorkingHours.Shared.Dto;
 
 namespace WorkingHours.Bll.Managers
 {

@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace WorkingHours.Web.Models
+namespace WorkingHours.Shared.Dto
 {
     public class PasswordChangeModel
     {

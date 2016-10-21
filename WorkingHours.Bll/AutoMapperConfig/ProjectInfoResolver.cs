@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using System.Collections.Generic;
-using WorkingHours.Bll.Dto;
 using WorkingHours.Model;
 using System;
+using WorkingHours.Shared.Dto;
 
 namespace WorkingHours.Bll.AutoMapperConfig
 {

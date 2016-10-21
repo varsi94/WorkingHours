@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WorkingHours.Client.Model
+namespace WorkingHours.Client.Interfaces
 {
-    public enum Roles
+    public interface IUserManager
     {
-        Manager = 0,
-        Employee = 1
+
     }
 }

@@ -72,11 +72,6 @@
     <Compile Include="AutoMapperConfig\Configuration.cs" />
     <Compile Include="AutoMapperConfig\PagedListConverter.cs" />
     <Compile Include="AutoMapperConfig\ProjectInfoResolver.cs" />
-    <Compile Include="Dto\IssueHeader.cs" />
-    <Compile Include="Dto\PagedResult.cs" />
-    <Compile Include="Dto\ProjectHeader.cs" />
-    <Compile Include="Dto\ProjectInfo.cs" />
-    <Compile Include="Dto\UserHeaderDto.cs" />
     <Compile Include="Exceptions\BllException.cs" />
     <Compile Include="Exceptions\InternalServerException.cs" />
     <Compile Include="Exceptions\NotFoundException.cs" />
@@ -93,6 +88,10 @@
     <ProjectReference Include="..\WorkingHours.Model\WorkingHours.Model.csproj">
       <Project>{A18D8C55-6A0D-4B48-A040-7BCF392BE5AB}</Project>
       <Name>WorkingHours.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WorkingHours.Shared\WorkingHours.Shared.csproj">
+      <Project>{481A1468-A254-4A08-9E16-FF396F895555}</Project>
+      <Name>WorkingHours.Shared</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -15,6 +15,7 @@ using WorkingHours.Desktop.Common;
 using WorkingHours.Desktop.Interfaces.Services;
 using WorkingHours.Desktop.Services;
 using System.ComponentModel.DataAnnotations;
+using WorkingHours.Shared.Dto;
 
 namespace WorkingHours.Desktop.ViewModel
 {
@@ -100,7 +101,7 @@ namespace WorkingHours.Desktop.ViewModel
 
         private async void ExecuteSignUpCommand()
         {
-            var signUp = new SignUpRequest
+            var signUp = new SignUpModel
             {
                 UserName = UserName,
                 Password = Password,

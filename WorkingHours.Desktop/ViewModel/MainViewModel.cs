@@ -98,7 +98,7 @@ namespace WorkingHours.Desktop.ViewModel
 
         private void UpdateUserData(NotificationMessage obj)
         {
-            Roles = string.Join(", ", loginInfo.Roles.Select(x => x.ToString()));
+            Roles = loginInfo.Role.ToString();
             DisplayedName = $"{loginInfo.FullName} ({loginInfo.UserName})";
             Email = loginInfo.Email;
             IsLoginVisible = false;

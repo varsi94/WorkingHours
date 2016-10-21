@@ -13,6 +13,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkingHours.Client", "Work
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkingHours.Desktop", "WorkingHours.Desktop\WorkingHours.Desktop.csproj", "{FEBC4EBB-0AF2-45C9-8ABB-EE695285E619}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkingHours.ClientTest", "WorkingHours.ClientTest\WorkingHours.ClientTest.csproj", "{F7A54FEA-E104-4A70-A16B-E58503758CAA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkingHours.Shared", "WorkingHours.Shared\WorkingHours.Shared.csproj", "{481A1468-A254-4A08-9E16-FF396F895555}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +43,14 @@ Global
 		{FEBC4EBB-0AF2-45C9-8ABB-EE695285E619}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FEBC4EBB-0AF2-45C9-8ABB-EE695285E619}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FEBC4EBB-0AF2-45C9-8ABB-EE695285E619}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F7A54FEA-E104-4A70-A16B-E58503758CAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7A54FEA-E104-4A70-A16B-E58503758CAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7A54FEA-E104-4A70-A16B-E58503758CAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7A54FEA-E104-4A70-A16B-E58503758CAA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{481A1468-A254-4A08-9E16-FF396F895555}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{481A1468-A254-4A08-9E16-FF396F895555}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{481A1468-A254-4A08-9E16-FF396F895555}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{481A1468-A254-4A08-9E16-FF396F895555}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
