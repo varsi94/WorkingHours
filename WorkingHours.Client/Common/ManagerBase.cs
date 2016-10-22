@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ninject;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -9,15 +10,15 @@ using WorkingHours.Client.Model;
 
 namespace WorkingHours.Client.Common
 {
-    public abstract class ManagerBase
+    public abstract class ManagerBase : IManager
     {
-        protected LoginInfo LoginInfo { get; }
+        [Inject]
+        public LoginInfo LoginInfo { get; set; }
 
         protected IAppSettingsManager ConfigurationManager { get; }
 
-        public ManagerBase(LoginInfo loginInfo, IAppSettingsManager configurationManager)
+        public ManagerBase(IAppSettingsManager configurationManager)
         {
-            LoginInfo = loginInfo;
             ConfigurationManager = configurationManager;
         }
         

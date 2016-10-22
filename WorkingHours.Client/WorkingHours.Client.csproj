@@ -63,6 +63,7 @@
     <Compile Include="Interfaces\IAppSettingsManager.cs" />
     <Compile Include="Interfaces\IAccountManager.cs" />
     <Compile Include="Interfaces\IIssueManager.cs" />
+    <Compile Include="Interfaces\IManager.cs" />
     <Compile Include="Interfaces\IProjectManager.cs" />
     <Compile Include="Interfaces\IUserManager.cs" />
     <Compile Include="IoC\ClientModule.cs" />

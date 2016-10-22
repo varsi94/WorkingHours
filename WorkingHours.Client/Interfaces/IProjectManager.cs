@@ -7,7 +7,7 @@ using WorkingHours.Shared.Dto;
 
 namespace WorkingHours.Client.Interfaces
 {
-    public interface IProjectManager
+    public interface IProjectManager : IManager
     {
         Task CreateAsync(ProjectHeader projectHeader);
 

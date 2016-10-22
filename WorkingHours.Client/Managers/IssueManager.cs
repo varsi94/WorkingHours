@@ -15,7 +15,7 @@ namespace WorkingHours.Client.Managers
 {
     public class IssueManager : ManagerBase, IIssueManager
     {
-        public IssueManager(LoginInfo loginInfo, IAppSettingsManager configurationManager) : base(loginInfo, configurationManager)
+        public IssueManager(IAppSettingsManager configurationManager) : base(configurationManager)
         {
         }
 

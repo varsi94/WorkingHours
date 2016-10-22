@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WorkingHours.Shared.Dto;
+using WorkingHours.Client.Model;
 
 namespace WorkingHours.Client.Interfaces
 {
-    public interface IIssueManager : IManager
+    public interface IManager
     {
-        Task CreateIssueForProject(int projectId, IssueHeader issue);
+        LoginInfo LoginInfo { get; set; }
     }
 }

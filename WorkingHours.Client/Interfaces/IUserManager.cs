@@ -8,7 +8,7 @@ using WorkingHours.Shared.Model;
 
 namespace WorkingHours.Client.Interfaces
 {
-    public interface IUserManager
+    public interface IUserManager : IManager
     {
         Task<PagedResult<UserHeaderDto>> ListUsersAsync(int? pageSize = null, int? pageIndex = null, string nameFilter = null);
 

@@ -15,7 +15,7 @@ namespace WorkingHours.Client.Managers
 {
     public class ProjectManager : ManagerBase, IProjectManager
     {
-        public ProjectManager(LoginInfo loginInfo, IAppSettingsManager configurationManager) : base(loginInfo, configurationManager)
+        public ProjectManager(IAppSettingsManager configurationManager) : base(configurationManager)
         {
         }
 

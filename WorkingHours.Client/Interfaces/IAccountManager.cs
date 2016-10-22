@@ -8,7 +8,7 @@ using WorkingHours.Shared.Dto;
 
 namespace WorkingHours.Client.Interfaces
 {
-    public interface IAccountManager
+    public interface IAccountManager : IManager
     {
         Task<bool> LoginAsync(string username, string password);
 

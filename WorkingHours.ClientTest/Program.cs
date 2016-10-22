@@ -14,11 +14,11 @@ namespace WorkingHours.ClientTest
         static void Main(string[] args)
         {
             var loginInfo = new LoginInfo();
-            var accountManager = new AccountManager(loginInfo, new AppSettingsManager());
+            var accountManager = new AccountManager(new AppSettingsManager()) { LoginInfo = loginInfo };
             accountManager.LoginAsync("varsi.marci", "123456").Wait();
 
-            var issueManager = new IssueManager(loginInfo, new AppSettingsManager());
-            issueManager.CreateIssueForProject(1, new IssueHeader() {Name ="Issue #2", Deadline = DateTime.UtcNow, Description = "This is created from client."}).Wait();
+            //var issueManager = new IssueManager(new AppSettingsManager()) {LoginInfo = loginInfo};
+            //issueManager.CreateIssueForProject(1, new IssueHeader() {Name ="Issue #2", Deadline = DateTime.UtcNow, Description = "This is created from client."}).Wait();
         }
     }
 }
