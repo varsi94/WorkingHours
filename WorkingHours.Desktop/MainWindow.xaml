@@ -10,6 +10,7 @@
         xmlns:behaviors="clr-namespace:WorkingHours.Desktop.Behaviors"
         xmlns:controls="clr-namespace:WorkingHours.Desktop.Controls"
         xmlns:mahapps="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
         mc:Ignorable="d"
         Title="Working hours"
         Height="483"
@@ -24,8 +25,14 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="3*" />
             </Grid.ColumnDefinitions>
-            
-            <ListView ItemsSource="{Binding MyProjects}" Grid.Row="1" Grid.Column="0">
+
+            <ListView ItemsSource="{Binding MyProjects}" Grid.Row="1" Grid.Column="0" x:Name="projectList">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <cmd:EventToCommand Command="{Binding ProjectSelectedCommand}"
+                                            CommandParameter="{Binding ElementName=projectList, Path=SelectedItem}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Name}" />
@@ -50,12 +57,16 @@
             </StackPanel>
             <TabControl Grid.Column="1" Grid.Row="1">
                 <TabControl.Items>
-                    <TabItem Header="User Handling"/>
-                    <TabItem Header="Issue Listing"/>
+                    <TabItem Visibility="{Binding Roles, Converter={StaticResource RoleToVisibilityConverter}}"
+                             Header="User Handling" >
+                    </TabItem>
+                    <TabItem Header="Issue Listing">
+                        <TextBlock Text="{Binding SelectedProject.Name}"></TextBlock>
+                    </TabItem>
                     <TabItem Visibility="{Binding Roles, Converter={StaticResource RoleToVisibilityConverter}}" 
                              Header="Issue Handling"/>
                 </TabControl.Items>
-            </TabControl>        
+            </TabControl>
         </Grid>
         <controls:LoginControl Visibility="{Binding IsLoginVisible, Converter={StaticResource BooleanToVisibilityConverter}}"
                                HorizontalAlignment="Center"
