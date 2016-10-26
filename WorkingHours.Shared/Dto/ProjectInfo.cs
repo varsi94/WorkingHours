@@ -8,6 +8,8 @@ namespace WorkingHours.Shared.Dto
 
         public List<IssueHeader> Issues { get; set; }
 
+        public bool IsActive { get; set; }
+
         public byte[] RowVersion { get; set; }
     }
 }
