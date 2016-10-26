@@ -48,11 +48,12 @@
                     <Button Grid.Column="1" Command="{Binding LogoutCommand}">Log out</Button>
                 </Grid>
             </StackPanel>
-            <TabControl>
+            <TabControl Grid.Column="1" Grid.Row="1">
                 <TabControl.Items>
                     <TabItem Header="User Handling"/>
                     <TabItem Header="Issue Listing"/>
-                    <TabItem Visibility="{Binding Roles}"  Header="Issue Handling"/>
+                    <TabItem Visibility="{Binding Roles, Converter={StaticResource RoleToVisibilityConverter}}" 
+                             Header="Issue Handling"/>
                 </TabControl.Items>
             </TabControl>        
         </Grid>

@@ -8,5 +8,5 @@
     <local:BooleanToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter"
                                         FalseValue="Visible"
                                         TrueValue="Collapsed" />
-    
+    <local:RoleToVisibilityConverter x:Key="RoleToVisibilityConverter" ManagerValue="Visible" EmployeeValue="Collapsed" />
 </ResourceDictionary>
