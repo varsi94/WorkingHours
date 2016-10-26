@@ -15,22 +15,47 @@
         Height="483"
         Width="774">
     <Grid DataContext="{ioc:ViewModel ViewModelType={x:Type vm:IMainViewModel}}">
-        <StackPanel Visibility="{Binding IsMainPageVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
-            <TextBlock Text="{Binding DisplayedName}"
-                       HorizontalAlignment="Right" />
-            <TextBlock Text="{Binding Email}"
-                       HorizontalAlignment="Right" />
-            <TextBlock Text="{Binding Roles}"
-                       HorizontalAlignment="Right" />
-        </StackPanel>
+        <Grid Visibility="{Binding IsMainPageVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="3*" />
+            </Grid.ColumnDefinitions>
+            
+            <ListView ItemsSource="{Binding MyProjects}" Grid.Row="1" Grid.Column="0">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Name}" />
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <StackPanel Grid.ColumnSpan="2" >
+                <TextBlock Text="{Binding DisplayedName}"
+                           HorizontalAlignment="Right" />
+                <TextBlock Text="{Binding Email}"
+                           HorizontalAlignment="Right" />
+                <TextBlock Text="{Binding Roles}"
+                           HorizontalAlignment="Right" />
+            </StackPanel>
+            <TabControl>
+                <TabControl.Items>
+                    <TabItem Header="User Handling"/>
+                    <TabItem Header="Issue Listing"/>
+                    <TabItem Visibility="{Binding Roles}"  Header="Issue Handling"/>
+                </TabControl.Items>
+            </TabControl>        
+        </Grid>
         <controls:LoginControl Visibility="{Binding IsLoginVisible, Converter={StaticResource BooleanToVisibilityConverter}}"
                                HorizontalAlignment="Center"
                                VerticalAlignment="Center"
-                               Width="300"/>
+                               Width="300" />
         <controls:SignUpControl Visibility="{Binding IsSignUpVisible, Converter={StaticResource BooleanToVisibilityConverter}}"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
-                                Width="300"/>
+                                Width="300" />
         <Grid Background="#AAC6C6C6"
               x:Name="LoadingGrid"
               x:FieldModifier="public"

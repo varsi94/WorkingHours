@@ -68,7 +68,7 @@ namespace WorkingHours.Client.Managers
                     LoginInfo.UserName = userDataResult.Username;
                     LoginInfo.Email = userDataResult.Email;
                     LoginInfo.FullName = userDataResult.FullName;
-                    LoginInfo.Role = (Roles)Enum.Parse(typeof(Roles), userDataResult.Role);
+                    LoginInfo.Role = (Roles?)Enum.Parse(typeof(Roles), userDataResult.Role);
                     return true;
                 }
 

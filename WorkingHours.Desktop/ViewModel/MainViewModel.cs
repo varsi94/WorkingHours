@@ -11,6 +11,8 @@ using WorkingHours.Client.Interfaces;
 using GalaSoft.MvvmLight.Messaging;
 using WorkingHours.Desktop.Common;
 using WorkingHours.Client.Model;
+using WorkingHours.Shared.Dto;
+using System.Collections.ObjectModel;
 
 namespace WorkingHours.Desktop.ViewModel
 {
@@ -18,7 +20,8 @@ namespace WorkingHours.Desktop.ViewModel
     {
         private readonly LoginInfo loginInfo;
         private readonly IAccountManager accountManager;
-        
+        private readonly IProjectManager projectmanager;
+
         private bool isMainPageVisible;
 
         public bool IsMainPageVisible
@@ -27,7 +30,7 @@ namespace WorkingHours.Desktop.ViewModel
 
             set { Set(ref isMainPageVisible, value); }
         }
-        
+
         private bool isSignUpVisible;
 
         public bool IsSignUpVisible
@@ -63,7 +66,7 @@ namespace WorkingHours.Desktop.ViewModel
         }
 
         public ICommand LogoutCommand { get; }
-        
+
         private string roles;
         public string Roles
         {
@@ -72,7 +75,14 @@ namespace WorkingHours.Desktop.ViewModel
             set { Set(ref roles, value); }
         }
         
-        public MainViewModel(LoginInfo loginInfo, IAccountManager accountManager)
+        private ObservableCollection<ProjectHeader> myProjects;
+        public ObservableCollection<ProjectHeader> MyProjects
+        {
+            get { return myProjects; }
+            set { Set(ref myProjects, value); }
+        }
+
+        public MainViewModel(LoginInfo loginInfo, IAccountManager accountManager, IProjectManager projectManager)
         {
             this.accountManager = accountManager;
             this.loginInfo = loginInfo;
@@ -82,6 +92,8 @@ namespace WorkingHours.Desktop.ViewModel
             IsLoginVisible = true;
 
             LogoutCommand = new RelayCommand(ExecuteLogoutCommand);
+
+            this.projectmanager = projectManager;
         }
 
         private void ExecuteStartSignUp(NotificationMessage obj)
@@ -96,11 +108,12 @@ namespace WorkingHours.Desktop.ViewModel
             IsSignUpVisible = false;
         }
 
-        private void UpdateUserData(NotificationMessage obj)
+        private async void UpdateUserData(NotificationMessage obj)
         {
             Roles = loginInfo.Role.ToString();
             DisplayedName = $"{loginInfo.FullName} ({loginInfo.UserName})";
             Email = loginInfo.Email;
+            MyProjects = new ObservableCollection<ProjectHeader>(await projectmanager.GetMyProjectsAsync());
             IsLoginVisible = false;
             IsMainPageVisible = true;
         }
