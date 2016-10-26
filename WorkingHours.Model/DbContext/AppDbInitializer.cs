@@ -38,12 +38,21 @@ namespace WorkingHours.Model.DbContext
                 UserName = "ecsedigergo"
             };
 
+            var testEmployee = new ApplicationUser
+            {
+                FullName = "Test employee",
+                Email = "test@gmail.com",
+                UserName = "testuser"
+            };
+
             context.UserManager.Create(ecsedi, "123456");
             context.UserManager.Create(varsi, "123456");
+            context.UserManager.Create(testEmployee, "123456");
             context.SaveChanges();
 
             context.UserManager.AddToRole(varsi.Id, Roles.Manager.ToString());
             context.UserManager.AddToRole(ecsedi.Id, Roles.Manager.ToString());
+            context.UserManager.AddToRole(testEmployee.Id, Roles.Employee.ToString());
             context.SaveChanges();
         }
     }

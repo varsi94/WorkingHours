@@ -122,6 +122,7 @@ namespace WorkingHours.Desktop.ViewModel
         {
             accountManager.Logout();
             IsLoginVisible = true;
+            IsMainPageVisible = false;
         }
     }
 }

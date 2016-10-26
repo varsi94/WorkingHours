@@ -24,8 +24,6 @@ namespace WorkingHours.Desktop.Behaviors
         public static readonly DependencyProperty BoundPasswordProperty =
             DependencyProperty.RegisterAttached("BoundPassword", typeof(string), typeof(PasswordBoxBinding), new FrameworkPropertyMetadata(null));
 
-
-
         public static bool GetIsPasswordBound(DependencyObject obj)
         {
             return (bool)obj.GetValue(IsPasswordBoundProperty);

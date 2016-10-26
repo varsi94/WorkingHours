@@ -68,6 +68,8 @@ namespace WorkingHours.Desktop.ViewModel
             else
             {
                 MessengerInstance.Send(new NotificationMessage(null), MessageTokens.LoginNotification);
+                UserName = string.Empty;
+                Password = string.Empty;
             }
             LoadingService.HideIndicator();
         }

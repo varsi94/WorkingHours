@@ -114,6 +114,7 @@ namespace WorkingHours.Desktop.ViewModel
                 LoadingService.ShowIndicator("Signing up...");
                 await AccountManager.SignUpAsync(signUp);
                 MessengerInstance.Send(new NotificationMessage(null), MessageTokens.SignUpCompleted);
+                Clear();
             }
             catch (ModelStateException)
             {
@@ -127,6 +128,15 @@ namespace WorkingHours.Desktop.ViewModel
             {
                 LoadingService.HideIndicator();
             }
+        }
+
+        private void Clear()
+        {
+            UserName = string.Empty;
+            Password = string.Empty;
+            Email = string.Empty;
+            FullName = string.Empty;
+            PasswordConfirmed = string.Empty;
         }
 
         protected override void FillInProperties()
