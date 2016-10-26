@@ -96,6 +96,7 @@
     </Compile>
     <Compile Include="Converters\BooleanConverter.cs" />
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
+    <Compile Include="Converters\RoleToVisibilityConverter.cs" />
     <Compile Include="Interfaces\Services\IDialogService.cs" />
     <Compile Include="Interfaces\ViewModels\IMainViewModel.cs" />
     <Compile Include="Interfaces\ViewModels\ISignUpViewModel.cs" />

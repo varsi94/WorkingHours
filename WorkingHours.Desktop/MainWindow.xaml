@@ -40,11 +40,12 @@
                 <TextBlock Text="{Binding Roles}"
                            HorizontalAlignment="Right" />
             </StackPanel>
-            <TabControl>
+            <TabControl Grid.Column="1" Grid.Row="1">
                 <TabControl.Items>
                     <TabItem Header="User Handling"/>
                     <TabItem Header="Issue Listing"/>
-                    <TabItem Visibility="{Binding Roles}"  Header="Issue Handling"/>
+                    <TabItem Visibility="{Binding Roles, Converter={StaticResource RoleToVisibilityConverter}}" 
+                             Header="Issue Handling"/>
                 </TabControl.Items>
             </TabControl>        
         </Grid>
