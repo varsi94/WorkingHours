@@ -25,6 +25,8 @@ namespace WorkingHours.Model
 
         public int RoleId { get; set; }
 
+        public bool IsActive { get; set; }
+
         [Timestamp]
         public byte[] RowVersion { get; set; }
     }
