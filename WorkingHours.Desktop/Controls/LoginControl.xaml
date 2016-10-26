@@ -21,7 +21,7 @@
         <TextBlock Margin="10">Password:</TextBlock>
         <PasswordBox Margin="10"
                      behaviors:PasswordBoxBinding.IsPasswordBound="True"
-                     behaviors:PasswordBoxBinding.BoundPassword="{Binding Path=Password, Mode=OneWayToSource}" />
+                     behaviors:PasswordBoxBinding.BoundPassword="{Binding Path=Password, Mode=TwoWay}" />
         <Button Command="{Binding LoginCommand}"
                 Margin="10">Log in!</Button>
         <Button Command="{Binding SignUpCommand}"

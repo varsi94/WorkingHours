@@ -10,6 +10,7 @@ namespace WorkingHours.Desktop.Behaviors
 {
     public static class PasswordBoxBinding
     {
+        private static bool IsChangedFromCode = false;
         public static string GetBoundPassword(DependencyObject obj)
         {
             return (string)obj.GetValue(BoundPasswordProperty);
@@ -17,12 +18,22 @@ namespace WorkingHours.Desktop.Behaviors
 
         public static void SetBoundPassword(DependencyObject obj, string value)
         {
+            IsChangedFromCode = true;
             obj.SetValue(BoundPasswordProperty, value);
+            IsChangedFromCode = false;
         }
 
         // Using a DependencyProperty as the backing store for BoundPassword.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty BoundPasswordProperty =
-            DependencyProperty.RegisterAttached("BoundPassword", typeof(string), typeof(PasswordBoxBinding), new FrameworkPropertyMetadata(null));
+            DependencyProperty.RegisterAttached("BoundPassword", typeof(string), typeof(PasswordBoxBinding), new FrameworkPropertyMetadata(BoundPasswordChanged));
+
+        private static void BoundPasswordChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (!IsChangedFromCode)
+            {
+                ((PasswordBox) d).Password = (string)e.NewValue;
+            }
+        }
 
         public static bool GetIsPasswordBound(DependencyObject obj)
         {
