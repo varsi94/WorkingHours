@@ -27,5 +27,7 @@ namespace WorkingHours.Desktop.Interfaces.ViewModels
         ObservableCollection<ProjectHeader> MyProjects { get; set; }
 
         ICommand LogoutCommand { get; }
+
+        ICommand ChangePasswordCommand { get; }
     }
 }

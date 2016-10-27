@@ -44,7 +44,7 @@
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
-                    <Button Grid.Column="0" Margin="0 0 10 0">Change password</Button>
+                    <Button Grid.Column="0" Margin="0 0 10 0" Command="{Binding ChangePasswordCommand}">Change password</Button>
                     <Button Grid.Column="1" Command="{Binding LogoutCommand}">Log out</Button>
                 </Grid>
             </StackPanel>

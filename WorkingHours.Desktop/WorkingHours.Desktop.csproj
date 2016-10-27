@@ -88,6 +88,9 @@
     <Compile Include="Behaviors\PasswordBoxBinding.cs" />
     <Compile Include="Common\MessageTokens.cs" />
     <Compile Include="Common\ValidatableViewModelBase.cs" />
+    <Compile Include="Controls\ChangePasswordControl.xaml.cs">
+      <DependentUpon>ChangePasswordControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\LoginControl.xaml.cs">
       <DependentUpon>LoginControl.xaml</DependentUpon>
     </Compile>
@@ -97,14 +100,25 @@
     <Compile Include="Converters\BooleanConverter.cs" />
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\RoleToVisibilityConverter.cs" />
+    <Compile Include="Dialogs\DialogWindow.xaml.cs">
+      <DependentUpon>DialogWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\DialogWrapper.cs" />
+    <Compile Include="Interfaces\IDialogWrapper.cs" />
     <Compile Include="Interfaces\Services\IDialogService.cs" />
+    <Compile Include="Interfaces\ViewModels\IChangePasswordViewModel.cs" />
     <Compile Include="Interfaces\ViewModels\IMainViewModel.cs" />
     <Compile Include="Interfaces\ViewModels\ISignUpViewModel.cs" />
     <Compile Include="Services\DialogService.cs" />
     <Compile Include="Interfaces\Services\ILoadingService.cs" />
+    <Compile Include="ViewModel\ChangePasswordViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\SignUpViewModel.cs" />
+    <Page Include="Controls\ChangePasswordControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\LoginControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -114,6 +128,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Converters\Converters.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\DialogWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

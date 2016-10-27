@@ -13,14 +13,18 @@ using WorkingHours.Desktop.Common;
 using WorkingHours.Client.Model;
 using WorkingHours.Shared.Dto;
 using System.Collections.ObjectModel;
+using WorkingHours.Desktop.Interfaces.Services;
+using WorkingHours.Client.Exceptions;
 
 namespace WorkingHours.Desktop.ViewModel
 {
     public class MainViewModel : ViewModelBase, IMainViewModel
     {
+        private readonly ILoadingService loadingService;
         private readonly LoginInfo loginInfo;
         private readonly IAccountManager accountManager;
         private readonly IProjectManager projectmanager;
+        private readonly IDialogService dialogService;
 
         private bool isMainPageVisible;
 
@@ -82,18 +86,46 @@ namespace WorkingHours.Desktop.ViewModel
             set { Set(ref myProjects, value); }
         }
 
-        public MainViewModel(LoginInfo loginInfo, IAccountManager accountManager, IProjectManager projectManager)
+        public ICommand ChangePasswordCommand { get; }
+
+        public MainViewModel(LoginInfo loginInfo, IAccountManager accountManager, IProjectManager projectManager,
+            IDialogService dialogService, ILoadingService loadingService)
         {
             this.accountManager = accountManager;
             this.loginInfo = loginInfo;
+            this.loadingService = loadingService;
             MessengerInstance.Register<NotificationMessage>(this, MessageTokens.LoginNotification, UpdateUserData);
             MessengerInstance.Register<NotificationMessage>(this, MessageTokens.SignUpCompleted, ExecuteSignUpCompleted);
             MessengerInstance.Register<NotificationMessage>(this, MessageTokens.StartSignUp, ExecuteStartSignUp);
             IsLoginVisible = true;
 
             LogoutCommand = new RelayCommand(ExecuteLogoutCommand);
+            ChangePasswordCommand = new RelayCommand(ExecuteChangePasswordCommand);
 
             this.projectmanager = projectManager;
+            this.dialogService = dialogService;
+        }
+
+        private async void ExecuteChangePasswordCommand()
+        {
+            var result = await dialogService.ShowPasswordChangeDialogAsync();
+            if (result != null)
+            {
+                try
+                {
+                    loadingService.ShowIndicator("Changing password...");
+                    await accountManager.ChangePasswordAsync(result);
+                }
+                catch (ServerException e)
+                {
+                    dialogService.ShowError("Error occured!", e.Message);
+                    await dialogService.ShowPasswordChangeDialogAsync(result);
+                }
+                finally
+                {
+                    loadingService.HideIndicator();
+                }
+            }
         }
 
         private void ExecuteStartSignUp(NotificationMessage obj)

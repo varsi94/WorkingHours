@@ -23,7 +23,8 @@
                      behaviors:PasswordBoxBinding.IsPasswordBound="True"
                      behaviors:PasswordBoxBinding.BoundPassword="{Binding Path=Password, Mode=TwoWay}" />
         <Button Command="{Binding LoginCommand}"
-                Margin="10">Log in!</Button>
+                Margin="10"
+                IsDefault="True">Log in!</Button>
         <Button Command="{Binding SignUpCommand}"
                 Margin="10">Sign up!</Button>
     </StackPanel>
