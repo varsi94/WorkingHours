@@ -29,5 +29,7 @@ namespace WorkingHours.Desktop.Interfaces.ViewModels
         ICommand LogoutCommand { get; }
 
         ICommand ChangePasswordCommand { get; }
+
+        ICommand ProjectSelectedCommand { get; }
     }
 }

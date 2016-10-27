@@ -78,7 +78,7 @@ namespace WorkingHours.Desktop.ViewModel
 
             set { Set(ref roles, value); }
         }
-        
+
         private ObservableCollection<ProjectHeader> myProjects;
         public ObservableCollection<ProjectHeader> MyProjects
         {
@@ -86,6 +86,16 @@ namespace WorkingHours.Desktop.ViewModel
             set { Set(ref myProjects, value); }
         }
 
+        private ProjectInfo selectedProject;
+        public ProjectInfo SelectedProject
+        {
+            get { return selectedProject; }
+            set { Set(ref selectedProject, value); }
+        }
+
+        public ICommand ProjectSelectedCommand { get; }
+
+        public MainViewModel(LoginInfo loginInfo, IAccountManager accountManager, IProjectManager projectManager)
         public ICommand ChangePasswordCommand { get; }
 
         public MainViewModel(LoginInfo loginInfo, IAccountManager accountManager, IProjectManager projectManager,
@@ -101,6 +111,7 @@ namespace WorkingHours.Desktop.ViewModel
 
             LogoutCommand = new RelayCommand(ExecuteLogoutCommand);
             ChangePasswordCommand = new RelayCommand(ExecuteChangePasswordCommand);
+            ProjectSelectedCommand = new RelayCommand<ProjectHeader>(ExecuteProjectSelectedCommand);
 
             this.projectmanager = projectManager;
             this.dialogService = dialogService;
@@ -126,6 +137,11 @@ namespace WorkingHours.Desktop.ViewModel
                     loadingService.HideIndicator();
                 }
             }
+        }
+
+        private async void ExecuteProjectSelectedCommand(ProjectHeader obj)
+        {
+            SelectedProject = await projectmanager.GetProjectAsync(obj.Id);
         }
 
         private void ExecuteStartSignUp(NotificationMessage obj)
