@@ -133,7 +133,6 @@ namespace WorkingHours.Desktop.ViewModel
                 catch (ServerException e)
                 {
                     dialogService.ShowError("Error occured!", e.Message);
-                    await dialogService.ShowPasswordChangeDialogAsync(result);
                 }
                 finally
                 {

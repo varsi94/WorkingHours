@@ -19,7 +19,7 @@ namespace WorkingHours.Desktop.Services
             MessageBox.Show(message, title, MessageBoxButton.OK, MessageBoxImage.Error);
         }
 
-        public async Task<PasswordChangeModel> ShowPasswordChangeDialogAsync(PasswordChangeModel input = null)
+        public async Task<PasswordChangeModel> ShowPasswordChangeDialogAsync()
         {
             var dialogWrapper = new DialogWrapper<ChangePasswordControl, IChangePasswordViewModel>("Change password", 500, 280);
             var result = await dialogWrapper.ShowDialogAsync();
