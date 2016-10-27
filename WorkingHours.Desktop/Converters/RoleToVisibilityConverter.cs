@@ -16,7 +16,7 @@ namespace WorkingHours.Desktop.Converters
         public Visibility EmployeeValue { get; set; }
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if ((string)value == Roles.Manager.ToString())
+            if ((Roles)value == Roles.Manager)
             {
                 return ManagerValue;
             }

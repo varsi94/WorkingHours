@@ -18,6 +18,8 @@ namespace WorkingHours.Desktop.Interfaces.ViewModels
 
         bool IsSignUpVisible { get; set; }
 
+        bool IsProjectControlVisible { get; set; }
+
         string DisplayedName { get; set; }
 
         string Roles { get; set; }

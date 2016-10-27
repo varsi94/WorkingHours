@@ -60,7 +60,8 @@ namespace WorkingHours.Web.Controllers
                 Email = User.Identity.GetEmail(),
                 FullName = User.Identity.GetFullName(),
                 Username = User.Identity.Name,
-                Role = User.Identity.GetRoles().Single()
+                Role = User.Identity.GetRoles().Single(),
+                Id = User.Identity.GetUserId()
             };
             return Ok(result);
         }

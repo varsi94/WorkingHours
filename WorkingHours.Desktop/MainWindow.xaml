@@ -55,18 +55,9 @@
                     <Button Grid.Column="1" Command="{Binding LogoutCommand}">Log out</Button>
                 </Grid>
             </StackPanel>
-            <TabControl Grid.Column="1" Grid.Row="1">
-                <TabControl.Items>
-                    <TabItem Visibility="{Binding Roles, Converter={StaticResource RoleToVisibilityConverter}}"
-                             Header="User Handling" >
-                    </TabItem>
-                    <TabItem Header="Issue Listing">
-                        <TextBlock Text="{Binding SelectedProject.Name}"></TextBlock>
-                    </TabItem>
-                    <TabItem Visibility="{Binding Roles, Converter={StaticResource RoleToVisibilityConverter}}" 
-                             Header="Issue Handling"/>
-                </TabControl.Items>
-            </TabControl>
+            <controls:ProjectControl Grid.Column="1"
+                                     Grid.Row="1"
+                                     Visibility="{Binding IsProjectControlVisible, Converter={StaticResource BooleanToVisibilityConverter}}"/>
         </Grid>
         <controls:LoginControl Visibility="{Binding IsLoginVisible, Converter={StaticResource BooleanToVisibilityConverter}}"
                                HorizontalAlignment="Center"

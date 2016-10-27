@@ -11,6 +11,8 @@ namespace WorkingHours.Client.Model
     {
         public bool IsLoggedIn { get; internal set; }
 
+        public int? Id { get; set; }
+
         public string UserName { get; internal set; }
         
         public string Email { get; internal set; }

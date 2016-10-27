@@ -69,6 +69,7 @@ namespace WorkingHours.Client.Managers
                     LoginInfo.Email = userDataResult.Email;
                     LoginInfo.FullName = userDataResult.FullName;
                     LoginInfo.Role = (Roles?)Enum.Parse(typeof(Roles), userDataResult.Role);
+                    LoginInfo.Id = userDataResult.Id;
                     return true;
                 }
 
@@ -89,6 +90,7 @@ namespace WorkingHours.Client.Managers
             LoginInfo.Token = null;
             LoginInfo.Email = null;
             LoginInfo.Role = null;
+            LoginInfo.Id = null;
         }
 
         public async Task SignUpAsync(SignUpModel request)

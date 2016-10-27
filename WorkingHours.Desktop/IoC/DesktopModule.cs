@@ -33,6 +33,7 @@ namespace WorkingHours.Desktop.IoC
             Bind<IMainViewModel>().To<MainViewModel>().InTransientScope();
             Bind<ISignUpViewModel>().To<SignUpViewModel>().InTransientScope();
             Bind<IChangePasswordViewModel>().To<ChangePasswordViewModel>().InTransientScope();
+            Bind<IProjectViewModel>().To<ProjectViewModel>().InTransientScope();
         }
     }
 }

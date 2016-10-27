@@ -27,12 +27,23 @@ namespace WorkingHours.Desktop.ViewModel
         private readonly IDialogService dialogService;
 
         private bool isMainPageVisible;
+        private ProjectHeader selectedProject;
 
         public bool IsMainPageVisible
         {
             get { return isMainPageVisible; }
 
             set { Set(ref isMainPageVisible, value); }
+        }
+
+
+        private bool isProjectControlVisible;
+
+        public bool IsProjectControlVisible
+        {
+            get { return isProjectControlVisible; }
+
+            set { Set(ref isProjectControlVisible, value); }
         }
 
         private bool isSignUpVisible;
@@ -86,13 +97,6 @@ namespace WorkingHours.Desktop.ViewModel
             set { Set(ref myProjects, value); }
         }
 
-        private ProjectInfo selectedProject;
-        public ProjectInfo SelectedProject
-        {
-            get { return selectedProject; }
-            set { Set(ref selectedProject, value); }
-        }
-
         public ICommand ProjectSelectedCommand { get; }
 
         public ICommand ChangePasswordCommand { get; }
@@ -138,9 +142,12 @@ namespace WorkingHours.Desktop.ViewModel
             }
         }
 
-        private async void ExecuteProjectSelectedCommand(ProjectHeader obj)
+        private void ExecuteProjectSelectedCommand(ProjectHeader obj)
         {
-            SelectedProject = await projectmanager.GetProjectAsync(obj.Id);
+            selectedProject = obj;
+            IsProjectControlVisible = obj != null;
+            MessengerInstance.Send(new NotificationMessage<ProjectHeader>(obj, null),
+                MessageTokens.CurrentProjectChanged);
         }
 
         private void ExecuteStartSignUp(NotificationMessage obj)
