@@ -95,7 +95,6 @@ namespace WorkingHours.Desktop.ViewModel
 
         public ICommand ProjectSelectedCommand { get; }
 
-        public MainViewModel(LoginInfo loginInfo, IAccountManager accountManager, IProjectManager projectManager)
         public ICommand ChangePasswordCommand { get; }
 
         public MainViewModel(LoginInfo loginInfo, IAccountManager accountManager, IProjectManager projectManager,
