@@ -34,7 +34,7 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <TextBlock VerticalAlignment="Center"
-                       Margin="10">Search:</TextBlock>
+                       Margin="10">Search by name or username:</TextBlock>
             <TextBox Grid.Column="1"
                      Text="{Binding Keyword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                      VerticalAlignment="Center"
@@ -42,7 +42,7 @@
             <Button Command="{Binding SearchCommand}"
                     Grid.Column="2"
                     VerticalAlignment="Center"
-                    Padding="10"
+                    Padding="10 5 10 5"
                     Margin="10">Search!</Button>
             <StackPanel Orientation="Horizontal"
                         HorizontalAlignment="Right"
@@ -51,10 +51,12 @@
                            Margin="10">Pages: <TextBlock Text="{Binding PageCount}" /></TextBlock>
                 <Button Command="{Binding PreviousCommand}"
                         Margin="10"
-                        Padding="10">Previous</Button>
+                        Padding="10 5 10 5"
+                        Width="70">Previous</Button>
                 <Button Command="{Binding NextCommand}"
                         Margin="10"
-                        Padding="10">Next</Button>
+                        Padding="10 5 10 5"
+                        Width="70">Next</Button>
             </StackPanel>
         </Grid>
         <DataGrid Grid.Row="2"

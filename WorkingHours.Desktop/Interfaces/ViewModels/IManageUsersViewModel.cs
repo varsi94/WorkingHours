@@ -29,8 +29,6 @@ namespace WorkingHours.Desktop.Interfaces.ViewModels
 
         ObservableCollection<UserViewModel> UsersShown { get; set; }
 
-        ObservableCollection<KeyValuePair<int, Roles>> RolesToUpdateDict { get; set; }
-
         string Keyword { get; set; }
 
         int PageCount { get; set; }

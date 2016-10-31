@@ -48,14 +48,7 @@ namespace WorkingHours.Desktop.ViewModel
 
         public ICloseable Window { get; set; }
         
-        private ObservableCollection<KeyValuePair<int, Roles>> rolesToUpdateDict;
-
-        public ObservableCollection<KeyValuePair<int, Roles>> RolesToUpdateDict
-        {
-            get { return rolesToUpdateDict; }
-
-            set { Set(ref rolesToUpdateDict, value); }
-        }
+        private Dictionary<int, Roles> rolesToUpdateDict;
 
         public ICommand SaveChangesCommand { get; }
         
@@ -83,11 +76,11 @@ namespace WorkingHours.Desktop.ViewModel
             NextCommand = new RelayCommand(ExecuteNextCommand, () => PageCount > pageIndex);
             PreviousCommand = new RelayCommand(ExecutePreviousCommand, () => pageIndex > 1);
             SearchCommand = new RelayCommand(ExecuteSearchCommand);
-            SaveChangesCommand = new RelayCommand(ExecuteSaveChangesCommand);
+            SaveChangesCommand = new RelayCommand(ExecuteSaveChangesCommand, () => rolesToUpdateDict.Count != 0);
             CancelCommand = new RelayCommand(ExecuteCancelCommand);
             ChangeRoleCommand = new RelayCommand<RoleChangedModel>(ExecuteChangeRoleCommand);
 
-            RolesToUpdateDict = new ObservableCollection<KeyValuePair<int, Roles>>();
+            rolesToUpdateDict = new Dictionary<int, Roles>();
         }
 
         private void ExecuteChangeRoleCommand(RoleChangedModel obj)
@@ -98,12 +91,12 @@ namespace WorkingHours.Desktop.ViewModel
             }
 
             changedFromVM = true;
-            bool isAny = RolesToUpdateDict.Any(x => x.Key == obj.User.Id);
+            bool isAny = rolesToUpdateDict.Any(x => x.Key == obj.User.Id);
             if (isAny)
             {
-                var item = RolesToUpdateDict.Single(x => x.Key == obj.User.Id);
+                var item = rolesToUpdateDict.Single(x => x.Key == obj.User.Id);
                 UsersShown.Single(x => x.Id == obj.User.Id).Role = obj.NewRole;
-                RolesToUpdateDict.Remove(item);
+                rolesToUpdateDict.Remove(item.Key);
                 obj.User.IsChanged = !obj.User.IsChanged;
                 obj.User.Role = obj.NewRole;
             }
@@ -113,7 +106,7 @@ namespace WorkingHours.Desktop.ViewModel
                 var currentRole = UsersShown.Single(x => x.Id == obj.User.Id).Role;
                 if (currentRole != newRole)
                 {
-                    RolesToUpdateDict.Add(new KeyValuePair<int, Roles>(obj.User.Id, newRole));
+                    rolesToUpdateDict.Add(obj.User.Id, newRole);
                     obj.User.IsChanged = !obj.User.IsChanged;
                     obj.User.Role = obj.NewRole;
                 }
@@ -130,7 +123,7 @@ namespace WorkingHours.Desktop.ViewModel
         {
             try
             {
-                await userManager.UpdateRolesAsync(RolesToUpdateDict.ToDictionary(x => x.Key, x => x.Value));
+                await userManager.UpdateRolesAsync(rolesToUpdateDict);
                 Window.Close();
             }
             catch (InvalidOperationException e)
@@ -141,7 +134,7 @@ namespace WorkingHours.Desktop.ViewModel
 
         private async void ExecuteSearchCommand()
         {
-            RolesToUpdateDict.Clear();
+            rolesToUpdateDict.Clear();
             await UpdateUserList(Keyword, 1);
         }
 
@@ -159,10 +152,10 @@ namespace WorkingHours.Desktop.ViewModel
             (NextCommand as RelayCommand).RaiseCanExecuteChanged();
             (PreviousCommand as RelayCommand).RaiseCanExecuteChanged();
 
-            foreach (var user in UsersShown.Where(x => RolesToUpdateDict.Any(y => y.Key == x.Id)))
+            foreach (var user in UsersShown.Where(x => rolesToUpdateDict.Any(y => y.Key == x.Id)))
             {
                 user.IsChanged = true;
-                user.Role = RolesToUpdateDict.Single(x => x.Key == user.Id).Value;
+                user.Role = rolesToUpdateDict.Single(x => x.Key == user.Id).Value;
             }
         }
 
