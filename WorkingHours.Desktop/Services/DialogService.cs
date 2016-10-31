@@ -14,6 +14,12 @@ namespace WorkingHours.Desktop.Services
 {
     public class DialogService : IDialogService
     {
+        public async Task<INewProjectViewModel> ShowAddProjectDialogAsync()
+        {
+            var dialogWrapper = new DialogWrapper<AddProjectControl, INewProjectViewModel>("Add new project", 500, 280);
+            return await dialogWrapper.ShowDialogAsync();
+        }
+
         public void ShowError(string title, string message)
         {
             MessageBox.Show(message, title, MessageBoxButton.OK, MessageBoxImage.Error);

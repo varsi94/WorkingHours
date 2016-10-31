@@ -129,9 +129,29 @@ namespace WorkingHours.Desktop.ViewModel
             this.dialogService = dialogService;
         }
 
-        private void ExecuteAddProjectCommand()
+        private async void ExecuteAddProjectCommand()
         {
-
+            var result = await dialogService.ShowAddProjectDialogAsync();
+            if (result == null) return;
+            try
+            {
+                loadingService.ShowIndicator("Creating project...");
+                await projectmanager.CreateAsync(new ProjectHeader
+                {
+                    Name = result.Name,
+                    Deadline = result.Deadline,
+                    IsClosed = false
+                });
+                ExecuteRefreshCommand();
+            }
+            catch (ServerException)
+            {
+                dialogService.ShowError("Error occured", "Internal server error occured while creating project!");
+            }
+            finally
+            {
+                loadingService.HideIndicator();
+            }
         }
 
         private async void ExecuteRefreshCommand()

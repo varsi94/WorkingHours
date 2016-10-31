@@ -26,7 +26,8 @@ namespace WorkingHours.Bll.Managers
             {
                 UserId = managerId,
                 Project = project,
-                Role = UoW.Roles.GetRole(Roles.Manager)
+                Role = UoW.Roles.GetRole(Roles.Manager),
+                IsActive = true
             };
             project.AssociatedMembers.Add(association);
             UoW.Projects.Add(project);
