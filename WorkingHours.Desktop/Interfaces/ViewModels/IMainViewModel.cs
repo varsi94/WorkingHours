@@ -36,5 +36,9 @@ namespace WorkingHours.Desktop.Interfaces.ViewModels
         ICommand ProjectSelectedCommand { get; }
 
         ICommand ShowManageUsersCommand { get; }
+
+        ICommand RefreshCommand { get; }
+
+        ICommand AddCommand { get; }
     }
 }

@@ -103,6 +103,10 @@ namespace WorkingHours.Desktop.ViewModel
 
         public ICommand ShowManageUsersCommand { get; }
 
+        public ICommand RefreshCommand { get; }
+
+        public ICommand AddCommand { get; }
+
         public MainViewModel(LoginInfo loginInfo, IAccountManager accountManager, IProjectManager projectManager,
             IDialogService dialogService, ILoadingService loadingService)
         {
@@ -118,9 +122,23 @@ namespace WorkingHours.Desktop.ViewModel
             ChangePasswordCommand = new RelayCommand(ExecuteChangePasswordCommand);
             ProjectSelectedCommand = new RelayCommand<ProjectHeader>(ExecuteProjectSelectedCommand);
             ShowManageUsersCommand = new RelayCommand(ExecuteShowManageUsersCommand);
+            RefreshCommand = new RelayCommand(ExecuteRefreshCommand);
+            AddCommand = new RelayCommand(ExecuteAddProjectCommand);
 
             this.projectmanager = projectManager;
             this.dialogService = dialogService;
+        }
+
+        private void ExecuteAddProjectCommand()
+        {
+
+        }
+
+        private async void ExecuteRefreshCommand()
+        {
+            loadingService.ShowIndicator("Refresh projects...");
+            MyProjects = new ObservableCollection<ProjectHeader>(await projectmanager.GetMyProjectsAsync());
+            loadingService.HideIndicator();
         }
 
         private void ExecuteShowManageUsersCommand()

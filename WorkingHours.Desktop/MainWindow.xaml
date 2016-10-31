@@ -27,19 +27,50 @@
                 <ColumnDefinition Width="3*" />
             </Grid.ColumnDefinitions>
 
-            <ListView ItemsSource="{Binding MyProjects}" Grid.Row="1" Grid.Column="0" x:Name="projectList">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="SelectionChanged">
-                        <cmd:EventToCommand Command="{Binding ProjectSelectedCommand}"
-                                            CommandParameter="{Binding ElementName=projectList, Path=SelectedItem}" />
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding Name}" />
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+            <Grid Grid.Row="1"
+                  Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Right">
+                    <Button Command="{Binding AddCommand}"
+                            BorderThickness="0"
+                            Background="White"
+                            Cursor="Hand">
+                        <Image Source="Assets/add.png"
+                               Width="30"
+                               RenderOptions.BitmapScalingMode="HighQuality"
+                               Height="30" />
+                    </Button>
+                    <Button Command="{Binding RefreshCommand}"
+                            BorderThickness="0"
+                            Background="White"
+                            Cursor="Hand">
+                        <Image Source="Assets/refresh.png"
+                               RenderOptions.BitmapScalingMode="HighQuality"
+                               Width="30"
+                               Height="30" />
+                    </Button>
+                </StackPanel>
+                <ListView ItemsSource="{Binding MyProjects}"
+                          Grid.Row="1"
+                          Grid.Column="0"
+                          x:Name="projectList">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <cmd:EventToCommand Command="{Binding ProjectSelectedCommand}"
+                                                CommandParameter="{Binding ElementName=projectList, Path=SelectedItem}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Name}" />
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
             <StackPanel Grid.ColumnSpan="2" Margin="10" Width="350" HorizontalAlignment="Right">
                 <TextBlock Text="{Binding DisplayedName}"
                            HorizontalAlignment="Right" />
