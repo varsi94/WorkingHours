@@ -36,6 +36,7 @@
                 <StackPanel Orientation="Horizontal"
                             HorizontalAlignment="Right">
                     <Button Command="{Binding AddCommand}"
+                            Visibility="{Binding Role, Converter={StaticResource RoleToVisibilityConverter}}"
                             BorderThickness="0"
                             Background="White"
                             Cursor="Hand">
