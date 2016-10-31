@@ -19,6 +19,12 @@ namespace WorkingHours.Desktop.Services
             MessageBox.Show(message, title, MessageBoxButton.OK, MessageBoxImage.Error);
         }
 
+        public void ShowManageUsersWindow()
+        {
+            var window = new ManageUsersWindow();
+            window.Show();
+        }
+
         public async Task<PasswordChangeModel> ShowPasswordChangeDialogAsync()
         {
             var dialogWrapper = new DialogWrapper<ChangePasswordControl, IChangePasswordViewModel>("Change password", 500, 280);

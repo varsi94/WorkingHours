@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using WorkingHours.Desktop.Interfaces.ViewModels;
 using WorkingHours.Shared.Dto;
+using WorkingHours.Shared.Model;
 
 namespace WorkingHours.Desktop.Interfaces.ViewModels
 {
@@ -22,7 +23,7 @@ namespace WorkingHours.Desktop.Interfaces.ViewModels
 
         string DisplayedName { get; set; }
 
-        string Roles { get; set; }
+        Roles Role { get; set; }
 
         string Email { get; set; }
 
@@ -33,5 +34,7 @@ namespace WorkingHours.Desktop.Interfaces.ViewModels
         ICommand ChangePasswordCommand { get; }
 
         ICommand ProjectSelectedCommand { get; }
+
+        ICommand ShowManageUsersCommand { get; }
     }
 }

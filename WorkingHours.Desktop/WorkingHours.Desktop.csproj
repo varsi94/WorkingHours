@@ -105,24 +105,34 @@
     </Compile>
     <Compile Include="Converters\BooleanConverter.cs" />
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
+    <Compile Include="Converters\RoleChangedEventArgsConverter.cs" />
     <Compile Include="Converters\RoleToVisibilityConverter.cs" />
     <Compile Include="Dialogs\DialogWindow.xaml.cs">
       <DependentUpon>DialogWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\DialogWrapper.cs" />
+    <Compile Include="Dialogs\ManageUsersWindow.xaml.cs">
+      <DependentUpon>ManageUsersWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Interfaces\ICloseable.cs" />
     <Compile Include="Interfaces\IDialogWrapper.cs" />
     <Compile Include="Interfaces\Services\IDialogService.cs" />
     <Compile Include="Interfaces\ViewModels\IChangePasswordViewModel.cs" />
+    <Compile Include="Interfaces\ViewModels\ILoadAwareViewModel.cs" />
     <Compile Include="Interfaces\ViewModels\IMainViewModel.cs" />
+    <Compile Include="Interfaces\ViewModels\IManageUsersViewModel.cs" />
     <Compile Include="Interfaces\ViewModels\IProjectViewModel.cs" />
     <Compile Include="Interfaces\ViewModels\ISignUpViewModel.cs" />
+    <Compile Include="Model\RoleChangedModel.cs" />
     <Compile Include="Services\DialogService.cs" />
     <Compile Include="Interfaces\Services\ILoadingService.cs" />
     <Compile Include="ViewModel\ChangePasswordViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\ManageUsersViewModel.cs" />
     <Compile Include="ViewModel\ProjectViewModel.cs" />
     <Compile Include="ViewModel\SignUpViewModel.cs" />
+    <Compile Include="ViewModel\UserViewModel.cs" />
     <Page Include="Controls\ChangePasswordControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -144,6 +154,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Dialogs\DialogWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\ManageUsersWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using WorkingHours.Shared.Model;
 
 namespace WorkingHours.Shared.Dto
@@ -19,6 +20,13 @@ namespace WorkingHours.Shared.Dto
         {
             get { return role.ToString(); }
             set { role = (Roles)Enum.Parse(typeof(Roles), value); }
+        }
+
+        [JsonIgnore]
+        public Roles RoleAsEnum
+        {
+            get { return role; }
+            set { role = value; }
         }
     }
 }

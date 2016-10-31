@@ -15,6 +15,7 @@ using WorkingHours.Shared.Dto;
 using System.Collections.ObjectModel;
 using WorkingHours.Desktop.Interfaces.Services;
 using WorkingHours.Client.Exceptions;
+using WorkingHours.Shared.Model;
 
 namespace WorkingHours.Desktop.ViewModel
 {
@@ -35,8 +36,7 @@ namespace WorkingHours.Desktop.ViewModel
 
             set { Set(ref isMainPageVisible, value); }
         }
-
-
+        
         private bool isProjectControlVisible;
 
         public bool IsProjectControlVisible
@@ -82,12 +82,12 @@ namespace WorkingHours.Desktop.ViewModel
 
         public ICommand LogoutCommand { get; }
 
-        private string roles;
-        public string Roles
+        private Roles role;
+        public Roles Role
         {
-            get { return roles; }
+            get { return role; }
 
-            set { Set(ref roles, value); }
+            set { Set(ref role, value); }
         }
 
         private ObservableCollection<ProjectHeader> myProjects;
@@ -100,6 +100,8 @@ namespace WorkingHours.Desktop.ViewModel
         public ICommand ProjectSelectedCommand { get; }
 
         public ICommand ChangePasswordCommand { get; }
+
+        public ICommand ShowManageUsersCommand { get; }
 
         public MainViewModel(LoginInfo loginInfo, IAccountManager accountManager, IProjectManager projectManager,
             IDialogService dialogService, ILoadingService loadingService)
@@ -115,9 +117,15 @@ namespace WorkingHours.Desktop.ViewModel
             LogoutCommand = new RelayCommand(ExecuteLogoutCommand);
             ChangePasswordCommand = new RelayCommand(ExecuteChangePasswordCommand);
             ProjectSelectedCommand = new RelayCommand<ProjectHeader>(ExecuteProjectSelectedCommand);
+            ShowManageUsersCommand = new RelayCommand(ExecuteShowManageUsersCommand);
 
             this.projectmanager = projectManager;
             this.dialogService = dialogService;
+        }
+
+        private void ExecuteShowManageUsersCommand()
+        {
+            dialogService.ShowManageUsersWindow();
         }
 
         private async void ExecuteChangePasswordCommand()
@@ -163,7 +171,7 @@ namespace WorkingHours.Desktop.ViewModel
 
         private async void UpdateUserData(NotificationMessage obj)
         {
-            Roles = loginInfo.Role.ToString();
+            Role = loginInfo.Role.HasValue ? loginInfo.Role.Value : Roles.Employee;
             DisplayedName = $"{loginInfo.FullName} ({loginInfo.UserName})";
             Email = loginInfo.Email;
             MyProjects = new ObservableCollection<ProjectHeader>(await projectmanager.GetMyProjectsAsync());

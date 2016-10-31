@@ -12,5 +12,7 @@ namespace WorkingHours.Desktop.Interfaces.Services
         void ShowError(string title, string message);
 
         Task<PasswordChangeModel> ShowPasswordChangeDialogAsync();
+
+        void ShowManageUsersWindow();
     }
 }
