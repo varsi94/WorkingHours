@@ -15,7 +15,8 @@
         Width="708.384"
         Loaded="Window_Loaded"
         DataContext="{ioc:ViewModel ViewModelType={x:Type vm:IManageUsersViewModel}}"
-        x:Name="mainWindow">
+        x:Name="mainWindow"
+        ResizeMode="NoResize">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -81,8 +82,19 @@
             </DataGrid.RowStyle>
             <DataGrid.CellStyle>
                 <Style TargetType="DataGridCell">
-                    <Setter Property="Padding"
-                            Value="10" />
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="DataGridCell">
+                                <Border Padding="10"
+                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                        BorderThickness="{TemplateBinding BorderThickness}"
+                                        Background="{TemplateBinding Background}"
+                                        SnapsToDevicePixels="True">
+                                    <ContentPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
                 </Style>
             </DataGrid.CellStyle>
             <DataGrid.Columns>
@@ -104,7 +116,7 @@
                     </DataGridTemplateColumn.CellTemplate>
                     <DataGridTemplateColumn.CellEditingTemplate>
                         <DataTemplate>
-                            <ComboBox SelectedItem="{Binding Role, Mode=OneWay}"
+                            <ComboBox SelectedItem="{Binding Role, Mode=TwoWay}"
                                       IsEditable="False"
                                       x:Name="RoleComboBox">
                                 <i:Interaction.Triggers>
@@ -133,8 +145,7 @@
         <StackPanel Grid.Row="3"
                     Orientation="Horizontal"
                     HorizontalAlignment="Right">
-            <Button IsDefault="True"
-                    Margin="10"
+            <Button Margin="10"
                     Padding="10"
                     Width="100"
                     Command="{Binding SaveChangesCommand}">OK</Button>

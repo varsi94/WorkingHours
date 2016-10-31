@@ -72,6 +72,7 @@
     <Compile Include="Managers\IssueManager.cs" />
     <Compile Include="Managers\ProjectManager.cs" />
     <Compile Include="Managers\UserManager.cs" />
+    <Compile Include="Model\ErrorMessage.cs" />
     <Compile Include="Model\LoginInfo.cs" />
     <Compile Include="Model\LoginResult.cs" />
     <Compile Include="Model\ModelStateError.cs" />

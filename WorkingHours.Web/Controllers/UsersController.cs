@@ -31,7 +31,14 @@ namespace WorkingHours.Web.Controllers
         [HttpPost]
         public IHttpActionResult UpdateRoles([FromBody] Dictionary<int, Roles> rolesToUpdate)
         {
-            UserManager.UpdateRoles(rolesToUpdate);
+            try
+            {
+                UserManager.UpdateRoles(rolesToUpdate);
+            }
+            catch (InvalidOperationException e)
+            {
+                return BadRequest(e.Message);
+            }
             return Ok();
         }
     }

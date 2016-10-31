@@ -14,6 +14,7 @@ using WorkingHours.Client.Model;
 using GalaSoft.MvvmLight.CommandWpf;
 using WorkingHours.Desktop.Interfaces;
 using WorkingHours.Desktop.Model;
+using WorkingHours.Desktop.Interfaces.Services;
 
 namespace WorkingHours.Desktop.ViewModel
 {
@@ -22,6 +23,8 @@ namespace WorkingHours.Desktop.ViewModel
         private const int pageSize = 10;
         private int pageIndex;
         private readonly IUserManager userManager;
+        private readonly IDialogService dialogService;
+        private bool changedFromVM = false;
 
         public ICommand ChangeRoleCommand { get; }
         
@@ -73,8 +76,9 @@ namespace WorkingHours.Desktop.ViewModel
 
         public ICommand CancelCommand { get; }
 
-        public ManageUsersViewModel(IUserManager userManager)
+        public ManageUsersViewModel(IUserManager userManager, IDialogService dialogService)
         {
+            this.dialogService = dialogService;
             this.userManager = userManager;
             NextCommand = new RelayCommand(ExecuteNextCommand, () => PageCount > pageIndex);
             PreviousCommand = new RelayCommand(ExecutePreviousCommand, () => pageIndex > 1);
@@ -88,14 +92,20 @@ namespace WorkingHours.Desktop.ViewModel
 
         private void ExecuteChangeRoleCommand(RoleChangedModel obj)
         {
+            if (changedFromVM)
+            {
+                return;
+            }
+
+            changedFromVM = true;
             bool isAny = RolesToUpdateDict.Any(x => x.Key == obj.User.Id);
             if (isAny)
             {
                 var item = RolesToUpdateDict.Single(x => x.Key == obj.User.Id);
                 UsersShown.Single(x => x.Id == obj.User.Id).Role = obj.NewRole;
                 RolesToUpdateDict.Remove(item);
-                obj.User.Role = obj.NewRole;
                 obj.User.IsChanged = !obj.User.IsChanged;
+                obj.User.Role = obj.NewRole;
             }
             else
             {
@@ -104,10 +114,11 @@ namespace WorkingHours.Desktop.ViewModel
                 if (currentRole != newRole)
                 {
                     RolesToUpdateDict.Add(new KeyValuePair<int, Roles>(obj.User.Id, newRole));
-                    obj.User.Role = newRole;
                     obj.User.IsChanged = !obj.User.IsChanged;
+                    obj.User.Role = obj.NewRole;
                 }
             }
+            changedFromVM = false;
         }
 
         private void ExecuteCancelCommand()
@@ -117,8 +128,15 @@ namespace WorkingHours.Desktop.ViewModel
 
         private async void ExecuteSaveChangesCommand()
         {
-            await userManager.UpdateRolesAsync(RolesToUpdateDict.ToDictionary(x => x.Key, x => x.Value));
-            Window.Close();
+            try
+            {
+                await userManager.UpdateRolesAsync(RolesToUpdateDict.ToDictionary(x => x.Key, x => x.Value));
+                Window.Close();
+            }
+            catch (InvalidOperationException e)
+            {
+                dialogService.ShowError("Error occured", e.Message);
+            }
         }
 
         private async void ExecuteSearchCommand()

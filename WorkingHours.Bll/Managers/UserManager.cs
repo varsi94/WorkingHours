@@ -65,8 +65,24 @@ namespace WorkingHours.Bll.Managers
 
         public void UpdateRoles(Dictionary<int, Roles> rolesToUpdate)
         {
+            string managerRole = Roles.Manager.ToString();
             foreach (var item in rolesToUpdate)
             {
+                int userId = item.Key;
+                var user = UoW.Users.GetById(item.Key);
+                if (item.Value == Roles.Employee && user.Role == Roles.Manager)
+                {
+                    var dummy = new Project();
+                    IEnumerable<Project> projects =
+                        UoW.Projects.List(
+                            x => x.AssociatedMembers.Any(m => m.UserId == userId && m.Role.Name == managerRole), null,
+                            nameof(dummy.AssociatedMembers), nameof(dummy.AssociatedMembers) + ".Role");
+                    if (projects.Any())
+                    {
+                        throw new InvalidOperationException($"{user.FullName} has a project in which he/she is manager!");
+                    }
+                }
+
                 var result = UoW.Users.AddToRole(item.Key, item.Value);
                 if (!result.Succeeded)
                 {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -40,7 +41,7 @@ namespace WorkingHours.Client.Managers
                     var result = await httpResult.Content.ReadAsAsync<PagedResult<UserHeaderDto>>();
                     return result;
                 }
-                else if (httpResult.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                else if (httpResult.StatusCode == HttpStatusCode.Unauthorized)
                 {
                     throw new UnauthorizedAccessException();
                 }
@@ -63,6 +64,11 @@ namespace WorkingHours.Client.Managers
                 var httpResult = await client.PostAsJsonAsync("api/users/updateRoles", rolesToUpdate);
                 if (!httpResult.IsSuccessStatusCode)
                 {
+                    if (httpResult.StatusCode == HttpStatusCode.BadRequest)
+                    {
+                        var msg = await httpResult.Content.ReadAsAsync<ErrorMessage>();
+                        throw new InvalidOperationException(msg.Message);
+                    }
                     throw new Exception("Internal server error!");
                 }
             }
