@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using WorkingHours.Client.Managers;
 using WorkingHours.Client.Model;
 using WorkingHours.Shared.Dto;
+using WorkingHours.Shared.Model;
 
 namespace WorkingHours.ClientTest
 {
@@ -17,8 +18,13 @@ namespace WorkingHours.ClientTest
             var accountManager = new AccountManager(new AppSettingsManager()) { LoginInfo = loginInfo };
             accountManager.LoginAsync("varsi.marci", "123456").Wait();
 
-            //var issueManager = new IssueManager(new AppSettingsManager()) {LoginInfo = loginInfo};
-            //issueManager.CreateIssueForProject(1, new IssueHeader() {Name ="Issue #2", Deadline = DateTime.UtcNow, Description = "This is created from client."}).Wait();
+            var pm = new ProjectManager(new AppSettingsManager())
+            {
+                LoginInfo = loginInfo
+            };
+
+            pm.AddMembersToProjectAsync(2, new Dictionary<int, Roles> {{1, Roles.Employee}})
+                .Wait();
         }
     }
 }

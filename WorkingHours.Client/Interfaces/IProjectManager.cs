@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WorkingHours.Shared.Dto;
+using WorkingHours.Shared.Model;
 
 namespace WorkingHours.Client.Interfaces
 {
@@ -14,5 +15,7 @@ namespace WorkingHours.Client.Interfaces
         Task<List<ProjectHeader>> GetMyProjectsAsync();
 
         Task<ProjectInfo> GetProjectAsync(int id);
+
+        Task AddMembersToProjectAsync(int projectId, Dictionary<int, Roles> membersToAdd);
     }
 }

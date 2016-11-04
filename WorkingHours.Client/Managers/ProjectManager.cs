@@ -10,6 +10,7 @@ using WorkingHours.Client.Exceptions;
 using WorkingHours.Client.Interfaces;
 using WorkingHours.Client.Model;
 using WorkingHours.Shared.Dto;
+using WorkingHours.Shared.Model;
 
 namespace WorkingHours.Client.Managers
 {
@@ -19,9 +20,38 @@ namespace WorkingHours.Client.Managers
         {
         }
 
+        public async Task AddMembersToProjectAsync(int projectId, Dictionary<int, Roles> membersToAdd)
+        {
+            if (LoginInfo.Role != Roles.Manager)
+            {
+                throw new UnauthorizedAccessException();
+            }
+
+            using (var client = GetAuthenticatedClient())
+            {
+                var httpResult = await client.PostAsJsonAsync($"api/project/{projectId}/membersAdd", membersToAdd);
+                if (!httpResult.IsSuccessStatusCode)
+                {
+                    var messageResult = await httpResult.Content.ReadAsAsync<ErrorMessage>();
+                    if (httpResult.StatusCode == HttpStatusCode.InternalServerError)
+                    {
+                        throw new InvalidOperationException(messageResult.Message);
+                    }
+                    else if (httpResult.StatusCode == HttpStatusCode.Unauthorized)
+                    {
+                        throw new UnauthorizedAccessException();
+                    }
+                    else if (httpResult.StatusCode == HttpStatusCode.NotFound)
+                    {
+                        throw new ServerException(messageResult.Message);
+                    }
+                }
+            }
+        }
+
         public async Task CreateAsync(ProjectHeader projectHeader)
         {
-            if (LoginInfo.Role != Shared.Model.Roles.Manager)
+            if (LoginInfo.Role != Roles.Manager)
             {
                 throw new UnauthorizedAccessException();
             }

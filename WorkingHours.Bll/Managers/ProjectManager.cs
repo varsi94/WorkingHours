@@ -35,6 +35,57 @@ namespace WorkingHours.Bll.Managers
             return project.Id;
         }
 
+        public void AddMembersToProject(int projectId, int managerId, Dictionary<int, Roles> users)
+        {
+            var dummy = new Project();
+            var project = UoW.Projects.GetById(projectId, nameof(dummy.AssociatedMembers));
+            if (project == null)
+            {
+                throw new NotFoundException("Project not found");
+            }
+
+            var managerRole = UoW.Roles.GetRole(Roles.Manager);
+            if (!project.AssociatedMembers.Any(x => x.RoleId == managerRole.Id && x.UserId == managerId))
+            {
+                throw new UnauthorizedException("You are not a manager in this project!");
+            }
+
+            foreach (var user in users)
+            {
+                int userId = user.Key;
+                Roles role = user.Value;
+                var userProject = project.AssociatedMembers.SingleOrDefault(x => x.UserId == userId);
+                var userToAdd = UoW.Users.GetById(userId);
+                if (userToAdd == null)
+                {
+                    throw new NotFoundException("One user can not found!");
+                }
+
+                if (!UoW.Users.IsInRole(userId, Roles.Manager) && role == Roles.Manager)
+                {
+                    throw new InternalServerException("Employee can not be added as manager!");
+                }
+
+                if (userProject != null)
+                {
+                    userProject.IsActive = true;
+                    userProject.RoleId = UoW.Roles.GetRole(role).Id;
+                }
+                else
+                {
+                    userProject = new UserProject
+                    {
+                        IsActive = true,
+                        UserId = userId,
+                        RoleId = UoW.Roles.GetRole(role).Id,
+                        ProjectId = projectId
+                    };
+                    project.AssociatedMembers.Add(userProject);
+                }
+            }
+            UoW.SaveChanges();
+        }
+
         public ProjectInfo GetProjectInfo(int projectId, int userId)
         {
             var dummy = new Project();
@@ -63,6 +114,11 @@ namespace WorkingHours.Bll.Managers
             var projects = UoW.Projects.List(x => x.AssociatedMembers.Any(y => y.UserId == userId), orderInfo,
                 nameof(dummy.AssociatedMembers));
             return Mapper.Map<List<ProjectHeader>>(projects);
+        }
+
+        public void RemoveUsersFromProject(int projectId, int managerId, List<int> userIds)
+        {
+            throw new NotImplementedException();
         }
     }
 }

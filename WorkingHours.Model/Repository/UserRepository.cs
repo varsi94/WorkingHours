@@ -76,5 +76,10 @@ namespace WorkingHours.Model.Repository
                 throw new ArgumentException();
             }
         }
+
+        public bool IsInRole(int userId, Roles role)
+        {
+            return DbContext.UserManager.IsInRole(userId, role.ToString());
+        }
     }
 }

@@ -19,5 +19,7 @@ namespace WorkingHours.Model.Repository
         IdentityResult Add(ApplicationUser user, string password);
 
         void ChangePassword(int userId, string oldPassword, string newPassword);
+        
+        bool IsInRole(int userId, Roles manager);
     }
 }

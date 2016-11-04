@@ -54,5 +54,13 @@ namespace WorkingHours.Web.Controllers
         {
             return Ok(ProjectManager.GetProjectInfo(id, User.Identity.GetUserId()));
         }
+
+        [HttpPost]
+        [Route("api/project/{projectId}/membersAdd")]
+        public IHttpActionResult AddMembersToProject(int projectId, Dictionary<int, Roles> membersToAdd)
+        {
+            ProjectManager.AddMembersToProject(projectId, User.Identity.GetUserId(), membersToAdd);
+            return Ok();
+        }
     }
 }

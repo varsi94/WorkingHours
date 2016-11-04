@@ -19,15 +19,15 @@ namespace WorkingHours.Web.Extensions
             {
                 if (ex is NotFoundException)
                 {
-                    context.Response = new HttpResponseMessage(HttpStatusCode.NotFound);
+                    context.Response = context.Request.CreateErrorResponse(HttpStatusCode.NotFound, ex.Message);
                 }
                 else if (ex is UnauthorizedException)
                 {
-                    context.Response = new HttpResponseMessage(HttpStatusCode.Unauthorized);
+                    context.Response = context.Request.CreateErrorResponse(HttpStatusCode.NotFound, ex.Message);
                 }
                 else if (ex is InternalServerException)
                 {
-                    context.Response = new HttpResponseMessage(HttpStatusCode.InternalServerError);
+                    context.Response = context.Request.CreateErrorResponse(HttpStatusCode.NotFound, ex.Message);
                 }
             }
             else
