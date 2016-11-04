@@ -57,6 +57,7 @@ namespace WorkingHours.Web.Controllers
 
         [HttpPost]
         [Route("api/project/{projectId}/membersAdd")]
+        [AuthorizeRoles(Roles.Manager)]
         public IHttpActionResult AddMembersToProject(int projectId, Dictionary<int, Roles> membersToAdd)
         {
             ProjectManager.AddMembersToProject(projectId, User.Identity.GetUserId(), membersToAdd);

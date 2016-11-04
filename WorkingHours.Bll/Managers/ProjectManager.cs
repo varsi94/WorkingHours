@@ -86,6 +86,11 @@ namespace WorkingHours.Bll.Managers
             UoW.SaveChanges();
         }
 
+        public List<ProjectMemberDto> GetMembersForProject(int projectId)
+        {
+            throw new NotImplementedException();
+        }
+
         public ProjectInfo GetProjectInfo(int projectId, int userId)
         {
             var dummy = new Project();

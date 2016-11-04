@@ -50,6 +50,7 @@
     <Compile Include="Dto\PasswordChangeModel.cs" />
     <Compile Include="Dto\ProjectHeader.cs" />
     <Compile Include="Dto\ProjectInfo.cs" />
+    <Compile Include="Dto\ProjectMemberDto.cs" />
     <Compile Include="Dto\SignUpModel.cs" />
     <Compile Include="Dto\UserHeaderDto.cs" />
     <Compile Include="Model\Roles.cs" />
