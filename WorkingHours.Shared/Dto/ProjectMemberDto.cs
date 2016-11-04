@@ -24,5 +24,7 @@ namespace WorkingHours.Shared.Dto
             get { return roleInProjectEnum; }
             set { roleInProjectEnum = value; }
         }
+
+        public bool IsActive { get; set; }
     }
 }

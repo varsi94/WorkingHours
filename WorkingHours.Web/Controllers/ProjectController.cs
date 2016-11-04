@@ -58,9 +58,18 @@ namespace WorkingHours.Web.Controllers
         [HttpPost]
         [Route("api/project/{projectId}/membersAdd")]
         [AuthorizeRoles(Roles.Manager)]
-        public IHttpActionResult AddMembersToProject(int projectId, Dictionary<int, Roles> membersToAdd)
+        public IHttpActionResult AddMembers(int projectId, Dictionary<int, Roles> membersToAdd)
         {
             ProjectManager.AddMembersToProject(projectId, User.Identity.GetUserId(), membersToAdd);
+            return Ok();
+        }
+
+        [HttpPost]
+        [Route("api/project/{projectId}/membersRemove")]
+        [AuthorizeRoles(Roles.Manager)]
+        public IHttpActionResult RemoveMembers(int projectId, List<int> membersToRemove)
+        {
+            ProjectManager.RemoveMembersFromProject(projectId, User.Identity.GetUserId(), membersToRemove);
             return Ok();
         }
     }

@@ -35,7 +35,7 @@ namespace WorkingHours.Bll.Managers
             return project.Id;
         }
 
-        public void AddMembersToProject(int projectId, int managerId, Dictionary<int, Roles> users)
+        private void UpdateMembersForProject(int projectId, int managerId, Dictionary<int, Roles?> members, bool isAdd)
         {
             var dummy = new Project();
             var project = UoW.Projects.GetById(projectId, nameof(dummy.AssociatedMembers));
@@ -50,10 +50,10 @@ namespace WorkingHours.Bll.Managers
                 throw new UnauthorizedException("You are not a manager in this project!");
             }
 
-            foreach (var user in users)
+            foreach (var user in members)
             {
                 int userId = user.Key;
-                Roles role = user.Value;
+                Roles? role = user.Value;
                 var userProject = project.AssociatedMembers.SingleOrDefault(x => x.UserId == userId);
                 var userToAdd = UoW.Users.GetById(userId);
                 if (userToAdd == null)
@@ -68,17 +68,25 @@ namespace WorkingHours.Bll.Managers
 
                 if (userProject != null)
                 {
-                    userProject.IsActive = true;
-                    userProject.RoleId = UoW.Roles.GetRole(role).Id;
+                    userProject.IsActive = isAdd;
+                    if (role.HasValue)
+                    {
+                        userProject.RoleId = UoW.Roles.GetRole(role.Value).Id;
+                    }
                 }
-                else
+                else if (isAdd)
                 {
+                    if (!role.HasValue)
+                    {
+                        throw new InternalServerException("Role must have a value!");
+                    }
+
                     userProject = new UserProject
                     {
                         IsActive = true,
                         UserId = userId,
-                        RoleId = UoW.Roles.GetRole(role).Id,
-                        ProjectId = projectId
+                        ProjectId = projectId,
+                        Role = UoW.Roles.GetRole(role.Value)
                     };
                     project.AssociatedMembers.Add(userProject);
                 }
@@ -86,9 +94,9 @@ namespace WorkingHours.Bll.Managers
             UoW.SaveChanges();
         }
 
-        public List<ProjectMemberDto> GetMembersForProject(int projectId)
+        public void AddMembersToProject(int projectId, int managerId, Dictionary<int, Roles> users)
         {
-            throw new NotImplementedException();
+            UpdateMembersForProject(projectId, managerId, users.ToDictionary(x => x.Key, x => (Roles?)x.Value), true);
         }
 
         public ProjectInfo GetProjectInfo(int projectId, int userId)
@@ -105,6 +113,7 @@ namespace WorkingHours.Bll.Managers
             {
                 throw new UnauthorizedException("User is not associated to this project!");
             }
+
             return Mapper.Map<ProjectInfo>(project);
         }
 
@@ -121,9 +130,9 @@ namespace WorkingHours.Bll.Managers
             return Mapper.Map<List<ProjectHeader>>(projects);
         }
 
-        public void RemoveUsersFromProject(int projectId, int managerId, List<int> userIds)
+        public void RemoveMembersFromProject(int projectId, int managerId, List<int> userIds)
         {
-            throw new NotImplementedException();
+            UpdateMembersForProject(projectId, managerId, userIds.ToDictionary(x => x, y => (Roles?)null), false);
         }
     }
 }
