@@ -13,6 +13,6 @@ namespace WorkingHours.Bll.Interfaces
 
         PagedResult<WorkTimeDto> GetMyWorkTimes(int userId, int issueId, PagingInfo pagingInfo);
 
-        PagedResult<WorkTimeDto> GetWorkTimesForAdmin(int userId, int issueId, PagingInfo pagingInfo);
+        PagedResult<ManagerWorkTimeDto> GetWorkTimesForManager(int userId, int issueId, PagingInfo pagingInfo);
     }
 }

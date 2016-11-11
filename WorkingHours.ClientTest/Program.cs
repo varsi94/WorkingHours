@@ -19,7 +19,7 @@ namespace WorkingHours.ClientTest
             accountManager.LoginAsync("varsi.marci", "123456").Wait();
 
             var workTimeManager = new WorkTimeManager(new AppSettingsManager()) {LoginInfo = loginInfo};
-            var result = workTimeManager.GetMyWorkTimesAsync(1, 1, 2).Result;
+            var result = workTimeManager.GetWorkTimesForManagerAsync(1, 10, 1).Result;
         }
     }
 }

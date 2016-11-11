@@ -67,9 +67,38 @@ namespace WorkingHours.Bll.Managers
             return Mapper.Map<PagedResult<WorkTimeDto>>(list);
         }
 
-        public PagedResult<WorkTimeDto> GetWorkTimesForAdmin(int userId, int issueId, PagingInfo pagingInfo)
+        public PagedResult<ManagerWorkTimeDto> GetWorkTimesForManager(int userId, int issueId, PagingInfo pagingInfo)
         {
-            throw new NotImplementedException();
+            var dummy = new Issue();
+            var issue = UoW.Issues.GetById(issueId, nameof(dummy.Project) + "." + nameof(dummy.Project.AssociatedMembers));
+            if (issue == null)
+            {
+                throw new NotFoundException("Issue not found!");
+            }
+
+            var managerRole = UoW.Roles.GetRole(Roles.Manager);
+            if (!issue.Project.AssociatedMembers.Any(x => x.UserId == userId && x.RoleId == managerRole.Id))
+            {
+                throw new UnauthorizedException("You are not associated to this project as manager!");
+            }
+
+            var orderInfo = new OrderInfo<WorkTime, DateTime> { Direction = SortDirection.Descending, OrderBy = x => x.Date };
+            var dummyWorkTime = new WorkTime();
+            var list = UoW.WorkTimeLog.ListPaged(x => x.IssueId == issueId, pagingInfo.PageIndex, pagingInfo.PageSize,
+                orderInfo, nameof(dummyWorkTime.Employee));
+            var result = Mapper.Map<PagedResult<ManagerWorkTimeDto>>(list);
+            foreach (var managerWorkTimeDto in result.Items)
+            {
+                var userProject = issue.Project.AssociatedMembers.Single(x => x.UserId == managerWorkTimeDto.Employee.Id);
+                managerWorkTimeDto.Employee.RoleInPorjectEnum =
+                    (userProject.RoleId == managerRole.Id)
+                        ? Shared.Model.Roles.Manager
+                        : Shared.Model.Roles.Employee;
+
+                managerWorkTimeDto.Employee.IsActive = userProject.IsActive;
+            }
+
+            return result;
         }
     }
 }

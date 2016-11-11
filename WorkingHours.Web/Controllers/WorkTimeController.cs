@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using WorkingHours.Bll.Interfaces;
+using WorkingHours.Model;
 using WorkingHours.Shared.Dto;
 using WorkingHours.Web.Extensions;
 
@@ -46,6 +47,21 @@ namespace WorkingHours.Web.Controllers
             };
 
             return Ok(workTimeManager.GetMyWorkTimes(User.Identity.GetUserId(), issueId, pagingInfo));
+        }
+
+        [HttpGet]
+        [Route("api/worktimes/manager/{issueId}")]
+        [AuthorizeRoles(Roles.Manager)]
+        public IHttpActionResult GetManagerWorkItems(int issueId, [FromUri] int? pageSize = null,
+            [FromUri] int? pageIndex = null)
+        {
+            var pagingInfo = new PagingInfo
+            {
+                PageIndex = pageIndex ?? 1,
+                PageSize = pageSize ?? 10
+            };
+
+            return Ok(workTimeManager.GetWorkTimesForManager(User.Identity.GetUserId(), issueId, pagingInfo));
         }
     }
 }

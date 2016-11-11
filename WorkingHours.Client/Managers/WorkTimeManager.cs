@@ -10,6 +10,7 @@ using WorkingHours.Client.Exceptions;
 using WorkingHours.Client.Interfaces;
 using WorkingHours.Client.Model;
 using WorkingHours.Shared.Dto;
+using WorkingHours.Shared.Model;
 
 namespace WorkingHours.Client.Managers
 {
@@ -60,6 +61,30 @@ namespace WorkingHours.Client.Managers
                 }
 
                 return await httpResult.Content.ReadAsAsync<PagedResult<WorkTimeDto>>();
+            }
+        }
+
+        public async Task<PagedResult<ManagerWorkTimeDto>> GetWorkTimesForManagerAsync(int issueId, int pageSize, int pageIndex)
+        {
+            if (LoginInfo.Role != Roles.Manager)
+            {
+                throw new UnauthorizedAccessException();
+            }
+
+            using (var client = GetAuthenticatedClient())
+            {
+                var httpResult = await client.GetAsync($"/api/worktimes/manager/{issueId}/?pageSize={pageSize}&pageIndex={pageIndex}");
+                if (httpResult.StatusCode == HttpStatusCode.NotFound)
+                {
+                    throw new ServerException("Issue not found!");
+                }
+
+                if (httpResult.StatusCode == HttpStatusCode.Unauthorized)
+                {
+                    throw new UnauthorizedAccessException();
+                }
+
+                return await httpResult.Content.ReadAsAsync<PagedResult<ManagerWorkTimeDto>>();
             }
         }
     }

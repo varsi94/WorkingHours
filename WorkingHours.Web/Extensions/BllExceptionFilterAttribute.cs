@@ -23,11 +23,11 @@ namespace WorkingHours.Web.Extensions
                 }
                 else if (ex is UnauthorizedException)
                 {
-                    context.Response = context.Request.CreateErrorResponse(HttpStatusCode.NotFound, ex.Message);
+                    context.Response = context.Request.CreateErrorResponse(HttpStatusCode.Unauthorized, ex.Message);
                 }
                 else if (ex is InternalServerException)
                 {
-                    context.Response = context.Request.CreateErrorResponse(HttpStatusCode.NotFound, ex.Message);
+                    context.Response = context.Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message);
                 }
                 else if (ex is ConflictedException)
                 {

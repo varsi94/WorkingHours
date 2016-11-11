@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Dto\IssueHeader.cs" />
+    <Compile Include="Dto\ManagerWorkTimeDto.cs" />
     <Compile Include="Dto\PagedResult.cs" />
     <Compile Include="Dto\PagingInfo.cs" />
     <Compile Include="Dto\PasswordChangeModel.cs" />

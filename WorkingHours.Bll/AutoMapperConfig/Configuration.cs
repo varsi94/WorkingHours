@@ -27,6 +27,9 @@ namespace WorkingHours.Bll.AutoMapperConfig
             CreateMap<WorkTime, WorkTimeDto>();
             CreateMap<IPagedList<WorkTime>, PagedResult<WorkTimeDto>>()
                 .ConvertUsing<PagedListConverter<WorkTime, WorkTimeDto>>();
+            CreateMap<WorkTime, ManagerWorkTimeDto>();
+            CreateMap<IPagedList<WorkTime>, PagedResult<ManagerWorkTimeDto>>()
+                .ConvertUsing<PagedListConverter<WorkTime, ManagerWorkTimeDto>>();
         }
     }
 }
