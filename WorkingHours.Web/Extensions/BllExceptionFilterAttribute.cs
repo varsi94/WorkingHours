@@ -29,6 +29,10 @@ namespace WorkingHours.Web.Extensions
                 {
                     context.Response = context.Request.CreateErrorResponse(HttpStatusCode.NotFound, ex.Message);
                 }
+                else if (ex is ConflictedException)
+                {
+                    context.Response = context.Request.CreateErrorResponse(HttpStatusCode.Conflict, ex.Message);
+                }
             }
             else
             {

@@ -18,13 +18,8 @@ namespace WorkingHours.ClientTest
             var accountManager = new AccountManager(new AppSettingsManager()) { LoginInfo = loginInfo };
             accountManager.LoginAsync("varsi.marci", "123456").Wait();
 
-            var pm = new ProjectManager(new AppSettingsManager())
-            {
-                LoginInfo = loginInfo
-            };
-
-            pm.AddMembersToProjectAsync(2, new Dictionary<int, Roles> {{1, Roles.Employee}})
-                .Wait();
+            var workTimeManager = new WorkTimeManager(new AppSettingsManager()) {LoginInfo = loginInfo};
+            workTimeManager.AddWorkTimeAsync(1, new WorkTimeDto {Name = "", Description = "dummy", Date = DateTime.Now, Hours = 5}).Wait();
         }
     }
 }

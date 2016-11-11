@@ -4,15 +4,11 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WorkingHours.Model.DbContext;
-using WorkingHours.Model.Repository;
 
-namespace WorkingHours.Model
+namespace WorkingHours.Shared.Dto
 {
-    public class WorkTime : IDbEntity
+    public class WorkTimeDto
     {
-        public int Id { get; set; }
-
         [Required]
         public string Name { get; set; }
 
@@ -22,15 +18,6 @@ namespace WorkingHours.Model
 
         public double Hours { get; set; }
 
-        public Issue Issue { get; set; }
-
-        public int IssueId { get; set; }
-
-        public ApplicationUser Employee { get; set; }
-
-        public int EmployeeId { get; set; }
-
-        [Timestamp]
         public byte[] RowVersion { get; set; }
     }
 }

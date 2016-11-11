@@ -23,6 +23,7 @@ namespace WorkingHours.Bll.AutoMapperConfig
             CreateMap<Project, ProjectInfo>()
                 .ForMember(p => p.Members, cfg => cfg.ResolveUsing<ProjectInfoResolver>());
             CreateMap<Issue, IssueHeader>();
+            CreateMap<WorkTimeDto, WorkTime>();
         }
     }
 }

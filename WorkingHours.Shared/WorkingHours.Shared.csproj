@@ -53,6 +53,7 @@
     <Compile Include="Dto\ProjectMemberDto.cs" />
     <Compile Include="Dto\SignUpModel.cs" />
     <Compile Include="Dto\UserHeaderDto.cs" />
+    <Compile Include="Dto\WorkTimeDto.cs" />
     <Compile Include="Model\Roles.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

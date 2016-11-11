@@ -66,12 +66,14 @@
     <Compile Include="Interfaces\IManager.cs" />
     <Compile Include="Interfaces\IProjectManager.cs" />
     <Compile Include="Interfaces\IUserManager.cs" />
+    <Compile Include="Interfaces\IWorkTimeManager.cs" />
     <Compile Include="IoC\ClientModule.cs" />
     <Compile Include="Managers\AppSettingsManager.cs" />
     <Compile Include="Managers\AccountManager.cs" />
     <Compile Include="Managers\IssueManager.cs" />
     <Compile Include="Managers\ProjectManager.cs" />
     <Compile Include="Managers\UserManager.cs" />
+    <Compile Include="Managers\WorkTimeManager.cs" />
     <Compile Include="Model\ErrorMessage.cs" />
     <Compile Include="Model\LoginInfo.cs" />
     <Compile Include="Model\LoginResult.cs" />
