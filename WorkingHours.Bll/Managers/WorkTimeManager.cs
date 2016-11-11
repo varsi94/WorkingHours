@@ -16,8 +16,11 @@ namespace WorkingHours.Bll.Managers
 {
     public class WorkTimeManager : ManagerBase, IWorkTimeManager
     {
-        public WorkTimeManager(IUnitOfWork UoW) : base(UoW)
+        private readonly ITimeService timeService;
+
+        public WorkTimeManager(IUnitOfWork UoW, ITimeService timeService) : base(UoW)
         {
+            this.timeService = timeService;
         }
 
         public void AddWorkItem(int issueId, int userId, WorkTimeDto workTime)
@@ -99,6 +102,40 @@ namespace WorkingHours.Bll.Managers
             }
 
             return result;
+        }
+
+        public void UpdateWorkTime(int userId, UpdateWorkTimeDto workTime)
+        {
+            if ((workTime.Date - timeService.Now).TotalDays > 7)
+            {
+                throw new InvalidOperationException();
+            }
+
+            var inDb = UoW.WorkTimeLog.GetById(workTime.Id);
+            if (inDb == null)
+            {
+                throw new NotFoundException("Worktime not found!");
+            }
+
+            if (inDb.EmployeeId != userId)
+            {
+                throw new UnauthorizedException("Not your worktime!");
+            }
+
+            inDb.Name = workTime.Name;
+            inDb.Description = workTime.Description;
+            inDb.Date = workTime.Date;
+            inDb.Hours = workTime.Hours;
+            inDb.RowVersion = workTime.RowVersion;
+            UoW.WorkTimeLog.Update(inDb);
+            try
+            {
+                UoW.SaveChanges();
+            }
+            catch (ConcurrencyException)
+            {
+                throw new ConflictedException("Somebody already updated this worktime! Please do it again!");
+            }
         }
     }
 }

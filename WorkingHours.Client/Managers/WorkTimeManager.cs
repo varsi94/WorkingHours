@@ -87,5 +87,34 @@ namespace WorkingHours.Client.Managers
                 return await httpResult.Content.ReadAsAsync<PagedResult<ManagerWorkTimeDto>>();
             }
         }
+
+        public async Task UpdateWorkTimeAsync(UpdateWorkTimeDto workTime)
+        {
+            using (var client = GetAuthenticatedClient())
+            {
+                var httpResult = await client.PutAsJsonAsync("/api/worktime", workTime);
+                if (httpResult.IsSuccessStatusCode)
+                {
+                    return;
+                }
+                var msg = await httpResult.Content.ReadAsAsync<ErrorMessage>();
+                if (httpResult.StatusCode == HttpStatusCode.Unauthorized)
+                {
+                    throw new UnauthorizedAccessException(msg.Message);
+                }
+                else if (httpResult.StatusCode == HttpStatusCode.Conflict)
+                {
+                    throw new ServerException(msg.Message);
+                }
+                else if (httpResult.StatusCode == HttpStatusCode.NotFound)
+                {
+                    throw new ServerException(msg.Message);
+                }
+                else if (httpResult.StatusCode == HttpStatusCode.BadRequest)
+                {
+                    throw new InvalidOperationException(msg.Message);
+                }
+            }
+        }
     }
 }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace WorkingHours.Shared.Dto
 {
-    public class WorkTimeDto
+    public class UpdateWorkTimeDto
     {
         public int Id { get; set; }
 

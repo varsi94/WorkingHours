@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WorkingHours.Bll.Interfaces;
 using WorkingHours.Bll.Managers;
+using WorkingHours.Bll.Services;
 using WorkingHours.Model.IoC;
 
 namespace WorkingHours.Bll.IoC
@@ -18,6 +19,7 @@ namespace WorkingHours.Bll.IoC
             Bind<IProjectManager>().To<ProjectManager>().InTransientScope();
             Bind<IIssueManager>().To<IssueManager>().InTransientScope();
             Bind<IWorkTimeManager>().To<WorkTimeManager>().InTransientScope();
+            Bind<ITimeService>().To<TimeService>().InTransientScope();
         }
     }
 }

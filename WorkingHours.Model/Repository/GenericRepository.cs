@@ -50,6 +50,11 @@ namespace WorkingHours.Model.Repository
             {
                 DbContext.Set<T>().Attach(obj);
             }
+            else
+            {
+                DbContext.Entry(obj).State = EntityState.Detached;
+                DbContext.Set<T>().Attach(obj);
+            }
             DbContext.Entry(obj).State = EntityState.Modified;
         }
 

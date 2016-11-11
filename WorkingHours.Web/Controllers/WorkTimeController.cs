@@ -37,7 +37,7 @@ namespace WorkingHours.Web.Controllers
         [HttpGet]
         [Route("api/worktimes/{issueId}")]
         [Authorize]
-        public IHttpActionResult GetMyWorkItems(int issueId, [FromUri] int? pageSize = null,
+        public IHttpActionResult GetMyWorkTimes(int issueId, [FromUri] int? pageSize = null,
             [FromUri] int? pageIndex = null)
         {
             var pagingInfo = new PagingInfo
@@ -52,7 +52,7 @@ namespace WorkingHours.Web.Controllers
         [HttpGet]
         [Route("api/worktimes/manager/{issueId}")]
         [AuthorizeRoles(Roles.Manager)]
-        public IHttpActionResult GetManagerWorkItems(int issueId, [FromUri] int? pageSize = null,
+        public IHttpActionResult GetManagerWorkTimes(int issueId, [FromUri] int? pageSize = null,
             [FromUri] int? pageIndex = null)
         {
             var pagingInfo = new PagingInfo
@@ -62,6 +62,27 @@ namespace WorkingHours.Web.Controllers
             };
 
             return Ok(workTimeManager.GetWorkTimesForManager(User.Identity.GetUserId(), issueId, pagingInfo));
+        }
+
+        [HttpPut]
+        [Route("api/worktime/")]
+        [Authorize]
+        public IHttpActionResult UpdateWorkTime([FromBody] UpdateWorkTimeDto workTime)
+        {
+            if (!ModelState.IsValid)
+            {
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState));
+            }
+
+            try
+            {
+                workTimeManager.UpdateWorkTime(User.Identity.GetUserId(), workTime);
+                return Ok();
+            }
+            catch (InvalidOperationException)
+            {
+                return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest, "You can update a work item in a week only!"));
+            }
         }
     }
 }

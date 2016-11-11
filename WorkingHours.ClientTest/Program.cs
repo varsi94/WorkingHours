@@ -20,6 +20,17 @@ namespace WorkingHours.ClientTest
 
             var workTimeManager = new WorkTimeManager(new AppSettingsManager()) {LoginInfo = loginInfo};
             var result = workTimeManager.GetWorkTimesForManagerAsync(1, 10, 1).Result;
+
+            var ecsedi = result.Items.First(x => x.Employee.Username == "varsi.marci");
+            workTimeManager.UpdateWorkTimeAsync(new UpdateWorkTimeDto
+            {
+                Name = "first worktime",
+                Description = "asd",
+                Date = DateTime.Now,
+                Hours = 2.5,
+                Id = 50,
+                RowVersion = ecsedi.RowVersion
+            }).Wait();
         }
     }
 }
