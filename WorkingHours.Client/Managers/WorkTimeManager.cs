@@ -43,5 +43,24 @@ namespace WorkingHours.Client.Managers
                 }
             }
         }
+
+        public async Task<PagedResult<WorkTimeDto>> GetMyWorkTimesAsync(int issueId, int pageSize, int pageIndex)
+        {
+            using (var client = GetAuthenticatedClient())
+            {
+                var httpResult = await client.GetAsync($"/api/worktimes/{issueId}/?pageSize={pageSize}&pageIndex={pageIndex}");
+                if (httpResult.StatusCode == HttpStatusCode.NotFound)
+                {
+                    throw new ServerException("Issue not found!");
+                }
+
+                if (httpResult.StatusCode == HttpStatusCode.Unauthorized)
+                {
+                    throw new UnauthorizedAccessException();
+                }
+
+                return await httpResult.Content.ReadAsAsync<PagedResult<WorkTimeDto>>();
+            }
+        }
     }
 }

@@ -53,13 +53,13 @@ namespace WorkingHours.Model.Repository
             DbContext.Entry(obj).State = EntityState.Modified;
         }
 
-        public virtual IPagedList<T> ListPaged(Expression<Func<T, bool>> filter, int pageIndex, int pageSize, OrderInfo<T> orderInfo = null, params string[] propsToInclude)
+        public virtual IPagedList<T> ListPaged<TKey>(Expression<Func<T, bool>> filter, int pageIndex, int pageSize, OrderInfo<T, TKey> orderInfo = null, params string[] propsToInclude)
         {
             var query = CreateQuery(filter, orderInfo, propsToInclude);
             return query.ToPagedList(pageIndex, pageSize);
         }
 
-        private IQueryable<T> CreateQuery(Expression<Func<T, bool>> filter, OrderInfo<T> orderInfo = null, params string[] propsToInclude)
+        private IQueryable<T> CreateQuery<TKey>(Expression<Func<T, bool>> filter, OrderInfo<T, TKey> orderInfo = null, params string[] propsToInclude)
         {
             var query = DbContext.Set<T>().AsQueryable();
             foreach (var expression in propsToInclude)
@@ -90,7 +90,7 @@ namespace WorkingHours.Model.Repository
             return query;
         }
 
-        public IEnumerable<T> List(Expression<Func<T, bool>> filter, OrderInfo<T> orderInfo = null, params string[] propsToInclude)
+        public IEnumerable<T> List<TKey>(Expression<Func<T, bool>> filter, OrderInfo<T, TKey> orderInfo = null, params string[] propsToInclude)
         {
             return CreateQuery(filter, orderInfo, propsToInclude).ToList();
         }

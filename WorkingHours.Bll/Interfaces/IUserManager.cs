@@ -18,6 +18,6 @@ namespace WorkingHours.Bll.Interfaces
 
         void ChangePassword(int userId, string oldPassword, string newPassword);
 
-        PagedResult<UserHeaderDto> GetUsers(int pageIndex, int pageSize, string nameFilter);
+        PagedResult<UserHeaderDto> GetUsers(PagingInfo pagingInfo, string nameFilter);
     }
 }

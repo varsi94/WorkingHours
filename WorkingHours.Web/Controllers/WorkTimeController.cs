@@ -32,5 +32,20 @@ namespace WorkingHours.Web.Controllers
             workTimeManager.AddWorkItem(issueId, User.Identity.GetUserId(), workTimeDto);
             return Ok();
         }
+
+        [HttpGet]
+        [Route("api/worktimes/{issueId}")]
+        [Authorize]
+        public IHttpActionResult GetMyWorkItems(int issueId, [FromUri] int? pageSize = null,
+            [FromUri] int? pageIndex = null)
+        {
+            var pagingInfo = new PagingInfo
+            {
+                PageIndex = pageIndex ?? 1,
+                PageSize = pageSize ?? 10
+            };
+
+            return Ok(workTimeManager.GetMyWorkTimes(User.Identity.GetUserId(), issueId, pagingInfo));
+        }
     }
 }

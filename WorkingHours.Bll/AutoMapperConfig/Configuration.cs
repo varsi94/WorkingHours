@@ -24,6 +24,9 @@ namespace WorkingHours.Bll.AutoMapperConfig
                 .ForMember(p => p.Members, cfg => cfg.ResolveUsing<ProjectInfoResolver>());
             CreateMap<Issue, IssueHeader>();
             CreateMap<WorkTimeDto, WorkTime>();
+            CreateMap<WorkTime, WorkTimeDto>();
+            CreateMap<IPagedList<WorkTime>, PagedResult<WorkTimeDto>>()
+                .ConvertUsing<PagedListConverter<WorkTime, WorkTimeDto>>();
         }
     }
 }

@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Http;
 using WorkingHours.Bll.Interfaces;
 using WorkingHours.Model;
+using WorkingHours.Shared.Dto;
 using WorkingHours.Web.Extensions;
 
 namespace WorkingHours.Web.Controllers
@@ -23,7 +24,8 @@ namespace WorkingHours.Web.Controllers
         [AuthorizeRoles(Roles.Manager)]
         public IHttpActionResult ListUsers([FromUri] int? pageSize = null, [FromUri]int? pageIndex = null, [FromUri]string name = null)
         {
-            return Ok(UserManager.GetUsers(pageIndex ?? 1, pageSize ?? 10, name));
+            var pagingInfo = new PagingInfo {PageIndex = pageIndex ?? 1, PageSize = pageSize ?? 10};
+            return Ok(UserManager.GetUsers(pagingInfo, name));
         }
 
         [AuthorizeRoles(Roles.Manager)]

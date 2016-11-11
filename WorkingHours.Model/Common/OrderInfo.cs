@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace WorkingHours.Model.Common
 {
-    public class OrderInfo<T>
+    public class OrderInfo<T, TKey>
     {
-        public Expression<Func<T, object>> OrderBy { get; set; }
+        public Expression<Func<T, TKey>> OrderBy { get; set; }
 
         public SortDirection Direction { get; set; }
     }

@@ -10,5 +10,7 @@ namespace WorkingHours.Client.Interfaces
     public interface IWorkTimeManager : IManager
     {
         Task AddWorkTimeAsync(int issueId, WorkTimeDto workTime);
+
+        Task<PagedResult<WorkTimeDto>> GetMyWorkTimesAsync(int issueId, int pageSize, int pageIndex);
     }
 }

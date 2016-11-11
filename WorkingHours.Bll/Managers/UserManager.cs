@@ -47,15 +47,15 @@ namespace WorkingHours.Bll.Managers
             UoW.SaveChanges();
         }
 
-        public PagedResult<UserHeaderDto> GetUsers(int pageIndex, int pageSize, string nameFilter)
+        public PagedResult<UserHeaderDto> GetUsers(PagingInfo pagingInfo, string nameFilter)
         {
-            var orderInfo = new OrderInfo<ApplicationUser>
+            var orderInfo = new OrderInfo<ApplicationUser, string>
             {
                 Direction = SortDirection.Ascending,
                 OrderBy = x => x.FullName
             };
             var result = UoW.Users.ListPaged((nameFilter == null) ? null : ((Expression<Func<ApplicationUser, bool>>)(x => x.FullName.Contains(nameFilter) || x.UserName.Contains(nameFilter))),
-                pageIndex, pageSize, orderInfo, nameof(Roles));
+                pagingInfo.PageIndex, pagingInfo.PageSize, orderInfo, nameof(Roles));
             foreach (var applicationUser in result)
             {
                 applicationUser.Role = UoW.Users.GetRoles(applicationUser).First();
@@ -74,7 +74,7 @@ namespace WorkingHours.Bll.Managers
                 {
                     var dummy = new Project();
                     IEnumerable<Project> projects =
-                        UoW.Projects.List(
+                        UoW.Projects.List<object>(
                             x => x.AssociatedMembers.Any(m => m.UserId == userId && m.Role.Name == managerRole), null,
                             nameof(dummy.AssociatedMembers), nameof(dummy.AssociatedMembers) + ".Role");
                     if (projects.Any())

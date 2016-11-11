@@ -120,7 +120,7 @@ namespace WorkingHours.Bll.Managers
         public List<ProjectHeader> List(int userId)
         {
             var dummy = new Project();
-            var orderInfo = new OrderInfo<Project>
+            var orderInfo = new OrderInfo<Project, string>
             {
                 Direction = SortDirection.Ascending,
                 OrderBy = (x) => x.Name
