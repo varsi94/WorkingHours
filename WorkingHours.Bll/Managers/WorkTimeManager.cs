@@ -50,6 +50,28 @@ namespace WorkingHours.Bll.Managers
             UoW.SaveChanges();
         }
 
+        public void DeleteWorkTime(int userId, int workTimeId)
+        {
+            var workTime = UoW.WorkTimeLog.GetById(workTimeId);
+            if (workTime == null)
+            {
+                throw new NotFoundException("Worktime not found!");
+            }
+
+            if (workTime.EmployeeId != userId)
+            {
+                throw new UnauthorizedException("Worktime is not yours!");
+            }
+
+            if ((workTime.Date - timeService.Now).TotalDays > 7)
+            {
+                throw new InvalidOperationException();
+            }
+
+            UoW.WorkTimeLog.Remove(workTime);
+            UoW.SaveChanges();
+        }
+
         public PagedResult<WorkTimeDto> GetMyWorkTimes(int userId, int issueId, PagingInfo pagingInfo)
         {
             var dummy = new Issue();

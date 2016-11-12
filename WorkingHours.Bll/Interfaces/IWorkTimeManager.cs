@@ -16,5 +16,7 @@ namespace WorkingHours.Bll.Interfaces
         PagedResult<ManagerWorkTimeDto> GetWorkTimesForManager(int userId, int issueId, PagingInfo pagingInfo);
 
         void UpdateWorkTime(int userId, UpdateWorkTimeDto workTime);
+        
+        void DeleteWorkTime(int userId, int workTimeId);
     }
 }

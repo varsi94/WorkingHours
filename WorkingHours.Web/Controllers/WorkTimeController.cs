@@ -84,5 +84,23 @@ namespace WorkingHours.Web.Controllers
                 return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest, "You can update a work item in a week only!"));
             }
         }
+
+        [HttpDelete]
+        [Route("api/worktime/{workTimeId}")]
+        [Authorize]
+        public IHttpActionResult DeleteWorkTime(int workTimeId)
+        {
+            try
+            {
+                workTimeManager.DeleteWorkTime(User.Identity.GetUserId(), workTimeId);
+                return Ok();
+            }
+            catch (InvalidOperationException)
+            {
+                return
+                    ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.BadRequest,
+                        "You can update a work item in a week only!"));
+            }
+        }
     }
 }

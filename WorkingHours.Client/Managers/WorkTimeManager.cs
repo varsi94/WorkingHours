@@ -45,6 +45,23 @@ namespace WorkingHours.Client.Managers
             }
         }
 
+        public async Task DeleteWorkTimeAsync(int workTimeId)
+        {
+            using (var client = GetAuthenticatedClient())
+            {
+                var httpResult = await client.DeleteAsync($"/api/worktime/{workTimeId}");
+                var msg = await httpResult.Content.ReadAsAsync<ErrorMessage>();
+                if (httpResult.StatusCode == HttpStatusCode.NotFound)
+                {
+                    throw new ServerException("Worktime not found!");
+                }
+                else if (httpResult.StatusCode == HttpStatusCode.Unauthorized || httpResult.StatusCode == HttpStatusCode.BadRequest)
+                {
+                    throw new ServerException(msg.Message);
+                }
+            }
+        }
+
         public async Task<PagedResult<WorkTimeDto>> GetMyWorkTimesAsync(int issueId, int pageSize, int pageIndex)
         {
             using (var client = GetAuthenticatedClient())

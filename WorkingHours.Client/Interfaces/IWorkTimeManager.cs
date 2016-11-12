@@ -16,5 +16,7 @@ namespace WorkingHours.Client.Interfaces
         Task<PagedResult<ManagerWorkTimeDto>> GetWorkTimesForManagerAsync(int issueId, int pageSize, int pageIndex);
 
         Task UpdateWorkTimeAsync(UpdateWorkTimeDto workTime);
+
+        Task DeleteWorkTimeAsync(int workTimeId);
     }
 }
