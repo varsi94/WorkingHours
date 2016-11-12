@@ -114,5 +114,34 @@ namespace WorkingHours.Client.Managers
                 }
             }
         }
+
+        public async Task<byte[]> GetReportAsync(int projectId, DateTime? startDate = default(DateTime?), DateTime? endDate = default(DateTime?))
+        {
+            using (var client = GetAuthenticatedClient())
+            {
+                var httpResult =
+                    await client.GetAsync($"api/project/report/{projectId}/?startDate={startDate}&endDate={endDate}");
+
+                if (httpResult.IsSuccessStatusCode)
+                {
+                    return await httpResult.Content.ReadAsByteArrayAsync();
+                }
+                else
+                {
+                    if (httpResult.StatusCode == HttpStatusCode.NotFound)
+                    {
+                        throw new NotFoundException("Project not found!");
+                    }
+                    else if (httpResult.StatusCode == HttpStatusCode.Unauthorized)
+                    {
+                        throw new UnauthorizedAccessException();
+                    }
+                    else
+                    {
+                        throw new InvalidOperationException();
+                    }
+                }
+            }
+        }
     }
 }

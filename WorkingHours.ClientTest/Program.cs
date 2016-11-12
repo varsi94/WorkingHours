@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,11 +19,12 @@ namespace WorkingHours.ClientTest
             var accountManager = new AccountManager(new AppSettingsManager()) { LoginInfo = loginInfo };
             accountManager.LoginAsync("varsi.marci", "123456").Wait();
 
-            var workTimeManager = new WorkTimeManager(new AppSettingsManager()) {LoginInfo = loginInfo};
-            var result = workTimeManager.GetWorkTimesForManagerAsync(1, 10, 1).Result;
-
-            var ecsedi = result.Items.First(x => x.Employee.Username == "varsi.marci");
-            workTimeManager.DeleteWorkTimeAsync(ecsedi.Id).Wait();
+            var projectManager = new ProjectManager(new AppSettingsManager()) {LoginInfo = loginInfo};
+            var result = projectManager.GetReportAsync(1).Result;
+            using (var fs = new FileStream("output.docx", FileMode.Create))
+            {
+                fs.Write(result, 0, result.Length);
+            }
         }
     }
 }

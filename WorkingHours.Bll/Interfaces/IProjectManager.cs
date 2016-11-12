@@ -19,5 +19,7 @@ namespace WorkingHours.Bll.Interfaces
         void AddMembersToProject(int projectId, int managerId, Dictionary<int, Roles> users);
 
         void RemoveMembersFromProject(int projectId, int managerId, List<int> userIds);
+
+        byte[] GetReport(int userId, int projectId, DateTime? startDate, DateTime? endDate);
     }
 }

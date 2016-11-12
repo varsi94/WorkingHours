@@ -20,6 +20,7 @@ namespace WorkingHours.Bll.IoC
             Bind<IIssueManager>().To<IssueManager>().InTransientScope();
             Bind<IWorkTimeManager>().To<WorkTimeManager>().InTransientScope();
             Bind<ITimeService>().To<TimeService>().InTransientScope();
+            Bind<IReportingService>().To<ReportingService>().InTransientScope();
         }
     }
 }

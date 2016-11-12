@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Web;
 using System.Web.Http;
 using WorkingHours.Bll.Interfaces;
 using WorkingHours.Model;
@@ -13,11 +15,11 @@ namespace WorkingHours.Web.Controllers
 {
     public class ProjectController : ApiController
     {
-        private IProjectManager ProjectManager { get; }
+        private readonly IProjectManager projectManager;
 
         public ProjectController(IProjectManager projectManager)
         {
-            ProjectManager = projectManager;
+            this.projectManager = projectManager;
         }
 
         [HttpPost]
@@ -35,7 +37,7 @@ namespace WorkingHours.Web.Controllers
                 Name = projectHeader.Name,
                 Deadline = projectHeader.Deadline
             };
-            var id = ProjectManager.Add(project, User.Identity.GetUserId());
+            var id = projectManager.Add(project, User.Identity.GetUserId());
             return Created<object>(Url.Route(nameof(GetProjectInfo), new {id = id}), null);
         }
 
@@ -44,7 +46,7 @@ namespace WorkingHours.Web.Controllers
         [Authorize]
         public IHttpActionResult ListProjects()
         {
-            return Ok(ProjectManager.List(User.Identity.GetUserId()));
+            return Ok(projectManager.List(User.Identity.GetUserId()));
         }
 
         [HttpGet]
@@ -52,7 +54,7 @@ namespace WorkingHours.Web.Controllers
         [Authorize]
         public IHttpActionResult GetProjectInfo(int id)
         {
-            return Ok(ProjectManager.GetProjectInfo(id, User.Identity.GetUserId()));
+            return Ok(projectManager.GetProjectInfo(id, User.Identity.GetUserId()));
         }
 
         [HttpPost]
@@ -60,7 +62,7 @@ namespace WorkingHours.Web.Controllers
         [AuthorizeRoles(Roles.Manager)]
         public IHttpActionResult AddMembers(int projectId, Dictionary<int, Roles> membersToAdd)
         {
-            ProjectManager.AddMembersToProject(projectId, User.Identity.GetUserId(), membersToAdd);
+            projectManager.AddMembersToProject(projectId, User.Identity.GetUserId(), membersToAdd);
             return Ok();
         }
 
@@ -69,8 +71,20 @@ namespace WorkingHours.Web.Controllers
         [AuthorizeRoles(Roles.Manager)]
         public IHttpActionResult RemoveMembers(int projectId, List<int> membersToRemove)
         {
-            ProjectManager.RemoveMembersFromProject(projectId, User.Identity.GetUserId(), membersToRemove);
+            projectManager.RemoveMembersFromProject(projectId, User.Identity.GetUserId(), membersToRemove);
             return Ok();
+        }
+
+        [HttpGet]
+        [Route("api/project/report/{projectId}")]
+        [Authorize]
+        public IHttpActionResult GetReport(int projectId, [FromUri] DateTime? startDate = null, [FromUri] DateTime? endDate = null)
+        {
+            var message = new HttpResponseMessage(HttpStatusCode.OK);
+            message.Content =
+                new ByteArrayContent(projectManager.GetReport(User.Identity.GetUserId(), projectId, startDate, endDate));
+            message.Content.Headers.ContentType = new MediaTypeHeaderValue(MimeMapping.GetMimeMapping("valami.docx"));
+            return ResponseMessage(message);
         }
     }
 }

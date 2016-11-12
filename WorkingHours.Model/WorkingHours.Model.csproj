@@ -57,6 +57,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -83,7 +84,9 @@
     <Compile Include="Repository\IDbEntity.cs" />
     <Compile Include="Repository\IRepository.cs" />
     <Compile Include="Repository\IRoleRepository.cs" />
+    <Compile Include="Repository\IWorkTimeRepository.cs" />
     <Compile Include="Repository\RoleRepository.cs" />
+    <Compile Include="Repository\WorkTimeRepository.cs" />
     <Compile Include="Roles.cs" />
     <Compile Include="UoW\IUnitOfWork.cs" />
     <Compile Include="Repository\IUserRepository.cs" />

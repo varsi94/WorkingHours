@@ -20,7 +20,7 @@ namespace WorkingHours.Model.UoW
 
         public IRepository<Issue> Issues { get; }
 
-        public IRepository<WorkTime> WorkTimeLog { get; }
+        public IWorkTimeRepository WorkTimeLog { get; }
 
         public IRoleRepository Roles { get; }
 
@@ -30,7 +30,7 @@ namespace WorkingHours.Model.UoW
             Users = new UserRepository(dbContext);
             Projects = new GenericRepository<Project>(dbContext);
             Issues = new GenericRepository<Issue>(dbContext);
-            WorkTimeLog = new GenericRepository<WorkTime>(dbContext);
+            WorkTimeLog = new WorkTimeRepository(dbContext);
             Roles = new RoleRepository(dbContext);
         }
 

@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WorkingHours.Bll.Exceptions;
 using WorkingHours.Bll.Interfaces;
+using WorkingHours.Bll.Model;
 using WorkingHours.Model;
 using WorkingHours.Model.Common;
 using WorkingHours.Model.UoW;
@@ -15,8 +16,11 @@ namespace WorkingHours.Bll.Managers
 {
     public class ProjectManager : ManagerBase, IProjectManager
     {
-        public ProjectManager(IUnitOfWork UoW) : base(UoW)
+        private readonly IReportingService reportingService;
+
+        public ProjectManager(IUnitOfWork UoW, IReportingService reportingService) : base(UoW)
         {
+            this.reportingService = reportingService;
         }
 
         public int Add(Project project, int managerId)
@@ -133,6 +137,36 @@ namespace WorkingHours.Bll.Managers
         public void RemoveMembersFromProject(int projectId, int managerId, List<int> userIds)
         {
             UpdateMembersForProject(projectId, managerId, userIds.ToDictionary(x => x, y => (Roles?)null), false);
+        }
+
+        public byte[] GetReport(int userId, int projectId, DateTime? startDate, DateTime? endDate)
+        {
+            var user = UoW.Users.GetById(userId);
+            var dummy = new Project();
+            var project =
+                UoW.Projects.List<object>(x => x.Id == projectId, propsToInclude: new[] {nameof(dummy.AssociatedMembers)})
+                    .SingleOrDefault();
+            if (project == null)
+            {
+                throw new NotFoundException("Project not found!");
+            }
+
+            if (!project.AssociatedMembers.Any(x => x.UserId == userId))
+            {
+                throw new UnauthorizedException("You are not associated to this project!");
+            }
+
+            var items = UoW.WorkTimeLog.GetWorkTimesForProject(projectId, userId, startDate, endDate);
+            var reportData = new ReportData
+            {
+                StartDate = startDate,
+                EndDate = endDate,
+                User = user,
+                Project = project,
+                WorkTimeList = items
+            };
+
+            return reportingService.GetProjectWorkTimeReport(reportData);
         }
     }
 }

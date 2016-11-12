@@ -17,5 +17,7 @@ namespace WorkingHours.Client.Interfaces
         Task<ProjectInfo> GetProjectAsync(int id);
 
         Task AddMembersToProjectAsync(int projectId, Dictionary<int, Roles> membersToAdd);
+
+        Task<byte[]> GetReportAsync(int projectId, DateTime? startDate = null, DateTime? endDate = null);
     }
 }
