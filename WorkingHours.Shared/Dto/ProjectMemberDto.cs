@@ -19,7 +19,7 @@ namespace WorkingHours.Shared.Dto
         }
 
         [JsonIgnore]
-        public Roles RoleInPorjectEnum
+        public Roles RoleInProjectEnum
         {
             get { return roleInProjectEnum; }
             set { roleInProjectEnum = value; }

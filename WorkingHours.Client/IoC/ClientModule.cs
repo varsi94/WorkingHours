@@ -19,6 +19,7 @@ namespace WorkingHours.Client.IoC
             Bind<IAppSettingsManager>().To<AppSettingsManager>().InSingletonScope();
             Bind<IProjectManager>().To<ProjectManager>().InTransientScope();
             Bind<IUserManager>().To<UserManager>().InTransientScope();
+            Bind<IIssueManager>().To<IssueManager>().InTransientScope();
         }
     }
 }

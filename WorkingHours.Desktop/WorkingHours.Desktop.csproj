@@ -100,6 +100,9 @@
     <Compile Include="Controls\LoginControl.xaml.cs">
       <DependentUpon>LoginControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ManageIssuesControl.xaml.cs">
+      <DependentUpon>ManageIssuesControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ProjectControl.xaml.cs">
       <DependentUpon>ProjectControl.xaml</DependentUpon>
     </Compile>
@@ -123,6 +126,7 @@
     <Compile Include="Interfaces\ViewModels\IChangePasswordViewModel.cs" />
     <Compile Include="Interfaces\ViewModels\ILoadAwareViewModel.cs" />
     <Compile Include="Interfaces\ViewModels\IMainViewModel.cs" />
+    <Compile Include="Interfaces\ViewModels\IManageIssuesViewModel.cs" />
     <Compile Include="Interfaces\ViewModels\IManageUsersViewModel.cs" />
     <Compile Include="Interfaces\ViewModels\INewProjectViewModel.cs" />
     <Compile Include="Interfaces\ViewModels\IProjectViewModel.cs" />
@@ -131,8 +135,10 @@
     <Compile Include="Services\DialogService.cs" />
     <Compile Include="Interfaces\Services\ILoadingService.cs" />
     <Compile Include="ViewModel\ChangePasswordViewModel.cs" />
+    <Compile Include="ViewModel\IssueViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\ManageIssuesViewModel.cs" />
     <Compile Include="ViewModel\ManageUsersViewModel.cs" />
     <Compile Include="ViewModel\NewProjectDialogViewModel.cs" />
     <Compile Include="ViewModel\ProjectViewModel.cs" />
@@ -147,6 +153,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\LoginControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ManageIssuesControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -234,6 +244,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\refresh.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\lock.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

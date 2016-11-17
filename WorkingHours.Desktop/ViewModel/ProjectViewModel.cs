@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using WorkingHours.Client.Interfaces;
 using WorkingHours.Client.Model;
 using WorkingHours.Desktop.Common;
+using WorkingHours.Desktop.Interfaces.Services;
 using WorkingHours.Desktop.Interfaces.ViewModels;
 using WorkingHours.Shared.Dto;
 using WorkingHours.Shared.Model;
@@ -21,6 +22,7 @@ namespace WorkingHours.Desktop.ViewModel
         private readonly LoginInfo loginInfo;
         
         private Roles roleInProject;
+        private readonly ILoadingService loadingService;
 
         public Roles RoleInProject
         {
@@ -29,11 +31,32 @@ namespace WorkingHours.Desktop.ViewModel
             private set { Set(ref roleInProject, value); }
         }
 
-        public ProjectViewModel(LoginInfo loginInfo, IProjectManager projectManager)
+        public ProjectViewModel(LoginInfo loginInfo, IProjectManager projectManager, ILoadingService loadingService)
         {
             MessengerInstance.Register<NotificationMessage<ProjectHeader>>(this, MessageTokens.CurrentProjectChanged, CurrentProjectChanged);
+            MessengerInstance.Register<NotificationMessage>(this, MessageTokens.ReloadProjectToken, ReloadProject);
             this.projectManager = projectManager;
             this.loginInfo = loginInfo;
+            RoleInProject = Roles.Employee;
+            this.loadingService = loadingService;
+        }
+
+        private async void ReloadProject(NotificationMessage obj)
+        {
+            if (selectedProject == null)
+            {
+                return;
+            }
+
+            await LoadProjectAsync(selectedProject.Id);
+        }
+
+        private async Task LoadProjectAsync(int id)
+        {
+            loadingService.ShowIndicator("Loading project...");
+            selectedProject = await projectManager.GetProjectAsync(id);
+            MessengerInstance.Send(new NotificationMessage<ProjectInfo>(selectedProject, null), MessageTokens.ReceiveIssuesToken);
+            loadingService.HideIndicator();
         }
 
         private async void CurrentProjectChanged(NotificationMessage<ProjectHeader> obj)
@@ -44,8 +67,8 @@ namespace WorkingHours.Desktop.ViewModel
             }
             else
             {
-                selectedProject = await projectManager.GetProjectAsync(obj.Content.Id);
-                RoleInProject = (Roles)Enum.Parse(typeof(Roles), selectedProject.Members.SingleOrDefault(x => x.Id == loginInfo.Id).Role);
+                await LoadProjectAsync(obj.Content.Id);
+                RoleInProject = selectedProject.Members.SingleOrDefault(x => x.Id == loginInfo.Id).RoleInProjectEnum;
             }
         }
     }

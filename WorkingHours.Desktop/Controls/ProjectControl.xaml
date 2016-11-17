@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:WorkingHours.Desktop.Controls"
              xmlns:ioc="clr-namespace:WorkingHours.Desktop.IoC"
              xmlns:vm="clr-namespace:WorkingHours.Desktop.Interfaces.ViewModels"
+             xmlns:cntrl="clr-namespace:WorkingHours.Desktop.Controls"
              mc:Ignorable="d"
              d:DesignHeight="300"
              d:DesignWidth="300">
@@ -19,7 +20,9 @@
                 <TabItem Header="Associated members">
                 </TabItem>
                 <TabItem Visibility="{Binding RoleInProject, Converter={StaticResource RoleToVisibilityConverter}}"
-                         Header="Manage issues" />
+                         Header="Manage issues">
+                    <cntrl:ManageIssuesControl />
+                </TabItem>
             </TabControl.Items>
         </TabControl>
     </Grid>

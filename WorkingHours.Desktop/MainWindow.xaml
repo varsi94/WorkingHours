@@ -40,19 +40,25 @@
                             BorderThickness="0"
                             Background="White"
                             Cursor="Hand">
-                        <Image Source="Assets/add.png"
-                               Width="30"
-                               RenderOptions.BitmapScalingMode="HighQuality"
-                               Height="30" />
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="Assets/add.png"
+                                   Width="20"
+                                   RenderOptions.BitmapScalingMode="HighQuality"
+                                   Height="20" />
+                            <TextBlock Margin="2 0 2 0">New project</TextBlock>
+                        </StackPanel>
                     </Button>
                     <Button Command="{Binding RefreshCommand}"
                             BorderThickness="0"
                             Background="White"
                             Cursor="Hand">
-                        <Image Source="Assets/refresh.png"
-                               RenderOptions.BitmapScalingMode="HighQuality"
-                               Width="30"
-                               Height="30" />
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="Assets/refresh.png"
+                                   Width="20"
+                                   RenderOptions.BitmapScalingMode="HighQuality"
+                                   Height="20" />
+                            <TextBlock Margin="2 0 2 0">Reload projects</TextBlock>
+                        </StackPanel>
                     </Button>
                 </StackPanel>
                 <ListView ItemsSource="{Binding MyProjects}"

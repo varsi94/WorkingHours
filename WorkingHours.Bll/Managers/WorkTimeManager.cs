@@ -115,7 +115,7 @@ namespace WorkingHours.Bll.Managers
             foreach (var managerWorkTimeDto in result.Items)
             {
                 var userProject = issue.Project.AssociatedMembers.Single(x => x.UserId == managerWorkTimeDto.Employee.Id);
-                managerWorkTimeDto.Employee.RoleInPorjectEnum =
+                managerWorkTimeDto.Employee.RoleInProjectEnum =
                     (userProject.RoleId == managerRole.Id)
                         ? Shared.Model.Roles.Manager
                         : Shared.Model.Roles.Employee;

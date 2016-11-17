@@ -8,6 +8,9 @@
     <local:BooleanToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter"
                                         FalseValue="Visible"
                                         TrueValue="Collapsed" />
+    <local:BooleanToVisibilityConverter x:Key="HiddenBoolToVisiblityConverter"
+                                        FalseValue="Hidden"
+                                        TrueValue="Visible"/>
     <local:RoleToVisibilityConverter x:Key="RoleToVisibilityConverter"
                                      ManagerValue="Visible"
                                      EmployeeValue="Collapsed" />
