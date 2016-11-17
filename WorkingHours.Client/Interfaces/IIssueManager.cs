@@ -9,6 +9,8 @@ namespace WorkingHours.Client.Interfaces
 {
     public interface IIssueManager : IManager
     {
-        Task CreateIssueForProject(int projectId, IssueHeader issue);
+        Task CreateIssueForProjectAsync(int projectId, IssueHeader issue);
+
+        Task UpdateIssueAsync(IssueHeader issue);
     }
 }

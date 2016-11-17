@@ -40,5 +40,28 @@ namespace WorkingHours.Web.Controllers
             IssueManager.AddIssueToProject(projectId, issue, User.Identity.GetUserId());
             return Ok();
         }
+
+        [HttpPut]
+        [AuthorizeRoles(Roles.Manager)]
+        [Route("api/issue/")]
+        public IHttpActionResult UpdateIssue([FromBody] IssueHeader issueHeader)
+        {
+            if (!ModelState.IsValid)
+            {
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState));
+            }
+
+            var issue = new Issue
+            {
+                Deadline = issueHeader.Deadline,
+                Description = issueHeader.Description,
+                IsClosed = issueHeader.IsClosed,
+                Name = issueHeader.Name,
+                Id = issueHeader.Id,
+                RowVersion = issueHeader.RowVersion
+            };
+            IssueManager.UpdateIssue(User.Identity.GetUserId(), issue);
+            return Ok();
+        }
     }
 }

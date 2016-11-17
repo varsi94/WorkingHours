@@ -10,5 +10,7 @@ namespace WorkingHours.Bll.Interfaces
     public interface IIssueManager
     {
         void AddIssueToProject(int projectId, Issue issue, int managerId);
+
+        void UpdateIssue(int managerId, Issue issue);
     }
 }

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using WorkingHours.Bll.Exceptions;
 using WorkingHours.Bll.Interfaces;
 using WorkingHours.Model;
+using WorkingHours.Model.Exceptions;
 using WorkingHours.Model.UoW;
 
 namespace WorkingHours.Bll.Managers
@@ -32,6 +33,37 @@ namespace WorkingHours.Bll.Managers
 
             project.Issues.Add(issue);
             UoW.SaveChanges();
+        }
+
+        public void UpdateIssue(int managerId, Issue issue)
+        {
+            try
+            {
+                var managerRole = UoW.Roles.GetRole(Roles.Manager);
+                var issueFromDb = UoW.Issues.GetById(issue.Id, nameof(issue.Project) + "." + nameof(issue.Project.AssociatedMembers));
+                if (issueFromDb == null)
+                {
+                    throw new NotFoundException("Issue not found!");
+                }
+
+                if (!issueFromDb.Project.AssociatedMembers.Any(x => x.UserId == managerId && x.RoleId == managerRole.Id))
+                {
+                    throw new UnauthorizedException("You are not a manager in this project!");
+                }
+
+                issueFromDb.RowVersion = issue.RowVersion;
+                issueFromDb.Name = issue.Name;
+                issueFromDb.Deadline = issue.Deadline;
+                issueFromDb.Description = issue.Description;
+                issueFromDb.IsClosed = issue.IsClosed;
+
+                UoW.Issues.Update(issueFromDb);
+                UoW.SaveChanges();
+            }
+            catch (ConcurrencyException)
+            {
+                throw new ConflictedException("Issue has been changed!");
+            }
         }
     }
 }

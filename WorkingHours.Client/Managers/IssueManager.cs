@@ -19,7 +19,7 @@ namespace WorkingHours.Client.Managers
         {
         }
 
-        public async Task CreateIssueForProject(int projectId, IssueHeader issue)
+        public async Task CreateIssueForProjectAsync(int projectId, IssueHeader issue)
         {
             if (LoginInfo.Role != Shared.Model.Roles.Manager)
             {
@@ -43,6 +43,39 @@ namespace WorkingHours.Client.Managers
                     else if (httpResult.StatusCode == HttpStatusCode.NotFound)
                     {
                         throw new NotFoundException("Project not found!");
+                    }
+                }
+            }
+        }
+
+        public async Task UpdateIssueAsync(IssueHeader issue)
+        {
+            if (LoginInfo.Role != Shared.Model.Roles.Manager)
+            {
+                throw new UnauthorizedAccessException();
+            }
+
+            using (var client = GetAuthenticatedClient())
+            {
+                var httpResult = await client.PutAsJsonAsync("api/issue", issue);
+                if (!httpResult.IsSuccessStatusCode)
+                {
+                    if (httpResult.StatusCode == HttpStatusCode.BadRequest)
+                    {
+                        throw new ModelStateException("Model is not valid!",
+                            await httpResult.Content.ReadAsAsync<ModelState>());
+                    }
+                    else if (httpResult.StatusCode == HttpStatusCode.Unauthorized)
+                    {
+                        throw new UnauthorizedAccessException();
+                    }
+                    else if (httpResult.StatusCode == HttpStatusCode.NotFound)
+                    {
+                        throw new NotFoundException("Issue not found!");
+                    }
+                    else if (httpResult.StatusCode == HttpStatusCode.Conflict)
+                    {
+                        throw new ServerException("Conflicting edit!");
                     }
                 }
             }

@@ -15,5 +15,7 @@ namespace WorkingHours.Shared.Dto
         public string Description { get; set; }
 
         public DateTime? Deadline { get; set; }
+
+        public byte[] RowVersion { get; set; }
     }
 }

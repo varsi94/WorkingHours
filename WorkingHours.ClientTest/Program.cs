@@ -20,11 +20,15 @@ namespace WorkingHours.ClientTest
             accountManager.LoginAsync("varsi.marci", "123456").Wait();
 
             var projectManager = new ProjectManager(new AppSettingsManager()) {LoginInfo = loginInfo};
-            var result = projectManager.GetReportAsync(1).Result;
-            using (var fs = new FileStream("output.docx", FileMode.Create))
-            {
-                fs.Write(result, 0, result.Length);
-            }
+            var result = projectManager.GetProjectAsync(1).Result;
+            var issue = result.Issues.First();
+            issue.Name = "First issue updated";
+            issue.Description = "Dummy description";
+            issue.Deadline = new DateTime(2017, 1, 1);
+            issue.RowVersion = new byte[8];
+
+            var issueManager = new IssueManager(new AppSettingsManager()) {LoginInfo = loginInfo};
+            issueManager.UpdateIssueAsync(issue).Wait();
         }
     }
 }
