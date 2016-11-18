@@ -19,16 +19,8 @@ namespace WorkingHours.ClientTest
             var accountManager = new AccountManager(new AppSettingsManager()) { LoginInfo = loginInfo };
             accountManager.LoginAsync("varsi.marci", "123456").Wait();
 
-            var projectManager = new ProjectManager(new AppSettingsManager()) {LoginInfo = loginInfo};
-            var result = projectManager.GetProjectAsync(1).Result;
-            var issue = result.Issues.First();
-            issue.Name = "First issue updated";
-            issue.Description = "Dummy description";
-            issue.Deadline = new DateTime(2017, 1, 1);
-            issue.RowVersion = new byte[8];
-
-            var issueManager = new IssueManager(new AppSettingsManager()) {LoginInfo = loginInfo};
-            issueManager.UpdateIssueAsync(issue).Wait();
+            var workTimeManager = new WorkTimeManager(new AppSettingsManager()) {LoginInfo = loginInfo};
+            var result = workTimeManager.GetMyWorkTimesAsync(1, 10, 1).Result;
         }
     }
 }

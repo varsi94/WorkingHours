@@ -17,10 +17,12 @@ namespace WorkingHours.Bll.Managers
     public class WorkTimeManager : ManagerBase, IWorkTimeManager
     {
         private readonly ITimeService timeService;
+        private readonly IServerConfigurationManager configurationManager;
 
-        public WorkTimeManager(IUnitOfWork UoW, ITimeService timeService) : base(UoW)
+        public WorkTimeManager(IUnitOfWork UoW, ITimeService timeService, IServerConfigurationManager configurationManager) : base(UoW)
         {
             this.timeService = timeService;
+            this.configurationManager = configurationManager;
         }
 
         public void AddWorkItem(int issueId, int userId, WorkTimeDto workTime)
@@ -64,7 +66,7 @@ namespace WorkingHours.Bll.Managers
                 throw new UnauthorizedException("Worktime is not yours!");
             }
 
-            if ((workTime.Date - timeService.Now).TotalDays > 7)
+            if ((timeService.Now - workTime.Date).TotalDays > configurationManager.WorkTimeUpdateIntervalInDays)
             {
                 throw new InvalidOperationException();
             }
@@ -95,7 +97,12 @@ namespace WorkingHours.Bll.Managers
             var orderInfo = new OrderInfo<WorkTime, DateTime> {Direction = SortDirection.Descending, OrderBy = x => x.Date};
             var list = UoW.WorkTimeLog.ListPaged(x => x.EmployeeId == userId && x.IssueId == issueId,
                 pagingInfo.PageIndex, pagingInfo.PageSize, orderInfo);
-            return Mapper.Map<PagedResult<WorkTimeDto>>(list);
+            var result = Mapper.Map<PagedResult<WorkTimeDto>>(list);
+            foreach (var workTime in result.Items)
+            {
+                workTime.CanUpdate = (timeService.Now - workTime.Date).TotalDays < configurationManager.WorkTimeUpdateIntervalInDays;
+            }
+            return result;
         }
 
         public PagedResult<ManagerWorkTimeDto> GetWorkTimesForManager(int userId, int issueId, PagingInfo pagingInfo)
@@ -127,6 +134,8 @@ namespace WorkingHours.Bll.Managers
                         : Shared.Model.Roles.Employee;
 
                 managerWorkTimeDto.Employee.IsActive = userProject.IsActive;
+                managerWorkTimeDto.CanUpdate = managerWorkTimeDto.Employee.Id == userId &&
+                                               (timeService.Now - managerWorkTimeDto.Date).TotalDays < configurationManager.WorkTimeUpdateIntervalInDays;
             }
 
             return result;
@@ -134,7 +143,7 @@ namespace WorkingHours.Bll.Managers
 
         public void UpdateWorkTime(int userId, UpdateWorkTimeDto workTime)
         {
-            if ((workTime.Date - timeService.Now).TotalDays > 7)
+            if ((timeService.Now - workTime.Date).TotalDays > configurationManager.WorkTimeUpdateIntervalInDays)
             {
                 throw new InvalidOperationException();
             }

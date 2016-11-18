@@ -84,6 +84,7 @@
     <Compile Include="Interfaces\IIssueManager.cs" />
     <Compile Include="Interfaces\IProjectManager.cs" />
     <Compile Include="Interfaces\IReportingService.cs" />
+    <Compile Include="Interfaces\IServerConfigurationManager.cs" />
     <Compile Include="Interfaces\ITimeService.cs" />
     <Compile Include="Interfaces\IUserManager.cs" />
     <Compile Include="Interfaces\IWorkTimeManager.cs" />

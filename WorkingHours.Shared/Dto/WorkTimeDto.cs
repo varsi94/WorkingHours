@@ -21,5 +21,7 @@ namespace WorkingHours.Shared.Dto
         public double Hours { get; set; }
 
         public byte[] RowVersion { get; set; }
+
+        public bool CanUpdate { get; set; }
     }
 }
