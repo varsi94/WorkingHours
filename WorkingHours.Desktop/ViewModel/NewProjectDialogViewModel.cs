@@ -5,9 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WorkingHours.Client.Interfaces;
-using WorkingHours.Desktop.Common;
+using WorkingHours.Desktop.Messaging;
 using WorkingHours.Desktop.Interfaces.ViewModels;
 using WorkingHours.Shared.Dto;
+using WorkingHours.Desktop.Common;
 
 namespace WorkingHours.Desktop.ViewModel
 {

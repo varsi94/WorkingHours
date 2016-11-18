@@ -4,8 +4,9 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WorkingHours.Desktop.Common;
+using WorkingHours.Desktop.Messaging;
 using WorkingHours.Desktop.Interfaces.ViewModels;
+using WorkingHours.Desktop.Common;
 
 namespace WorkingHours.Desktop.ViewModel
 {

@@ -91,7 +91,7 @@
     <Compile Include="Behaviors\PasswordBoxBinding.cs" />
     <Compile Include="Common\ILoadAware.cs" />
     <Compile Include="Common\LoadAwareViewModelBase.cs" />
-    <Compile Include="Common\MessageTokens.cs" />
+    <Compile Include="Messaging\MessageTokens.cs" />
     <Compile Include="Common\UserControlEx.cs" />
     <Compile Include="Common\ValidatableViewModelBase.cs" />
     <Compile Include="Controls\AddProjectControl.xaml.cs">

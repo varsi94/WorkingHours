@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using WorkingHours.Client.Interfaces;
-using WorkingHours.Desktop.Common;
+using WorkingHours.Desktop.Messaging;
 using WorkingHours.Desktop.Interfaces.Services;
 using WorkingHours.Desktop.Interfaces.ViewModels;
 

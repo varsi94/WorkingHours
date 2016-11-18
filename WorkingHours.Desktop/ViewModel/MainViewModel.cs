@@ -9,7 +9,7 @@ using System.Windows.Input;
 using GalaSoft.MvvmLight.CommandWpf;
 using WorkingHours.Client.Interfaces;
 using GalaSoft.MvvmLight.Messaging;
-using WorkingHours.Desktop.Common;
+using WorkingHours.Desktop.Messaging;
 using WorkingHours.Client.Model;
 using WorkingHours.Shared.Dto;
 using System.Collections.ObjectModel;

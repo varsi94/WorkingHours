@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WorkingHours.Desktop.Common
+namespace WorkingHours.Desktop.Messaging
 {
     public static class MessageTokens
     {
@@ -16,7 +16,7 @@ namespace WorkingHours.Desktop.Common
 
         public static object CurrentProjectChanged { get; } = new object();
 
-        public static object ReceiveIssuesToken { get; } = new object();
+        public static object ProjectLoadedToken { get; } = new object();
 
         public static object ReloadProjectToken { get; } = new object();
     }

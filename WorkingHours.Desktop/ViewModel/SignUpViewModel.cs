@@ -11,11 +11,12 @@ using GalaSoft.MvvmLight.CommandWpf;
 using WorkingHours.Client.Model;
 using WorkingHours.Client.Exceptions;
 using GalaSoft.MvvmLight.Messaging;
-using WorkingHours.Desktop.Common;
+using WorkingHours.Desktop.Messaging;
 using WorkingHours.Desktop.Interfaces.Services;
 using WorkingHours.Desktop.Services;
 using System.ComponentModel.DataAnnotations;
 using WorkingHours.Shared.Dto;
+using WorkingHours.Desktop.Common;
 
 namespace WorkingHours.Desktop.ViewModel
 {

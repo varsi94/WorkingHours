@@ -8,7 +8,7 @@ using WorkingHours.Desktop.Interfaces.ViewModels;
 using System.Collections.ObjectModel;
 using GalaSoft.MvvmLight.Messaging;
 using WorkingHours.Shared.Dto;
-using WorkingHours.Desktop.Common;
+using WorkingHours.Desktop.Messaging;
 using System.Windows.Input;
 using WorkingHours.Client.Interfaces;
 using GalaSoft.MvvmLight.CommandWpf;
@@ -21,7 +21,6 @@ namespace WorkingHours.Desktop.ViewModel
     {
         private readonly IDialogService dialogService;
         private readonly ILoadingService loadingService;
-        private ProjectInfo project;
         private bool isNew = false;
         private readonly IIssueManager issueManager;
         private ObservableCollection<IssueViewModel> issues;
@@ -62,7 +61,6 @@ namespace WorkingHours.Desktop.ViewModel
 
         public ManageIssuesViewModel(IIssueManager issueManager, ILoadingService loadingService, IDialogService dialogService)
         {
-            MessengerInstance.Register<NotificationMessage<ProjectInfo>>(this, MessageTokens.ReceiveIssuesToken, ReceiveIssues);
             SaveCommand = new RelayCommand(ExecuteSaveCommand);
             NewIssueCommand = new RelayCommand(ExecuteNewIssueCommand);
             IssueSelectedCommand = new RelayCommand<IssueViewModel>(ExecuteIssueSelectedCommand);
@@ -118,7 +116,7 @@ namespace WorkingHours.Desktop.ViewModel
                 loadingService.ShowIndicator("Saving...");
                 if (isNew)
                 {
-                    await issueManager.CreateIssueForProjectAsync(project.Id, SelectedIssue.GetIssueHeader());
+                    await issueManager.CreateIssueForProjectAsync(CurrentProject.Id, SelectedIssue.GetIssueHeader());
                 }
                 else
                 {
@@ -138,12 +136,6 @@ namespace WorkingHours.Desktop.ViewModel
             }
         }
 
-        private void ReceiveIssues(NotificationMessage<ProjectInfo> obj)
-        {
-            project = obj.Content;
-            Issues = new ObservableCollection<IssueViewModel>(obj.Content.Issues.Select(x => new IssueViewModel(x)));
-        }
-
         public override Task OnHidden()
         {
             if (SelectedIssue != null)
@@ -151,6 +143,13 @@ namespace WorkingHours.Desktop.ViewModel
                 SelectedIssue.CancelEdit();
             }
             return base.OnHidden();
+        }
+
+        protected override Task OnProjectChanged()
+        {
+            Issues =
+                new ObservableCollection<IssueViewModel>(CurrentProject.Issues.Select(x => new IssueViewModel(x)));
+            return base.OnProjectChanged();
         }
     }
 }

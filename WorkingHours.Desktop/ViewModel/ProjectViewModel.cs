@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WorkingHours.Client.Interfaces;
 using WorkingHours.Client.Model;
-using WorkingHours.Desktop.Common;
+using WorkingHours.Desktop.Messaging;
 using WorkingHours.Desktop.Interfaces.Services;
 using WorkingHours.Desktop.Interfaces.ViewModels;
 using WorkingHours.Shared.Dto;
@@ -49,13 +49,14 @@ namespace WorkingHours.Desktop.ViewModel
             }
 
             await LoadProjectAsync(selectedProject.Id);
+            MessengerInstance.Send(new NotificationMessage<ProjectInfo>(selectedProject, null),
+                MessageTokens.ProjectLoadedToken);
         }
 
         private async Task LoadProjectAsync(int id)
         {
             loadingService.ShowIndicator("Loading project...");
             selectedProject = await projectManager.GetProjectAsync(id);
-            MessengerInstance.Send(new NotificationMessage<ProjectInfo>(selectedProject, null), MessageTokens.ReceiveIssuesToken);
             loadingService.HideIndicator();
         }
 
