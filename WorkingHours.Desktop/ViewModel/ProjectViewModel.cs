@@ -49,8 +49,6 @@ namespace WorkingHours.Desktop.ViewModel
             }
 
             await LoadProjectAsync(selectedProject.Id);
-            MessengerInstance.Send(new NotificationMessage<ProjectInfo>(selectedProject, null),
-                MessageTokens.ProjectLoadedToken);
         }
 
         private async Task LoadProjectAsync(int id)
@@ -58,6 +56,8 @@ namespace WorkingHours.Desktop.ViewModel
             loadingService.ShowIndicator("Loading project...");
             selectedProject = await projectManager.GetProjectAsync(id);
             loadingService.HideIndicator();
+            MessengerInstance.Send(new NotificationMessage<ProjectInfo>(selectedProject, null),
+                MessageTokens.ProjectLoadedToken);
         }
 
         private async void CurrentProjectChanged(NotificationMessage<ProjectHeader> obj)
