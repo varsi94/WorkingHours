@@ -12,13 +12,14 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WorkingHours.Desktop.Common;
 
 namespace WorkingHours.Desktop.Controls
 {
     /// <summary>
     /// Interaction logic for ManageIssuesControl.xaml
     /// </summary>
-    public partial class ManageIssuesControl : UserControl
+    public partial class ManageIssuesControl : UserControlEx
     {
         public ManageIssuesControl()
         {

@@ -17,7 +17,7 @@ using WorkingHours.Desktop.Interfaces.Services;
 
 namespace WorkingHours.Desktop.ViewModel
 {
-    public class ManageIssuesViewModel : ViewModelBase, IManageIssuesViewModel
+    public class ManageIssuesViewModel : TabViewModelBase, IManageIssuesViewModel
     {
         private readonly IDialogService dialogService;
         private readonly ILoadingService loadingService;
@@ -142,6 +142,15 @@ namespace WorkingHours.Desktop.ViewModel
         {
             project = obj.Content;
             Issues = new ObservableCollection<IssueViewModel>(obj.Content.Issues.Select(x => new IssueViewModel(x)));
+        }
+
+        public override Task OnHidden()
+        {
+            if (SelectedIssue != null)
+            {
+                SelectedIssue.CancelEdit();
+            }
+            return base.OnHidden();
         }
     }
 }

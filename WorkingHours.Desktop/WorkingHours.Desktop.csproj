@@ -89,7 +89,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Behaviors\PasswordBoxBinding.cs" />
+    <Compile Include="Common\ILoadAware.cs" />
+    <Compile Include="Common\LoadAwareViewModelBase.cs" />
     <Compile Include="Common\MessageTokens.cs" />
+    <Compile Include="Common\UserControlEx.cs" />
     <Compile Include="Common\ValidatableViewModelBase.cs" />
     <Compile Include="Controls\AddProjectControl.xaml.cs">
       <DependentUpon>AddProjectControl.xaml</DependentUpon>
@@ -143,6 +146,7 @@
     <Compile Include="ViewModel\NewProjectDialogViewModel.cs" />
     <Compile Include="ViewModel\ProjectViewModel.cs" />
     <Compile Include="ViewModel\SignUpViewModel.cs" />
+    <Compile Include="ViewModel\TabViewModelBase.cs" />
     <Compile Include="ViewModel\UserViewModel.cs" />
     <Page Include="Controls\AddProjectControl.xaml">
       <SubType>Designer</SubType>
