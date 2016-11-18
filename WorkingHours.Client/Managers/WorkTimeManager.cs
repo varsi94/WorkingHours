@@ -39,7 +39,7 @@ namespace WorkingHours.Client.Managers
                     }
                     else if (httpResult.StatusCode == HttpStatusCode.Unauthorized)
                     {
-                        throw new UnauthorizedAccessException();
+                        throw new UnauthorizedAccessException((await httpResult.Content.ReadAsAsync<ErrorMessage>()).Message);
                     }
                 }
             }
@@ -55,7 +55,11 @@ namespace WorkingHours.Client.Managers
                 {
                     throw new ServerException("Worktime not found!");
                 }
-                else if (httpResult.StatusCode == HttpStatusCode.Unauthorized || httpResult.StatusCode == HttpStatusCode.BadRequest)
+                else if (httpResult.StatusCode == HttpStatusCode.Unauthorized)
+                {
+                    throw new UnauthorizedAccessException(msg.Message);
+                }
+                else if (httpResult.StatusCode == HttpStatusCode.BadRequest)
                 {
                     throw new ServerException(msg.Message);
                 }

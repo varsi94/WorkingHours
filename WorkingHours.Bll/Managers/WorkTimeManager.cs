@@ -52,7 +52,8 @@ namespace WorkingHours.Bll.Managers
 
         public void DeleteWorkTime(int userId, int workTimeId)
         {
-            var workTime = UoW.WorkTimeLog.GetById(workTimeId);
+            var dummy = new WorkTime();
+            var workTime = UoW.WorkTimeLog.GetById(workTimeId, nameof(dummy.Issue) + "." + nameof(dummy.Issue.Project));
             if (workTime == null)
             {
                 throw new NotFoundException("Worktime not found!");
@@ -66,6 +67,11 @@ namespace WorkingHours.Bll.Managers
             if ((workTime.Date - timeService.Now).TotalDays > 7)
             {
                 throw new InvalidOperationException();
+            }
+
+            if (workTime.Issue.IsClosed || workTime.Issue.Project.IsClosed)
+            {
+                throw new UnauthorizedException("Issue or project is closed!");
             }
 
             UoW.WorkTimeLog.Remove(workTime);
@@ -132,8 +138,8 @@ namespace WorkingHours.Bll.Managers
             {
                 throw new InvalidOperationException();
             }
-
-            var inDb = UoW.WorkTimeLog.GetById(workTime.Id);
+            var dummy = new WorkTime();
+            var inDb = UoW.WorkTimeLog.GetById(workTime.Id, nameof(dummy.Issue) + "." + nameof(dummy.Issue.Project));
             if (inDb == null)
             {
                 throw new NotFoundException("Worktime not found!");
@@ -142,6 +148,11 @@ namespace WorkingHours.Bll.Managers
             if (inDb.EmployeeId != userId)
             {
                 throw new UnauthorizedException("Not your worktime!");
+            }
+
+            if (inDb.Issue.IsClosed || inDb.Issue.Project.IsClosed)
+            {
+                throw new UnauthorizedException("Issue or project is closed!");
             }
 
             inDb.Name = workTime.Name;
