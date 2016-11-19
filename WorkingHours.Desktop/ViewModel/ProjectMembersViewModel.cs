@@ -24,6 +24,9 @@ namespace WorkingHours.Desktop.ViewModel
         public ICommand SearchCommand { get; }
 
         public ICommand SaveCommand { get; }
+
+        public ICommand RemoveCommand { get; }
+
         private List<UserViewModel> searchResults;
 
         public List<UserViewModel> SearchResults
@@ -40,7 +43,7 @@ namespace WorkingHours.Desktop.ViewModel
             get { return members; }
             protected set { Set(ref members, value); }
         }
-
+        
 
         private bool isReadonly;
         private readonly IDialogService dialogService;
@@ -59,10 +62,17 @@ namespace WorkingHours.Desktop.ViewModel
             AddCommand = new RelayCommand<UserViewModel>(ExecuteAddCommand);
             SearchCommand = new RelayCommand<SearchEventArgs>(ExecuteSearchCommand);
             SaveCommand = new RelayCommand(ExecuteSaveCommand);
+            RemoveCommand = new RelayCommand<ProjectMemberViewModel>(ExecuteRemoveCommand);
             this.userManager = userManager;
             this.dialogService = dialogService;
             this.projectManager = projectManager;
             this.loadingService = loadingService;
+        }
+
+        private async void ExecuteRemoveCommand(ProjectMemberViewModel obj)
+        {
+            await projectManager.RemoveMemberFromProjectAsync(CurrentProject.Id, obj.Id);
+            ReloadProject();
         }
 
         private async void ExecuteSaveCommand()
@@ -78,7 +88,7 @@ namespace WorkingHours.Desktop.ViewModel
             catch (InvalidOperationException)
             {
                 dialogService.ShowError("Error", "You can not change your own status!");
-            }
+        }
             finally
             {
                 loadingService.HideIndicator();
@@ -104,8 +114,8 @@ namespace WorkingHours.Desktop.ViewModel
             }
 
             loadingService.ShowIndicator("Adding member...");
-            await projectManager.AddMembersToProjectAsync(CurrentProject.Id, new Dictionary<int, Shared.Model.Roles>() { { obj.Id, Shared.Model.Roles.Employee } });
-            ReloadProject();
+               await projectManager.AddMembersToProjectAsync(CurrentProject.Id, new Dictionary<int, Shared.Model.Roles>() { { obj.Id, Shared.Model.Roles.Employee } });
+                ReloadProject();
             loadingService.HideIndicator();
         }
 
