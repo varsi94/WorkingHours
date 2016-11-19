@@ -172,6 +172,7 @@
     </Compile>
     <Compile Include="Interfaces\ILoginManager.cs" />
     <Compile Include="Managers\LoginManager.cs" />
+    <Compile Include="Models\ChangePasswordModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\SignupModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -213,6 +214,8 @@
     <Content Include="Views\Projects\MyProjects.cshtml" />
     <Content Include="Views\Auth\Signup.cshtml" />
     <Content Include="Views\Auth\SignupSuccessful.cshtml" />
+    <Content Include="Views\Auth\ChangePassword.cshtml" />
+    <Content Include="Views\Auth\ChangePasswordSuccessful.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

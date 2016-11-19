@@ -23,7 +23,10 @@
             @Html.DisplayFor(modelItem => item.Name)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Deadline)
+            @if (item.Deadline.HasValue)
+            {
+                @item.Deadline.Value.ToLongDateString()
+            }
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.IsClosed)

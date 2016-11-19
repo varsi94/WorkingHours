@@ -101,6 +101,40 @@ namespace WorkingHours.WebClient.Controllers
             }
         }
 
+        [Authorize]
+        [HttpGet]
+        public ActionResult ChangePassword()
+        {
+            return View(new ChangePasswordModel());
+        }
+
+        [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ChangePassword(ChangePasswordModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            try
+            {
+                await accountManager.ChangePasswordAsync(new Shared.Dto.PasswordChangeModel
+                {
+                    OldPassword = model.OldPassword,
+                    NewPassword = model.NewPassword
+                });
+            }
+            catch (ServerException)
+            {
+                ModelState.AddModelError("", "Current password is not valid!");
+                return View(model);
+            }
+
+            return View("ChangePasswordSuccessful");
+        }
+
         protected override void SetupManagers()
         {
             Managers.Add(accountManager);
