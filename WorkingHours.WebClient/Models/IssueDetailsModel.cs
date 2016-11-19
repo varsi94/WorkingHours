@@ -11,5 +11,7 @@ namespace WorkingHours.WebClient.Models
         public PagedResult<WorkTimeDto> WorkTimes { get; set; }
 
         public int ProjectId { get; set; }
+
+        public string IssueName { get; set; }
     }
 }

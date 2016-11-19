@@ -6,11 +6,9 @@ using WorkingHours.Shared.Dto;
 
 namespace WorkingHours.WebClient.Models
 {
-    public class ProjectDetailsModel
+    public class MembersModel
     {
-        public List<IssueHeader> Issues { get; set; }
-
-        public int ProjectId { get; set; }
+        public List<ProjectMemberDto> Members { get; set; }
 
         public string ProjectName { get; set; }
     }

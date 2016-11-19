@@ -54,12 +54,31 @@ namespace WorkingHours.WebClient.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> Details(int id)
+        public async Task<ActionResult> Issues(int id)
         {
             try
             {
                 var project = await projectManager.GetProjectAsync(id);
-                return View(new ProjectDetailsModel { ProjectId = id, Issues = project.Issues });
+                return View(new ProjectDetailsModel { ProjectId = id, Issues = project.Issues, ProjectName = project.Name });
+            }
+            catch (NotFoundException)
+            {
+                return HttpNotFound();
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return HttpNotFound();
+            }
+        }
+
+        [HttpGet]
+        [Route("Projects/Members/{projectId}")]
+        public async Task<ActionResult> Members(int projectId)
+        {
+            try
+            {
+                var project = await projectManager.GetProjectAsync(projectId);
+                return View(new MembersModel {Members = project.Members, ProjectName = project.Name});
             }
             catch (NotFoundException)
             {

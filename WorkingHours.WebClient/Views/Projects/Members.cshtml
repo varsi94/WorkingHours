@@ -1,0 +1,24 @@
+﻿@model WorkingHours.WebClient.Models.MembersModel
+
+@{
+    ViewBag.Title = "Members";
+}
+
+<h2>Members - @Model.ProjectName</h2>
+
+<table class="table">
+    <tr>
+        <th>Name</th>
+        <th>E-mail address</th>
+        <th>Role</th>
+    </tr>
+@foreach (var member in Model.Members)
+{
+    <tr>
+        <td>@member.FullName</td>
+        <td>@member.Email</td>
+        <td>@member.RoleInProjectEnum</td>
+    </tr>
+}
+</table>
+

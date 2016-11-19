@@ -38,6 +38,10 @@ namespace WorkingHours.WebClient.Controllers
         [HttpGet]
         public ActionResult Login(string returnUrl)
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("MyProjects", "Projects");
+            }
             return View(new LoginModel() {ReturnUrl = returnUrl});
         }
 

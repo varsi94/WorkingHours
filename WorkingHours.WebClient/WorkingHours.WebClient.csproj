@@ -176,6 +176,7 @@
     <Compile Include="Models\ChangePasswordModel.cs" />
     <Compile Include="Models\IssueDetailsModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
+    <Compile Include="Models\MembersModel.cs" />
     <Compile Include="Models\ProjectDetailsModel.cs" />
     <Compile Include="Models\ReportIntervalModel.cs" />
     <Compile Include="Models\SignupModel.cs" />
@@ -221,8 +222,9 @@
     <Content Include="Views\Auth\ChangePassword.cshtml" />
     <Content Include="Views\Auth\ChangePasswordSuccessful.cshtml" />
     <Content Include="Views\Projects\ReportPartial.cshtml" />
-    <Content Include="Views\Projects\Details.cshtml" />
+    <Content Include="Views\Projects\Issues.cshtml" />
     <Content Include="Views\Issues\Details.cshtml" />
+    <Content Include="Views\Projects\Members.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

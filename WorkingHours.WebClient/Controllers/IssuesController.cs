@@ -16,15 +16,18 @@ namespace WorkingHours.WebClient.Controllers
     {
         private const int PageSize = 20;
         private readonly IWorkTimeManager worktimeManager;
+        private readonly IProjectManager projectManager;
 
-        public IssuesController(IWorkTimeManager worktimeManager)
+        public IssuesController(IWorkTimeManager worktimeManager, IProjectManager projectManager)
         {
             this.worktimeManager = worktimeManager;
+            this.projectManager = projectManager;
         }
 
         protected override void SetupManagers()
         {
             Managers.Add(worktimeManager);
+            Managers.Add(projectManager);
         }
 
         [HttpGet]
@@ -33,8 +36,15 @@ namespace WorkingHours.WebClient.Controllers
         {
             try
             {
+                var project = await projectManager.GetProjectAsync(projectId);
+                var issue = project.Issues.SingleOrDefault(x => x.Id == issueId);
+                if (issue == null)
+                {
+                    return HttpNotFound();
+                }
+
                 var result = await worktimeManager.GetMyWorkTimesAsync(issueId, PageSize, pageIndex ?? 1);
-                return View(new IssueDetailsModel {WorkTimes = result, ProjectId = projectId});
+                return View(new IssueDetailsModel {WorkTimes = result, ProjectId = projectId, IssueName = issue.Name });
             }
             catch (UnauthorizedAccessException)
             {
