@@ -14,6 +14,8 @@ using WorkingHours.Client.Interfaces;
 using GalaSoft.MvvmLight.CommandWpf;
 using WorkingHours.Client.Exceptions;
 using WorkingHours.Desktop.Interfaces.Services;
+using WorkingHours.Client.Model;
+using System.ComponentModel;
 
 namespace WorkingHours.Desktop.ViewModel
 {
@@ -38,9 +40,20 @@ namespace WorkingHours.Desktop.ViewModel
         {
             get { return selectedIssue; }
 
-            set { Set(ref selectedIssue, value); }
+            set
+            {
+                if (selectedIssue != null)
+                {
+                    selectedIssue.PropertyChanged -= SelectedIssuePropChanged;
+                }
+                Set(ref selectedIssue, value);
+                if (selectedIssue != null)
+                {
+                    selectedIssue.PropertyChanged += SelectedIssuePropChanged;
+                }
+                UpdateSaveEnabled();
+            }
         }
-
 
         private bool isEditorVisible;
 
@@ -59,7 +72,14 @@ namespace WorkingHours.Desktop.ViewModel
 
         public ICommand DiscardChangesCommand { get; }
 
-        public ManageIssuesViewModel(IIssueManager issueManager, ILoadingService loadingService, IDialogService dialogService)
+        private bool isSaveEnabled;
+        public bool IsSaveEnabled
+        {
+            get { return isSaveEnabled; }
+            protected set { Set(ref isSaveEnabled, value); }
+        }
+
+        public ManageIssuesViewModel(LoginInfo loginInfo, IIssueManager issueManager, ILoadingService loadingService, IDialogService dialogService) : base(loginInfo)
         {
             SaveCommand = new RelayCommand(ExecuteSaveCommand);
             NewIssueCommand = new RelayCommand(ExecuteNewIssueCommand);
@@ -149,7 +169,18 @@ namespace WorkingHours.Desktop.ViewModel
         {
             Issues =
                 new ObservableCollection<IssueViewModel>(CurrentProject.Issues.Select(x => new IssueViewModel(x)));
+            UpdateSaveEnabled();
             return base.OnProjectChanged();
+        }
+        
+        private void SelectedIssuePropChanged(object sender, PropertyChangedEventArgs e)
+        {
+            UpdateSaveEnabled();
+        }
+
+        private void UpdateSaveEnabled()
+        {
+            IsSaveEnabled = IsActive && (SelectedIssue?.IsValid ?? false);
         }
     }
 }

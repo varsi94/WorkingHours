@@ -49,7 +49,7 @@ namespace WorkingHours.Bll.Managers
             }
 
             var managerRole = UoW.Roles.GetRole(Roles.Manager);
-            if (!project.AssociatedMembers.Any(x => x.RoleId == managerRole.Id && x.UserId == managerId))
+            if (!project.AssociatedMembers.Any(x => x.RoleId == managerRole.Id && x.UserId == managerId && x.IsActive))
             {
                 throw new UnauthorizedException("You are not a manager in this project!");
             }

@@ -9,7 +9,7 @@ using WorkingHours.Desktop.ViewModel;
 
 namespace WorkingHours.Desktop.Interfaces.ViewModels
 {
-    public interface IProjectMembersViewModel : IViewModel
+    public interface IProjectMembersViewModel : ITabViewModel
     {
         List<UserViewModel> SearchResults { get; }
 

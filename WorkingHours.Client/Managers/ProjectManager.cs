@@ -156,6 +156,11 @@ namespace WorkingHours.Client.Managers
                 throw new UnauthorizedAccessException();
             }
 
+            if (LoginInfo.Id == memberToRemove)
+            {
+                throw new InvalidOperationException();
+            }
+
             using (var client = GetAuthenticatedClient())
             {
                 var httpResult =

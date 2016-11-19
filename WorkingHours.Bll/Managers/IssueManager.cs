@@ -26,9 +26,14 @@ namespace WorkingHours.Bll.Managers
                 throw new NotFoundException("Project not found!");
             }
 
-            if (!project.AssociatedMembers.Any(x => x.UserId == managerId && x.Role.Name == Roles.Manager.ToString()))
+            if (project.AssociatedMembers.Any(x => x.UserId == managerId && x.Role.Name == Roles.Manager.ToString()))
             {
                 throw new UnauthorizedException("You are not a manager in this project!");
+            }
+
+            if (project.AssociatedMembers.Any(x => x.UserId == managerId && !x.IsActive))
+            {
+                throw new UnauthorizedException("You are inactive in this project!");
             }
 
             project.Issues.Add(issue);
@@ -49,6 +54,11 @@ namespace WorkingHours.Bll.Managers
                 if (!issueFromDb.Project.AssociatedMembers.Any(x => x.UserId == managerId && x.RoleId == managerRole.Id))
                 {
                     throw new UnauthorizedException("You are not a manager in this project!");
+                }
+
+                if (issueFromDb.Project.AssociatedMembers.Any(x => x.UserId == managerId && !x.IsActive))
+                {
+                    throw new UnauthorizedException("You are inactive in this project!");
                 }
 
                 issueFromDb.RowVersion = issue.RowVersion;

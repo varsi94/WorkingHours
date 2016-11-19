@@ -108,6 +108,7 @@
     </Compile>
     <Compile Include="Interfaces\IPopulatable.cs" />
     <Compile Include="Interfaces\ViewModels\IProjectMembersViewModel.cs" />
+    <Compile Include="Interfaces\ViewModels\ITabViewModel.cs" />
     <Compile Include="Messaging\MessageTokens.cs" />
     <Compile Include="Common\UserControlEx.cs" />
     <Compile Include="Common\ValidatableViewModelBase.cs" />

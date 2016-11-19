@@ -14,7 +14,8 @@
                       d:DesignHeight="300"
                       d:DesignWidth="300"
                       xmlns:model="clr-namespace:WorkingHours.Shared.Model;assembly=WorkingHours.Shared">
-    <Grid DataContext="{ioc:ViewModel ViewModelType={x:Type vm:IProjectMembersViewModel}}">
+    <Grid DataContext="{ioc:ViewModel ViewModelType={x:Type vm:IProjectMembersViewModel}}"
+          x:Name="LayoutRoot">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
@@ -100,7 +101,7 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button HorizontalAlignment="Right"
-                                    Command="{Binding RemoveCommand}"
+                                    Command="{Binding DataContext.RemoveCommand, ElementName=LayoutRoot}"
                                     CommandParameter="{Binding}"
                                     BorderThickness="0"
                                     Background="White">

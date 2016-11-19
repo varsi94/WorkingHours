@@ -35,9 +35,14 @@ namespace WorkingHours.Bll.Managers
                 throw new NotFoundException("Issue not found!");
             }
 
-            if (!issue.Project.AssociatedMembers.Any(x => x.UserId == userId && x.IsActive))
+            if (!issue.Project.AssociatedMembers.Any(x => x.UserId == userId))
             {
                 throw new UnauthorizedException("You are not associated to this project!");
+            }
+
+            if (issue.Project.AssociatedMembers.Any(x => x.UserId == userId && !x.IsActive))
+            {
+                throw new UnauthorizedException("You are inactive in this project!");
             }
 
             if (issue.Project.IsClosed || issue.IsClosed)
@@ -55,7 +60,7 @@ namespace WorkingHours.Bll.Managers
         public void DeleteWorkTime(int userId, int workTimeId)
         {
             var dummy = new WorkTime();
-            var workTime = UoW.WorkTimeLog.GetById(workTimeId, nameof(dummy.Issue) + "." + nameof(dummy.Issue.Project));
+            var workTime = UoW.WorkTimeLog.GetById(workTimeId, nameof(dummy.Issue) + "." + nameof(dummy.Issue.Project) + "." + nameof(dummy.Issue.Project.AssociatedMembers));
             if (workTime == null)
             {
                 throw new NotFoundException("Worktime not found!");
@@ -64,6 +69,11 @@ namespace WorkingHours.Bll.Managers
             if (workTime.EmployeeId != userId)
             {
                 throw new UnauthorizedException("Worktime is not yours!");
+            }
+
+            if (workTime.Issue.Project.AssociatedMembers.Any(x => x.UserId == userId && !x.IsActive))
+            {
+                throw new UnauthorizedException("You are inactive in this project!");
             }
 
             if ((timeService.Now - workTime.Date).TotalDays > configurationManager.WorkTimeUpdateIntervalInDays)
@@ -148,10 +158,15 @@ namespace WorkingHours.Bll.Managers
                 throw new InvalidOperationException();
             }
             var dummy = new WorkTime();
-            var inDb = UoW.WorkTimeLog.GetById(workTime.Id, nameof(dummy.Issue) + "." + nameof(dummy.Issue.Project));
+            var inDb = UoW.WorkTimeLog.GetById(workTime.Id, nameof(dummy.Issue) + "." + nameof(dummy.Issue.Project) + "." + nameof(dummy.Issue.Project.AssociatedMembers));
             if (inDb == null)
             {
                 throw new NotFoundException("Worktime not found!");
+            }
+
+            if (inDb.Issue.Project.AssociatedMembers.Any(x => x.UserId == userId && !x.IsActive))
+            {
+                throw new UnauthorizedException("You are inactive in this project!");
             }
 
             if (inDb.EmployeeId != userId)

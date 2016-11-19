@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using WorkingHours.Client.Interfaces;
+using WorkingHours.Client.Model;
 using WorkingHours.Desktop.Dialogs;
 using WorkingHours.Desktop.Interfaces.Services;
 using WorkingHours.Desktop.Interfaces.ViewModels;
@@ -56,8 +57,8 @@ namespace WorkingHours.Desktop.ViewModel
             set { Set(ref isReadonly, value); }
         }
 
-        public ProjectMembersViewModel(IUserManager userManager, IProjectManager projectManager, IDialogService dialogService,
-            ILoadingService loadingService)
+        public ProjectMembersViewModel(LoginInfo loginInfo, IUserManager userManager, IProjectManager projectManager, IDialogService dialogService,
+            ILoadingService loadingService) : base(loginInfo)
         {
             AddCommand = new RelayCommand<UserViewModel>(ExecuteAddCommand);
             SearchCommand = new RelayCommand<SearchEventArgs>(ExecuteSearchCommand);
@@ -71,8 +72,28 @@ namespace WorkingHours.Desktop.ViewModel
 
         private async void ExecuteRemoveCommand(ProjectMemberViewModel obj)
         {
-            await projectManager.RemoveMemberFromProjectAsync(CurrentProject.Id, obj.Id);
-            ReloadProject();
+            try
+            {
+                if (obj.IsActive)
+                {
+                    loadingService.ShowIndicator("Deleting...");
+                    await projectManager.RemoveMemberFromProjectAsync(CurrentProject.Id, obj.Id);
+                }
+                else
+                {
+                    loadingService.ShowIndicator("Adding...");
+                    await projectManager.AddMembersToProjectAsync(CurrentProject.Id, new Dictionary<int, Roles>() { { obj.Id, obj.RoleInProject } });
+                }
+                ReloadProject();
+            }
+            catch (InvalidOperationException)
+            {
+                dialogService.ShowError("Error", "You can not delete yourself!");
+            }
+            finally
+            {
+                loadingService.HideIndicator();
+            }
         }
 
         private async void ExecuteSaveCommand()

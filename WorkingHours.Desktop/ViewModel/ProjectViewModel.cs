@@ -31,6 +31,16 @@ namespace WorkingHours.Desktop.ViewModel
             private set { Set(ref roleInProject, value); }
         }
 
+
+        private bool isActive;
+
+        public bool IsActive
+        {
+            get { return isActive; }
+
+            protected set { Set(ref isActive, value); }
+        }
+
         public ProjectViewModel(LoginInfo loginInfo, IProjectManager projectManager, ILoadingService loadingService)
         {
             MessengerInstance.Register<NotificationMessage<ProjectHeader>>(this, MessageTokens.CurrentProjectChanged, CurrentProjectChanged);
@@ -70,6 +80,7 @@ namespace WorkingHours.Desktop.ViewModel
             {
                 await LoadProjectAsync(obj.Content.Id);
                 RoleInProject = selectedProject.Members.SingleOrDefault(x => x.Id == loginInfo.Id).RoleInProjectEnum;
+                IsActive = selectedProject.Members.Any(x => x.IsActive && x.Id == loginInfo.Id);
             }
         }
     }

@@ -27,7 +27,8 @@
                 Command="{Binding NewIssueCommand}"
                 Cursor="Hand"
                 BorderThickness="0"
-                Background="White">
+                Background="White"
+                IsEnabled="{Binding IsActive}">
             <StackPanel Orientation="Horizontal">
                 <Image Source="../Assets/add.png"
                        Width="20"
@@ -81,21 +82,24 @@
             <TextBlock Margin="10">Name:</TextBlock>
             <TextBox Text="{Binding SelectedIssue.Name, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
                      Grid.Column="1"
-                     Margin="10" />
+                     Margin="10"
+                     IsEnabled="{Binding IsActive}"/>
             <TextBlock Grid.Column="0"
                        Grid.Row="1"
                        Margin="10">Description:</TextBlock>
             <TextBox Grid.Row="1"
                      Grid.Column="1"
                      Text="{Binding SelectedIssue.Description, Mode=TwoWay}"
-                     Margin="10" />
+                     Margin="10"
+                     IsEnabled="{Binding IsActive}" />
             <TextBlock Grid.Column="0"
                        Grid.Row="2"
                        Margin="10">Deadline:</TextBlock>
             <DatePicker Grid.Column="1"
                         Grid.Row="2"
                         Margin="10"
-                        SelectedDate="{Binding SelectedIssue.Deadline, Mode=TwoWay}" />
+                        SelectedDate="{Binding SelectedIssue.Deadline, Mode=TwoWay}"
+                        IsEnabled="{Binding IsActive}" />
             <TextBlock Grid.Column="0"
                        Grid.Row="3"
                        Margin="10">Closed:</TextBlock>
@@ -103,7 +107,8 @@
                       Grid.Row="3"
                       Margin="10"
                       HorizontalAlignment="Center"
-                      Grid.Column="1" />
+                      Grid.Column="1"
+                      IsEnabled="{Binding IsActive}" />
 
             <Button Command="{Binding SaveCommand}"
                     Grid.Row="4"
@@ -111,13 +116,14 @@
                     IsDefault="True"
                     Margin="10"
                     Padding="10"
-                    IsEnabled="{Binding SelectedIssue.IsValid}">Save</Button>
+                    IsEnabled="{Binding IsSaveEnabled}">Save</Button>
 
             <Button Command="{Binding DiscardChangesCommand}"
                     Grid.Row="4"
                     Padding="10"
                     Margin="10"
-                    Grid.Column="1">Discard changes</Button>
+                    Grid.Column="1"
+                    IsEnabled="{Binding IsActive}">Discard changes</Button>
         </Grid>
     </Grid>
 </common:UserControlEx>

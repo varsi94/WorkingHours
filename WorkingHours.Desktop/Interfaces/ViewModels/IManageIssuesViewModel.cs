@@ -9,7 +9,7 @@ using WorkingHours.Desktop.ViewModel;
 
 namespace WorkingHours.Desktop.Interfaces.ViewModels
 {
-    public interface IManageIssuesViewModel : IViewModel
+    public interface IManageIssuesViewModel : ITabViewModel
     {
         bool IsEditorVisible { get; set; }
 
@@ -24,5 +24,7 @@ namespace WorkingHours.Desktop.Interfaces.ViewModels
         ICommand IssueSelectedCommand { get; }
 
         ICommand DiscardChangesCommand { get; }
+
+        bool IsSaveEnabled { get; }
     }
 }
