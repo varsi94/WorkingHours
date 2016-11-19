@@ -9,18 +9,18 @@ namespace WorkingHours.Client.Model
 {
     public class LoginInfo
     {
-        public bool IsLoggedIn { get; internal set; }
+        public bool IsLoggedIn { get; set; }
 
         public int? Id { get; set; }
 
-        public string UserName { get; internal set; }
+        public string UserName { get; set; }
         
-        public string Email { get; internal set; }
+        public string Email { get; set; }
         
-        public string FullName { get; internal set; }
+        public string FullName { get; set; }
         
-        public string Token { get; internal set; }
+        public string Token { get; set; }
         
-        public Roles? Role { get; internal set; }
+        public Roles? Role { get; set; }
     }
 }

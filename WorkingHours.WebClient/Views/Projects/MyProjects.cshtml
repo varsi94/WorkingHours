@@ -1,0 +1,67 @@
+﻿@using WorkingHours.WebClient.Models
+@model IEnumerable<WorkingHours.Shared.Dto.ProjectHeader>
+
+@{
+    ViewBag.Title = "My projects";
+}
+
+<h2>My projects</h2>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Deadline)
+        </th>
+        <th>Closed</th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @if (item.Deadline.HasValue)
+                {
+                    @item.Deadline.Value.ToLongDateString()
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsClosed)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", new {id = item.Id}, new {@class = "btn btn-default"})
+                <button type="button" data-id="@item.Id" class="btn btn-primary report-btn" data-container="body" data-toggle="popover" data-placement="right" data-html="asdasdd" data-original-title="Select interval!" title="">Get report</button>
+                <div style="display: none" class="popover-content">
+                    @Html.Partial("ReportPartial", new ReportIntervalModel() { Id = item.Id })
+                </div>
+            </td>
+        </tr>
+    }
+
+</table>
+
+@section scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            popoverOptions = {
+                content: function () {
+                    return $(this).siblings(".popover-content").html();
+                },
+                trigger: "click",
+                animation: true,
+                placement: "right"
+            };
+            $(".report-btn").popover(popoverOptions);
+        });
+
+        $(".report-btn")
+            .click(function() {
+                $(".report-btn").popover("hide");
+            });
+    </script>
+}
