@@ -10,7 +10,6 @@ namespace WorkingHours.WebClient.Models
     public class LoginModel
     {
         [Required]
-        [Display(Name = "User name:")]
         public string Username { get; set; }
 
         [Required]

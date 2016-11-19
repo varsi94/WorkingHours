@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using WorkingHours.Client.Exceptions;
 using WorkingHours.Client.Interfaces;
 using WorkingHours.WebClient.Common;
 using WorkingHours.WebClient.Extensions;
@@ -16,17 +17,19 @@ namespace WorkingHours.WebClient.Controllers
     public class AuthController : BaseController
     {
         private readonly ILoginManager loginManager;
+        private readonly IAccountManager accountManager; 
 
-        public AuthController(ILoginManager loginManager)
+        public AuthController(ILoginManager loginManager, IAccountManager accountManager)
         {
             this.loginManager = loginManager;
+            this.accountManager = accountManager;
         }
 
         private string GetRedirectUrl(string returnUrl)
         {
             if (string.IsNullOrEmpty(returnUrl) || !Url.IsLocalUrl(returnUrl))
             {
-                return Url.Action("login", "auth");
+                return Url.Action("MyProjects", "Projects");
             }
 
             return returnUrl;
@@ -65,14 +68,42 @@ namespace WorkingHours.WebClient.Controllers
             return RedirectToAction("login", "auth");
         }
 
-        [Authorize]
-        public string Dummy()
+        [HttpGet]
+        public ActionResult Signup()
         {
-            return User.GetUsername();
+            return View(new SignupModel());
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Signup(SignupModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            try
+            {
+                await accountManager.SignUpAsync(new Shared.Dto.SignUpModel
+                {
+                    UserName = model.Username,
+                    Password = model.Password,
+                    Email = model.Email,
+                    FullName = model.FullName
+                });
+                return View("SignupSuccessful");
+            }
+            catch (ServerException e)
+            {
+                ModelState.AddModelError("", e.Message);
+                return View(model);
+            }
         }
 
         protected override void SetupManagers()
         {
+            Managers.Add(accountManager);
         }
     }
 }
