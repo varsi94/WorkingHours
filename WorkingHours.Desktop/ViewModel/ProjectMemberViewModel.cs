@@ -2,7 +2,7 @@
 
 namespace WorkingHours.Desktop.ViewModel
 {
-    public class ProjectMemberViewModel:UserViewModel
+    public class ProjectMemberViewModel : UserViewModel
     {
         public Roles RoleInProject
         {
@@ -15,7 +15,7 @@ namespace WorkingHours.Desktop.ViewModel
                 RaisePropertyChanged();
             }
         }
-        
+
         public bool IsReadonly
         {
             get { return Role == Roles.Employee; }
@@ -28,11 +28,8 @@ namespace WorkingHours.Desktop.ViewModel
         public override Roles Role
         {
             get { return base.Role; }
-       
-
-
             set
-        {
+            {
                 base.Role = value;
                 RaisePropertyChanged(nameof(IsReadonly));
             }

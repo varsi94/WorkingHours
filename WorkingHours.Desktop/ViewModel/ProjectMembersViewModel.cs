@@ -62,7 +62,7 @@ namespace WorkingHours.Desktop.ViewModel
             AddCommand = new RelayCommand<UserViewModel>(ExecuteAddCommand);
             SearchCommand = new RelayCommand<SearchEventArgs>(ExecuteSearchCommand);
             SaveCommand = new RelayCommand(ExecuteSaveCommand);
-            //RemoveCommand = new RelayCommand(ExecuteRemoveCommand);
+            RemoveCommand = new RelayCommand<ProjectMemberViewModel>(ExecuteRemoveCommand);
             this.userManager = userManager;
             this.dialogService = dialogService;
             this.projectManager = projectManager;
@@ -71,8 +71,8 @@ namespace WorkingHours.Desktop.ViewModel
 
         private async void ExecuteRemoveCommand(ProjectMemberViewModel obj)
         {
-            //await projectManager.AddMembersToProjectAsync(CurrentProject.Id, )
-            
+            await projectManager.RemoveMemberFromProjectAsync(CurrentProject.Id, obj.Id);
+            ReloadProject();
         }
 
         private async void ExecuteSaveCommand()
