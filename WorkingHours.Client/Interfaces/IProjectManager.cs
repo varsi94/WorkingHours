@@ -18,6 +18,8 @@ namespace WorkingHours.Client.Interfaces
 
         Task AddMembersToProjectAsync(int projectId, Dictionary<int, Roles> membersToAdd);
 
+        Task RemoveMemberFromProjectAsync(int projectId, int memberToRemove);
+
         Task<byte[]> GetReportAsync(int projectId, DateTime? startDate = null, DateTime? endDate = null);
     }
 }

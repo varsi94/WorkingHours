@@ -43,7 +43,7 @@ namespace WorkingHours.Desktop.ViewModel
             }
         }
 
-        public Roles Role
+        public virtual Roles Role
         {
             get { return UserHeaderDto.RoleAsEnum; }
             set

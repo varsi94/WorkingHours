@@ -1,27 +1,41 @@
-﻿namespace WorkingHours.Desktop.ViewModel
+﻿using WorkingHours.Shared.Model;
+
+namespace WorkingHours.Desktop.ViewModel
 {
     public class ProjectMemberViewModel:UserViewModel
     {
-        public Shared.Model.Roles RoleInProject
+        public Roles RoleInProject
         {
             get { return member.RoleInProjectEnum; }
             set
             {
+                if (member.RoleInProjectEnum == value) { return; }
+                IsChanged = !IsChanged;
                 member.RoleInProjectEnum = value;
                 RaisePropertyChanged();
             }
         }
         
+        public bool IsReadonly
+        {
+            get { return Role == Roles.Employee; }
+        }
         public bool IsActive
         {
             get { return member.IsActive; }
             set { member.IsActive = value; }
         }
-
-
-        public bool CanUpDate
+        public override Roles Role
         {
-            get { return Role == Shared.Model.Roles.Manager; }
+            get { return base.Role; }
+       
+
+
+            set
+        {
+                base.Role = value;
+                RaisePropertyChanged(nameof(IsReadonly));
+            }
         }
 
         Shared.Dto.ProjectMemberDto member;

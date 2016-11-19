@@ -16,5 +16,11 @@ namespace WorkingHours.Desktop.Interfaces.ViewModels
         ICommand SearchCommand { get; }
 
         ICommand AddCommand { get; }
+
+        ICommand SaveCommand { get; }
+
+        ObservableCollection<ProjectMemberViewModel> Members { get; }
+
+        bool IsReadonly { get; }
     }
 }

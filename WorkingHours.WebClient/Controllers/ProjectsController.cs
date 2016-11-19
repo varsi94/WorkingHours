@@ -52,5 +52,23 @@ namespace WorkingHours.WebClient.Controllers
                 return HttpNotFound();
             }
         }
+
+        [HttpGet]
+        public async Task<ActionResult> Details(int id)
+        {
+            try
+            {
+                var project = await projectManager.GetProjectAsync(id);
+                return View(project.Issues);
+            }
+            catch (NotFoundException)
+            {
+                return HttpNotFound();
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return HttpNotFound();
+            }
+        }
     }
 }

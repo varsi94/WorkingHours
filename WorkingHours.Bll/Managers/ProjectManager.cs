@@ -106,7 +106,7 @@ namespace WorkingHours.Bll.Managers
         public ProjectInfo GetProjectInfo(int projectId, int userId)
         {
             var dummy = new Project();
-            var project = UoW.Projects.GetById(projectId, nameof(dummy.AssociatedMembers), nameof(dummy.Issues), nameof(dummy.AssociatedMembers) + ".User",
+            var project = UoW.Projects.GetById(projectId, nameof(dummy.AssociatedMembers), nameof(dummy.Issues), nameof(dummy.AssociatedMembers) + ".User.Roles",
                 nameof(dummy.AssociatedMembers) + ".Role");
             if (project == null)
             {
@@ -116,6 +116,12 @@ namespace WorkingHours.Bll.Managers
             if (!project.AssociatedMembers.Any(m => m.UserId == userId))
             {
                 throw new UnauthorizedException("User is not associated to this project!");
+            }
+
+            var managerRole = UoW.Roles.GetRole(Roles.Manager);
+            foreach (var member in project.AssociatedMembers)
+            {
+                member.User.Role = (member.User.Roles.Any(r => r.RoleId == managerRole.Id)) ? Roles.Manager : Roles.Employee;
             }
 
             return Mapper.Map<ProjectInfo>(project);
