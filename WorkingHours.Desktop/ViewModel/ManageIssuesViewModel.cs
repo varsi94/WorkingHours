@@ -123,7 +123,7 @@ namespace WorkingHours.Desktop.ViewModel
                     await issueManager.UpdateIssueAsync(SelectedIssue.GetIssueHeader());
                     SelectedIssue.EndEdit();
                 }
-                MessengerInstance.Send(new NotificationMessage(null), MessageTokens.ReloadProjectToken);
+                ReloadProject();
             }
             catch (ServerException)
             {

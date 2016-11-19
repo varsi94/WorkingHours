@@ -36,5 +36,11 @@ namespace WorkingHours.Desktop.ViewModel
         {
             return Task.FromResult<object>(null);
         }
+
+        protected void ReloadProject()
+        {
+            var msg = new NotificationMessage(null);
+            MessengerInstance.Send(msg, MessageTokens.ReloadProjectToken);
+        }
     }
 }
