@@ -8,8 +8,10 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using WorkingHours.Client.Interfaces;
 using WorkingHours.Desktop.Dialogs;
+using WorkingHours.Desktop.Interfaces.Services;
 using WorkingHours.Desktop.Interfaces.ViewModels;
 using WorkingHours.Desktop.Model;
+using WorkingHours.Shared.Model;
 
 namespace WorkingHours.Desktop.ViewModel
 {
@@ -38,37 +40,73 @@ namespace WorkingHours.Desktop.ViewModel
             get { return members; }
             protected set { Set(ref members, value); }
         }
-        
-        public ProjectMembersViewModel(IUserManager userManager, IProjectManager projectManager)
+
+
+        private bool isReadonly;
+        private readonly IDialogService dialogService;
+        private readonly ILoadingService loadingService;
+
+        public bool IsReadonly
+        {
+            get { return isReadonly; }
+
+            set { Set(ref isReadonly, value); }
+        }
+
+        public ProjectMembersViewModel(IUserManager userManager, IProjectManager projectManager, IDialogService dialogService,
+            ILoadingService loadingService)
         {
             AddCommand = new RelayCommand<UserViewModel>(ExecuteAddCommand);
             SearchCommand = new RelayCommand<SearchEventArgs>(ExecuteSearchCommand);
             SaveCommand = new RelayCommand(ExecuteSaveCommand);
             this.userManager = userManager;
+            this.dialogService = dialogService;
             this.projectManager = projectManager;
+            this.loadingService = loadingService;
         }
 
         private async void ExecuteSaveCommand()
         {
-            await projectManager.AddMembersToProjectAsync(CurrentProject.Id, members.ToDictionary(m => m.Id, m => m.RoleInProject));
+            try
+            {
+                loadingService.ShowIndicator("Saving...");
+                await
+                    projectManager.AddMembersToProjectAsync(CurrentProject.Id,
+                        members.Where(m => m.IsChanged).ToDictionary(m => m.Id, m => m.RoleInProject));
+                ReloadProject();
+            }
+            catch (InvalidOperationException)
+            {
+                dialogService.ShowError("Error", "You can not change your own status!");
+            }
+            finally
+            {
+                loadingService.HideIndicator();
+            }
         }
 
-        protected override  Task OnProjectChanged()
+        protected override Task OnProjectChanged()
         {
             Members = new ObservableCollection<ProjectMemberViewModel>(CurrentProject.Members.Select(x => new ProjectMemberViewModel(x)));
+            foreach (var member in Members)
+            {
+                member.IsChanged = false;
+            }
+            IsReadonly = projectManager.LoginInfo.Role == Roles.Employee;
             return base.OnProjectChanged();
         }
+
         private async void ExecuteAddCommand(UserViewModel obj)
         {
             if (obj == null)
             {
-                //DialogWrapper<> d = new DialogWrapper<>();
+                return;
             }
-            else
-            {
-               await projectManager.AddMembersToProjectAsync(CurrentProject.Id, new Dictionary<int, Shared.Model.Roles>() { { obj.Id, Shared.Model.Roles.Employee } });
-                ReloadProject();
-            }
+
+            loadingService.ShowIndicator("Adding member...");
+            await projectManager.AddMembersToProjectAsync(CurrentProject.Id, new Dictionary<int, Shared.Model.Roles>() { { obj.Id, Shared.Model.Roles.Employee } });
+            ReloadProject();
+            loadingService.HideIndicator();
         }
 
         private async void ExecuteSearchCommand(SearchEventArgs args)

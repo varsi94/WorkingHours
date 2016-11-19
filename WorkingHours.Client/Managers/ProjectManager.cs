@@ -27,6 +27,11 @@ namespace WorkingHours.Client.Managers
                 throw new UnauthorizedAccessException();
             }
 
+            if (membersToAdd.ContainsKey(LoginInfo.Id.Value))
+            {
+                throw new InvalidOperationException();
+            }
+
             using (var client = GetAuthenticatedClient())
             {
                 var httpResult = await client.PostAsJsonAsync($"api/project/{projectId}/membersAdd", membersToAdd);
@@ -35,7 +40,7 @@ namespace WorkingHours.Client.Managers
                     var messageResult = await httpResult.Content.ReadAsAsync<ErrorMessage>();
                     if (httpResult.StatusCode == HttpStatusCode.InternalServerError)
                     {
-                        throw new InvalidOperationException(messageResult.Message);
+                        throw new ServerException(messageResult.Message);
                     }
                     else if (httpResult.StatusCode == HttpStatusCode.Unauthorized)
                     {

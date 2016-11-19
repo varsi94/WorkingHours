@@ -16,11 +16,11 @@
                       xmlns:model="clr-namespace:WorkingHours.Shared.Model;assembly=WorkingHours.Shared">
     <Grid DataContext="{ioc:ViewModel ViewModelType={x:Type vm:IProjectMembersViewModel}}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0">
+        <StackPanel Grid.Row="0" Visibility="{Binding IsReadonly, Converter={StaticResource InverseBooleanToVisibilityConverter}}">
             <cntrl:AutoCompleteBox ItemsSource="{Binding Path=SearchResults}"
                                    MinimumPopulateDelay="500"
                                    x:Name="userNameBox"
@@ -48,13 +48,13 @@
                   CanUserAddRows="False"
                   CanUserDeleteRows="False"
                   CanUserSortColumns="False"
-                  CanUserReorderColumns="False">
+                  CanUserReorderColumns="False"
+                  IsReadOnly="{Binding IsReadonly}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Full name"
                                     IsReadOnly="True"
-                                    Binding="{Binding FullName}"/>
-                <DataGridTemplateColumn Header="Role"
-                                        IsReadOnly="{Binding CanUpDate}">
+                                    Binding="{Binding FullName}" />
+                <DataGridTemplateColumn Header="Role">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding RoleInProject}" />
@@ -62,33 +62,37 @@
                     </DataGridTemplateColumn.CellTemplate>
                     <DataGridTemplateColumn.CellEditingTemplate>
                         <DataTemplate>
-                            <ComboBox SelectedItem="{Binding RoleInProject}"
-                                      IsEditable="False"
-                                      x:Name="RoleComboBox">
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="SelectionChanged">
-                                        <cmd:EventToCommand Command="{Binding ElementName=mainWindow, Path=DataContext.ChangeRoleCommand}">
-                                            <cmd:EventToCommand.CommandParameter>
-                                                <MultiBinding Converter="{StaticResource RoleChangedEventArgsConverter}">
-                                                    <Binding />
-                                                    <Binding ElementName="RoleComboBox"
-                                                             Path="SelectedItem" />
-                                                </MultiBinding>
-                                            </cmd:EventToCommand.CommandParameter>
-                                        </cmd:EventToCommand>
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
-                                <ComboBox.Items>
-                                    <model:Roles>Manager</model:Roles>
-                                    <model:Roles>Employee</model:Roles>
-                                </ComboBox.Items>
-                            </ComboBox>
+                            <StackPanel>
+                                <TextBlock Text="{Binding RoleInProject}" Visibility="{Binding IsReadonly, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                <ComboBox SelectedItem="{Binding RoleInProject}"
+                                          IsEditable="False"
+                                          x:Name="RoleComboBox"
+                                          Visibility="{Binding IsReadonly, Converter={StaticResource InverseBooleanToVisibilityConverter}}">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="SelectionChanged">
+                                            <cmd:EventToCommand Command="{Binding ElementName=mainWindow, Path=DataContext.ChangeRoleCommand}">
+                                                <cmd:EventToCommand.CommandParameter>
+                                                    <MultiBinding Converter="{StaticResource RoleChangedEventArgsConverter}">
+                                                        <Binding />
+                                                        <Binding ElementName="RoleComboBox"
+                                                                 Path="SelectedItem" />
+                                                    </MultiBinding>
+                                                </cmd:EventToCommand.CommandParameter>
+                                            </cmd:EventToCommand>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                    <ComboBox.Items>
+                                        <model:Roles>Manager</model:Roles>
+                                        <model:Roles>Employee</model:Roles>
+                                    </ComboBox.Items>
+                                </ComboBox>
+                            </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <StackPanel Grid.Row="2">
+        <StackPanel Grid.Row="2" Visibility="{Binding IsReadonly, Converter={StaticResource InverseBooleanToVisibilityConverter}}">
             <Button HorizontalAlignment="Right"
                     Command="{Binding SaveCommand}">
                 Save project members
