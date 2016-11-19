@@ -163,6 +163,7 @@
     <Compile Include="ViewModel\ManageUsersViewModel.cs" />
     <Compile Include="ViewModel\NewProjectDialogViewModel.cs" />
     <Compile Include="ViewModel\ProjectMembersViewModel.cs" />
+    <Compile Include="ViewModel\ProjectMemberViewModel.cs" />
     <Compile Include="ViewModel\ProjectViewModel.cs" />
     <Compile Include="ViewModel\SignUpViewModel.cs" />
     <Compile Include="ViewModel\TabViewModelBase.cs" />
