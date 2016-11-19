@@ -1,4 +1,4 @@
-﻿@model IEnumerable<WorkingHours.Shared.Dto.IssueHeader>
+﻿@model WorkingHours.WebClient.Models.ProjectDetailsModel
 
 @{
     ViewBag.Title = "Issues";
@@ -6,24 +6,27 @@
 
 <h2>Issues</h2>
 
+@{
+    var dummy = Model.Issues.First();
+}
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Name)
+            @Html.DisplayNameFor(model => dummy.Name)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.IsClosed)
+            Closed
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Description)
+            @Html.DisplayNameFor(model => dummy.Description)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Deadline)
+            @Html.DisplayNameFor(model => dummy.Deadline)
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
+@foreach (var item in Model.Issues) {
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.Name)
@@ -41,7 +44,7 @@
             }
         </td>
         <td>
-            @Html.ActionLink("Details", "Details", "Issues", new { id=item.Id }, new {@class = "btn btn-primary"})
+            @Html.ActionLink("Details", "Details", "Issues", new { issueId=item.Id, projectId = Model.ProjectId }, new {@class = "btn btn-primary"})
         </td>
     </tr>
 }

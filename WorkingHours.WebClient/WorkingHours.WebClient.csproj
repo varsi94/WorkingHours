@@ -165,6 +165,7 @@
     <Compile Include="AutoMapperConfig\PrincipalConverter.cs" />
     <Compile Include="Common\BaseController.cs" />
     <Compile Include="Controllers\AuthController.cs" />
+    <Compile Include="Controllers\IssuesController.cs" />
     <Compile Include="Controllers\ProjectsController.cs" />
     <Compile Include="Extensions\IdentityExtensions.cs" />
     <Compile Include="Global.asax.cs">
@@ -173,7 +174,9 @@
     <Compile Include="Interfaces\ILoginManager.cs" />
     <Compile Include="Managers\LoginManager.cs" />
     <Compile Include="Models\ChangePasswordModel.cs" />
+    <Compile Include="Models\IssueDetailsModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
+    <Compile Include="Models\ProjectDetailsModel.cs" />
     <Compile Include="Models\ReportIntervalModel.cs" />
     <Compile Include="Models\SignupModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -219,6 +222,7 @@
     <Content Include="Views\Auth\ChangePasswordSuccessful.cshtml" />
     <Content Include="Views\Projects\ReportPartial.cshtml" />
     <Content Include="Views\Projects\Details.cshtml" />
+    <Content Include="Views\Issues\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

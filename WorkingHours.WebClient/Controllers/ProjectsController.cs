@@ -59,7 +59,7 @@ namespace WorkingHours.WebClient.Controllers
             try
             {
                 var project = await projectManager.GetProjectAsync(id);
-                return View(project.Issues);
+                return View(new ProjectDetailsModel { ProjectId = id, Issues = project.Issues });
             }
             catch (NotFoundException)
             {
