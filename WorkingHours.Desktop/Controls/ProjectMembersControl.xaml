@@ -21,14 +21,18 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0" Visibility="{Binding IsReadonly, Converter={StaticResource InverseBooleanToVisibilityConverter}}">
+        <StackPanel Grid.Row="0"
+                    Visibility="{Binding IsReadonly, Converter={StaticResource InverseBooleanToVisibilityConverter}}">
             <cntrl:AutoCompleteBox ItemsSource="{Binding Path=SearchResults}"
                                    MinimumPopulateDelay="500"
                                    x:Name="userNameBox"
                                    MinimumPrefixLength="3"
                                    Populating="UserNameBox_OnPopulating"
                                    FilterMode="None"
-                                   ValueMemberPath="FullName">
+                                   ValueMemberPath="FullName"
+                                   IsEnabled="{Binding IsActive}"
+                                   SelectedItem="{Binding SelectedUser, Mode=TwoWay}"
+                                   Margin="10">
                 <cntrl:AutoCompleteBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel HorizontalAlignment="Stretch">
@@ -41,8 +45,10 @@
             </cntrl:AutoCompleteBox>
             <Button HorizontalAlignment="Right"
                     Command="{Binding AddCommand}"
-                    CommandParameter="{Binding ElementName=userNameBox, Path=SelectedItem}">Add member to project</Button>
+                    CommandParameter="{Binding ElementName=userNameBox, Path=SelectedItem}"
+                    IsEnabled="{Binding IsActive}" Margin="10">Add member to project</Button>
         </StackPanel>
+        <FrameworkElement x:Name="dummyElement" Visibility="Collapsed" />
         <DataGrid Grid.Row="1"
                   AutoGenerateColumns="False"
                   ItemsSource="{Binding Members}"
@@ -50,25 +56,35 @@
                   CanUserDeleteRows="False"
                   CanUserSortColumns="False"
                   CanUserReorderColumns="False"
-                  IsReadOnly="{Binding IsReadonly}">
+                  IsReadOnly="{Binding IsReadonly}"
+                  Margin="10"
+                  x:Name="grid">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Full name"
-                                    IsReadOnly="True"
-                                    Binding="{Binding FullName}" />
+                <DataGridTemplateColumn Header="Full name"
+                                        IsReadOnly="True">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding FullName}"
+                                       Margin="10" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
                 <DataGridTemplateColumn Header="Role">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding RoleInProject}" />
+                            <TextBlock Text="{Binding RoleInProject}" Margin="10" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                     <DataGridTemplateColumn.CellEditingTemplate>
                         <DataTemplate>
                             <StackPanel>
-                                <TextBlock Text="{Binding RoleInProject}" Visibility="{Binding IsReadonly, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                <TextBlock Text="{Binding RoleInProject}"
+                                           Visibility="{Binding IsReadonly, Converter={StaticResource BooleanToVisibilityConverter}}" />
                                 <ComboBox SelectedItem="{Binding RoleInProject}"
                                           IsEditable="False"
                                           x:Name="RoleComboBox"
-                                          Visibility="{Binding IsReadonly, Converter={StaticResource InverseBooleanToVisibilityConverter}}">
+                                          Visibility="{Binding IsReadonly, Converter={StaticResource InverseBooleanToVisibilityConverter}}"
+                                          Margin="10">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="SelectionChanged">
                                             <cmd:EventToCommand Command="{Binding ElementName=mainWindow, Path=DataContext.ChangeRoleCommand}">
@@ -91,31 +107,41 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTextColumn Header="Active"
-                                    IsReadOnly="True"
-                                    Binding="{Binding IsActive}"
-                                    >
-                </DataGridTextColumn>
-                <DataGridTemplateColumn Header="Remove member"
+                <DataGridTemplateColumn Header="Active"
                                         IsReadOnly="True">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <CheckBox IsChecked="{Binding IsActive}"
+                                      IsEnabled="False"
+                                      Margin="10"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Actions"
+                                        IsReadOnly="True"
+                                        Visibility="{Binding DataContext.IsReadonly, Converter={StaticResource InverseBooleanToVisibilityConverter}, Source={x:Reference dummyElement}}">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button HorizontalAlignment="Right"
                                     Command="{Binding DataContext.RemoveCommand, ElementName=LayoutRoot}"
                                     CommandParameter="{Binding}"
                                     BorderThickness="0"
-                                    Background="White">
+                                    Background="White"
+                                    IsEnabled="{Binding ElementName=LayoutRoot, Path=DataContext.IsActive}"
+                                    Margin="10">
                                 <Grid>
-                                    <Image Source="/Assets/erro.png" 
+                                    <Image Source="/Assets/erro.png"
                                            Visibility="{Binding IsActive, Converter={StaticResource BooleanToVisibilityConverter}}"
-                                            Width="20"
-                                            RenderOptions.BitmapScalingMode="HighQuality"
-                                            Height="20"/>
+                                           Width="20"
+                                           RenderOptions.BitmapScalingMode="HighQuality"
+                                           Height="20"
+                                           ToolTip="Remove from project"/>
                                     <Image Source="/Assets/add.png"
                                            Visibility="{Binding IsActive, Converter={StaticResource InverseBooleanToVisibilityConverter}}"
                                            Width="20"
-                                            RenderOptions.BitmapScalingMode="HighQuality"
-                                            Height="20"/>
+                                           RenderOptions.BitmapScalingMode="HighQuality"
+                                           Height="20"
+                                           ToolTip="Add to project"/>
                                 </Grid>
                             </Button>
                         </DataTemplate>
@@ -125,9 +151,12 @@
             </DataGrid.Columns>
 
         </DataGrid>
-        <StackPanel Grid.Row="2" Visibility="{Binding IsReadonly, Converter={StaticResource InverseBooleanToVisibilityConverter}}">
+        <StackPanel Grid.Row="2"
+                    Visibility="{Binding IsReadonly, Converter={StaticResource InverseBooleanToVisibilityConverter}}">
             <Button HorizontalAlignment="Right"
-                    Command="{Binding SaveCommand}">
+                    Command="{Binding SaveCommand}"
+                    IsEnabled="{Binding IsActive}"
+                    Margin="10">
                 Save project members
             </Button>
 

@@ -13,5 +13,7 @@ namespace WorkingHours.Shared.Dto
         public DateTime? Deadline { get; set; }
 
         public bool IsClosed { get; set; }
+
+        public bool IsActive { get; set; }
     }
 }

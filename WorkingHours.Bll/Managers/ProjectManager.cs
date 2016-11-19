@@ -137,7 +137,13 @@ namespace WorkingHours.Bll.Managers
             };
             var projects = UoW.Projects.List(x => x.AssociatedMembers.Any(y => y.UserId == userId), orderInfo,
                 nameof(dummy.AssociatedMembers));
-            return Mapper.Map<List<ProjectHeader>>(projects);
+            var actives = projects.ToDictionary(x => x.Id, x => x.AssociatedMembers.Single(m => m.UserId == userId).IsActive);
+            var result = Mapper.Map<List<ProjectHeader>>(projects);
+            foreach (var projectHeader in result)
+            {
+                projectHeader.IsActive = actives[projectHeader.Id];
+            }
+            return result;
         }
 
         public void RemoveMembersFromProject(int projectId, int managerId, List<int> userIds)

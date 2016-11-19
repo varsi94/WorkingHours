@@ -13,6 +13,8 @@ namespace WorkingHours.Desktop.Interfaces.ViewModels
     {
         List<UserViewModel> SearchResults { get; }
 
+        UserViewModel SelectedUser { get; set; }
+
         ICommand SearchCommand { get; }
 
         ICommand AddCommand { get; }

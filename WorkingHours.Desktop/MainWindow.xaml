@@ -71,14 +71,43 @@
                                                 CommandParameter="{Binding ElementName=projectList, Path=SelectedItem}" />
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                        </Style>
+                    </ListView.ItemContainerStyle>
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding Name}" />
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="{Binding Name}" />
+                                <Image Grid.Column="1"
+                                       Source="/Assets/lock.png"
+                                       ToolTip="This project is closed!"
+                                       Visibility="{Binding IsClosed, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                       Width="20"
+                                       Height="20"
+                                       RenderOptions.BitmapScalingMode="HighQuality" />
+
+                                <Image Grid.Column="1"
+                                       Source="/Assets/erro.png"
+                                       ToolTip="You have been removed from this project! It is readonly"
+                                       Visibility="{Binding IsActive, Converter={StaticResource InverseBooleanToVisibilityConverter}}"
+                                       Width="20"
+                                       Height="20"
+                                       RenderOptions.BitmapScalingMode="HighQuality"/>
+                            </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
             </Grid>
-            <StackPanel Grid.ColumnSpan="2" Margin="10" Width="350" HorizontalAlignment="Right">
+            <StackPanel Grid.ColumnSpan="2"
+                        Margin="10"
+                        Width="350"
+                        HorizontalAlignment="Right">
                 <TextBlock Text="{Binding DisplayedName}"
                            HorizontalAlignment="Right" />
                 <TextBlock Text="{Binding Email}"
@@ -104,7 +133,7 @@
             </StackPanel>
             <controls:ProjectControl Grid.Column="1"
                                      Grid.Row="1"
-                                     Visibility="{Binding IsProjectControlVisible, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                                     Visibility="{Binding IsProjectControlVisible, Converter={StaticResource BooleanToVisibilityConverter}}" />
         </Grid>
         <controls:LoginControl Visibility="{Binding IsLoginVisible, Converter={StaticResource BooleanToVisibilityConverter}}"
                                HorizontalAlignment="Center"

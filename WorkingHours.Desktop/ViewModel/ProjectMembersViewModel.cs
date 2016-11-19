@@ -44,7 +44,7 @@ namespace WorkingHours.Desktop.ViewModel
             get { return members; }
             protected set { Set(ref members, value); }
         }
-        
+
 
         private bool isReadonly;
         private readonly IDialogService dialogService;
@@ -57,10 +57,24 @@ namespace WorkingHours.Desktop.ViewModel
             set { Set(ref isReadonly, value); }
         }
 
+
+        private UserViewModel selectedUser;
+
+        public UserViewModel SelectedUser
+        {
+            get { return selectedUser; }
+
+            set
+            {
+                Set(ref selectedUser, value);
+                ((RelayCommand) AddCommand).RaiseCanExecuteChanged();
+            }
+        }
+
         public ProjectMembersViewModel(LoginInfo loginInfo, IUserManager userManager, IProjectManager projectManager, IDialogService dialogService,
             ILoadingService loadingService) : base(loginInfo)
         {
-            AddCommand = new RelayCommand<UserViewModel>(ExecuteAddCommand);
+            AddCommand = new RelayCommand(ExecuteAddCommand, () => SelectedUser != null && !(CurrentProject?.Members.Any(x => x.Id == SelectedUser.Id) ?? true));
             SearchCommand = new RelayCommand<SearchEventArgs>(ExecuteSearchCommand);
             SaveCommand = new RelayCommand(ExecuteSaveCommand);
             RemoveCommand = new RelayCommand<ProjectMemberViewModel>(ExecuteRemoveCommand);
@@ -109,7 +123,7 @@ namespace WorkingHours.Desktop.ViewModel
             catch (InvalidOperationException)
             {
                 dialogService.ShowError("Error", "You can not change your own status!");
-        }
+            }
             finally
             {
                 loadingService.HideIndicator();
@@ -123,21 +137,34 @@ namespace WorkingHours.Desktop.ViewModel
             {
                 member.IsChanged = false;
             }
-            IsReadonly = projectManager.LoginInfo.Role == Roles.Employee;
+
+            IsReadonly = !(CurrentProject.Members.Any(m => m.Id == projectManager.LoginInfo.Id && m.RoleInProjectEnum == Roles.Manager) && IsActive);
             return base.OnProjectChanged();
         }
 
-        private async void ExecuteAddCommand(UserViewModel obj)
+        private async void ExecuteAddCommand()
         {
-            if (obj == null)
+            if (SelectedUser == null || CurrentProject.Members.Any(x => x.Id == SelectedUser.Id))
             {
                 return;
             }
 
-            loadingService.ShowIndicator("Adding member...");
-               await projectManager.AddMembersToProjectAsync(CurrentProject.Id, new Dictionary<int, Shared.Model.Roles>() { { obj.Id, Shared.Model.Roles.Employee } });
+            try
+            {
+                loadingService.ShowIndicator("Adding member...");
+                await
+                    projectManager.AddMembersToProjectAsync(CurrentProject.Id,
+                        new Dictionary<int, Shared.Model.Roles>() {{ SelectedUser.Id, Roles.Employee}});
                 ReloadProject();
-            loadingService.HideIndicator();
+            }
+            catch (InvalidOperationException)
+            {
+                dialogService.ShowError("Error", "You can not update yourself in a project!");
+            }
+            finally
+            {
+                loadingService.HideIndicator();
+            }
         }
 
         private async void ExecuteSearchCommand(SearchEventArgs args)
