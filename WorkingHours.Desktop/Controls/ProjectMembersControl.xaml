@@ -12,9 +12,15 @@
                       xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
                       mc:Ignorable="d"
                       d:DesignHeight="300"
-                      d:DesignWidth="300">
+                      d:DesignWidth="300"
+                      xmlns:model="clr-namespace:WorkingHours.Shared.Model;assembly=WorkingHours.Shared">
     <Grid DataContext="{ioc:ViewModel ViewModelType={x:Type vm:IProjectMembersViewModel}}">
-        <StackPanel>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0">
             <cntrl:AutoCompleteBox ItemsSource="{Binding Path=SearchResults}"
                                    MinimumPopulateDelay="500"
                                    x:Name="userNameBox"
@@ -34,7 +40,60 @@
             </cntrl:AutoCompleteBox>
             <Button HorizontalAlignment="Right"
                     Command="{Binding AddCommand}"
-                    CommandParameter="{Binding ElementName=userNameBox, Path=SelectedItem}">Add!</Button>
+                    CommandParameter="{Binding ElementName=userNameBox, Path=SelectedItem}">Add member to project</Button>
+        </StackPanel>
+        <DataGrid Grid.Row="1"
+                  AutoGenerateColumns="False"
+                  ItemsSource="{Binding Members}"
+                  CanUserAddRows="False"
+                  CanUserDeleteRows="False"
+                  CanUserSortColumns="False"
+                  CanUserReorderColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Full name"
+                                    IsReadOnly="True"
+                                    Binding="{Binding FullName}"/>
+                <DataGridTemplateColumn Header="Role"
+                                        IsReadOnly="{Binding CanUpDate}">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding RoleInProject}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <ComboBox SelectedItem="{Binding RoleInProject}"
+                                      IsEditable="False"
+                                      x:Name="RoleComboBox">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="SelectionChanged">
+                                        <cmd:EventToCommand Command="{Binding ElementName=mainWindow, Path=DataContext.ChangeRoleCommand}">
+                                            <cmd:EventToCommand.CommandParameter>
+                                                <MultiBinding Converter="{StaticResource RoleChangedEventArgsConverter}">
+                                                    <Binding />
+                                                    <Binding ElementName="RoleComboBox"
+                                                             Path="SelectedItem" />
+                                                </MultiBinding>
+                                            </cmd:EventToCommand.CommandParameter>
+                                        </cmd:EventToCommand>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                                <ComboBox.Items>
+                                    <model:Roles>Manager</model:Roles>
+                                    <model:Roles>Employee</model:Roles>
+                                </ComboBox.Items>
+                            </ComboBox>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <StackPanel Grid.Row="2">
+            <Button HorizontalAlignment="Right"
+                    Command="{Binding SaveCommand}">
+                Save project members
+            </Button>
+
         </StackPanel>
     </Grid>
 </common:UserControlEx>

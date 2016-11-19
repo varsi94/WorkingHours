@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using WorkingHours.Client.Interfaces;
+using WorkingHours.Desktop.Dialogs;
 using WorkingHours.Desktop.Interfaces.ViewModels;
 using WorkingHours.Desktop.Model;
 
@@ -20,6 +21,7 @@ namespace WorkingHours.Desktop.ViewModel
 
         public ICommand SearchCommand { get; }
 
+        public ICommand SaveCommand { get; }
         private List<UserViewModel> searchResults;
 
         public List<UserViewModel> SearchResults
@@ -28,15 +30,45 @@ namespace WorkingHours.Desktop.ViewModel
             protected set { Set(ref searchResults, value); }
         }
 
-        public ProjectMembersViewModel(IUserManager userManager)
+        private ObservableCollection<ProjectMemberViewModel> members;
+        private readonly IProjectManager projectManager;
+
+        public ObservableCollection<ProjectMemberViewModel> Members
+        {
+            get { return members; }
+            protected set { Set(ref members, value); }
+        }
+        
+        public ProjectMembersViewModel(IUserManager userManager, IProjectManager projectManager)
         {
             AddCommand = new RelayCommand<UserViewModel>(ExecuteAddCommand);
             SearchCommand = new RelayCommand<SearchEventArgs>(ExecuteSearchCommand);
+            SaveCommand = new RelayCommand(ExecuteSaveCommand);
             this.userManager = userManager;
+            this.projectManager = projectManager;
         }
 
-        private void ExecuteAddCommand(UserViewModel obj)
+        private async void ExecuteSaveCommand()
         {
+            await projectManager.AddMembersToProjectAsync(CurrentProject.Id, members.ToDictionary(m => m.Id, m => m.RoleInProject));
+        }
+
+        protected override  Task OnProjectChanged()
+        {
+            Members = new ObservableCollection<ProjectMemberViewModel>(CurrentProject.Members.Select(x => new ProjectMemberViewModel(x)));
+            return base.OnProjectChanged();
+        }
+        private async void ExecuteAddCommand(UserViewModel obj)
+        {
+            if (obj == null)
+            {
+                //DialogWrapper<> d = new DialogWrapper<>();
+            }
+            else
+            {
+               await projectManager.AddMembersToProjectAsync(CurrentProject.Id, new Dictionary<int, Shared.Model.Roles>() { { obj.Id, Shared.Model.Roles.Employee } });
+                ReloadProject();
+            }
         }
 
         private async void ExecuteSearchCommand(SearchEventArgs args)
