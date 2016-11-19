@@ -63,6 +63,7 @@ namespace WorkingHours.Desktop.ViewModel
             this.dialogService = dialogService;
             this.projectManager = projectManager;
             this.loadingService = loadingService;
+            projectManager.RemoveMemberFromProjectAsync()
         }
 
         private async void ExecuteSaveCommand()
