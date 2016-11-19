@@ -22,6 +22,9 @@ namespace WorkingHours.Desktop.ViewModel
         public ICommand SearchCommand { get; }
 
         public ICommand SaveCommand { get; }
+
+        public ICommand RemoveCommand { get; }
+
         private List<UserViewModel> searchResults;
 
         public List<UserViewModel> SearchResults
@@ -38,14 +41,21 @@ namespace WorkingHours.Desktop.ViewModel
             get { return members; }
             protected set { Set(ref members, value); }
         }
-        
+
         public ProjectMembersViewModel(IUserManager userManager, IProjectManager projectManager)
         {
             AddCommand = new RelayCommand<UserViewModel>(ExecuteAddCommand);
             SearchCommand = new RelayCommand<SearchEventArgs>(ExecuteSearchCommand);
             SaveCommand = new RelayCommand(ExecuteSaveCommand);
+            //RemoveCommand = new RelayCommand(ExecuteRemoveCommand);
             this.userManager = userManager;
             this.projectManager = projectManager;
+        }
+
+        private async void ExecuteRemoveCommand(ProjectMemberViewModel obj)
+        {
+            //await projectManager.AddMembersToProjectAsync(CurrentProject.Id, )
+            
         }
 
         private async void ExecuteSaveCommand()
@@ -53,7 +63,7 @@ namespace WorkingHours.Desktop.ViewModel
             await projectManager.AddMembersToProjectAsync(CurrentProject.Id, members.ToDictionary(m => m.Id, m => m.RoleInProject));
         }
 
-        protected override  Task OnProjectChanged()
+        protected override Task OnProjectChanged()
         {
             Members = new ObservableCollection<ProjectMemberViewModel>(CurrentProject.Members.Select(x => new ProjectMemberViewModel(x)));
             return base.OnProjectChanged();
@@ -66,7 +76,7 @@ namespace WorkingHours.Desktop.ViewModel
             }
             else
             {
-               await projectManager.AddMembersToProjectAsync(CurrentProject.Id, new Dictionary<int, Shared.Model.Roles>() { { obj.Id, Shared.Model.Roles.Employee } });
+                await projectManager.AddMembersToProjectAsync(CurrentProject.Id, new Dictionary<int, Shared.Model.Roles>() { { obj.Id, Shared.Model.Roles.Employee } });
                 ReloadProject();
             }
         }

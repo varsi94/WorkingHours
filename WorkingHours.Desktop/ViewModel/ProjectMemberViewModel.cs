@@ -11,6 +11,12 @@
                 RaisePropertyChanged();
             }
         }
+        
+        public bool IsActive
+        {
+            get { return member.IsActive; }
+            set { member.IsActive = value; }
+        }
 
 
         public bool CanUpDate
