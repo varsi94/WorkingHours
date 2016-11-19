@@ -14,10 +14,11 @@
         <TabControl Grid.Column="1"
                     Grid.Row="1">
             <TabControl.Items>
-                <TabItem Header="Issues and work items">
+                <TabItem Header="Issues and worktime">
 
                 </TabItem>
                 <TabItem Header="Associated members">
+                    <cntrl:ProjectMembersControl />
                 </TabItem>
                 <TabItem Visibility="{Binding RoleInProject, Converter={StaticResource RoleToVisibilityConverter}}"
                          Header="Manage issues">

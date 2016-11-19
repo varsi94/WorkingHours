@@ -83,7 +83,7 @@
                            HorizontalAlignment="Right" />
                 <TextBlock Text="{Binding Email}"
                            HorizontalAlignment="Right" />
-                <TextBlock Text="{Binding Roles}"
+                <TextBlock Text="{Binding Role}"
                            HorizontalAlignment="Right" />
                 <Grid>
                     <Grid.ColumnDefinitions>
