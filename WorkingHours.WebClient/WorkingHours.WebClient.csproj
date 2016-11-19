@@ -217,7 +217,7 @@
     <Content Include="Views\Auth\SignupSuccessful.cshtml" />
     <Content Include="Views\Auth\ChangePassword.cshtml" />
     <Content Include="Views\Auth\ChangePasswordSuccessful.cshtml" />
-    <Content Include="Views\Projects\Report.cshtml" />
+    <Content Include="Views\Projects\ReportPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

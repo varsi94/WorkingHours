@@ -32,24 +32,6 @@ namespace WorkingHours.WebClient.Controllers
             var result = await projectManager.GetMyProjectsAsync();
             return View(result);
         }
-        
-        [HttpGet]
-        public async Task<ActionResult> Report(int id)
-        {
-            try
-            {
-                var project = await projectManager.GetProjectAsync(id);
-                return View(new ReportIntervalModel {ProjectName = project.Name, Id = id});
-            }
-            catch (NotFoundException)
-            {
-                return HttpNotFound();
-            }
-            catch (UnauthorizedAccessException)
-            {
-                return HttpNotFound();
-            }
-        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]

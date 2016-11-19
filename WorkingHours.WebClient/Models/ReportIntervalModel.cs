@@ -16,9 +16,6 @@ namespace WorkingHours.WebClient.Models
         [Display(Name = "End date")]
         public DateTime? EndDate { get; set; }
 
-        [Display(Name = "Project name")]
-        public string ProjectName { get; set; }
-
         public int Id { get; set; }
     }
 }
