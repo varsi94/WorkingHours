@@ -225,6 +225,7 @@
     <Content Include="Views\Projects\Issues.cshtml" />
     <Content Include="Views\Issues\Details.cshtml" />
     <Content Include="Views\Projects\Members.cshtml" />
+    <Content Include="Views\Issues\DetailsForManagers.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

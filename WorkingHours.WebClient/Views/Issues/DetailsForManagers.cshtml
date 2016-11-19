@@ -1,28 +1,23 @@
-﻿@model WorkingHours.WebClient.Models.IssueDetailsModel<WorkingHours.Shared.Dto.WorkTimeDto>
+﻿@model WorkingHours.WebClient.Models.IssueDetailsModel<WorkingHours.Shared.Dto.ManagerWorkTimeDto>
 
 @{
-    ViewBag.Title = "Work time";
+    ViewBag.Title = "Worktime for all members";
 }
 
-<h2>Worktime - @Model.IssueName</h2>
+<h2>Worktime for all members - @Model.IssueName</h2>
 
-@if (Model.IsManager)
-{
-    <div style="text-align: right; margin-bottom: 10px">
-        <a href="@Url.Action("DetailsForManagers", new {issueId = Model.IssueId, projectId = Model.ProjectId})" class="btn btn-default">View everbody's worktime!</a>
-    </div>
-}
-@if (!Model.WorkTimes.Items.Any())
-{
-    <div style="text-align: center">
-        There are no work time in this issue!
-    </div>
-}
-else
+<div style="text-align: right; margin-bottom: 10px">
+    <a class="btn btn-default" href="@Url.Action("Details", new {issueId = Model.IssueId, projectId = Model.ProjectId})">Just my worktime!</a>
+</div>
+
+@if (Model.WorkTimes.Items.Any())
 {
     var dummy = Model.WorkTimes.Items.FirstOrDefault();
     <table class="table">
         <tr>
+            <th>
+                Member
+            </th>
             <th>
                 @Html.DisplayNameFor(model => dummy.Name)
             </th>
@@ -40,6 +35,9 @@ else
         @foreach (var item in Model.WorkTimes.Items)
         {
             <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Employee.FullName) (@Html.DisplayFor(modelItem => item.Employee.Email))
+                </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
@@ -69,7 +67,14 @@ else
         }
     </div>
 }
+else
+{
+    <div style="text-align: center">
+        There are no work times!
+    </div>
+}
 
 <div>
-    @Html.ActionLink("Back to issues", "Issues", "Projects", routeValues: new { id = Model.ProjectId }, htmlAttributes: null)
+    @Html.ActionLink("Back to issues", "Issues", "Projects", new { id = Model.ProjectId}, null)
 </div>
+
