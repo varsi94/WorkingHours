@@ -120,6 +120,28 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Delete"
+                                            IsReadOnly="True">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button HorizontalAlignment="Right"
+                                    Command="{Binding DeleteWorkTimeCommand}"
+                                    CommandParameter="{Binding}"
+                                    BorderThickness="0"
+                                    Background="White"
+                                    Margin="10">
+                                    <!--IsEnabled="{Binding ElementName=LayoutRoot, Path=DataContext.IsWriteable}"-->
+                                    <Grid>
+                                        <Image Source="/Assets/erro.png"
+                                           Width="20"
+                                           RenderOptions.BitmapScalingMode="HighQuality"
+                                           Height="20"
+                                           ToolTip="Remove workitem!"/>
+                                    </Grid>
+                                </Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>
