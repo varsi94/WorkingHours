@@ -38,7 +38,10 @@ namespace WorkingHours.Desktop.ViewModel
             DiscardChangesCommand = new RelayCommand(ExecuteDiscardChangesCommand);
             SaveCommand = new RelayCommand(ExecuteSaveCommand);
             GenerateReportCommand = new RelayCommand(ExecuteGenerateReportCommand);
+            DeleteWorkTimeCommand = new RelayCommand<WorkTimesViewModel>(ExecuteDeleteWorkTimeCommand);
         }
+
+       
 
         private WorkTimeViewModel currentWorkTime;
 
@@ -77,6 +80,8 @@ namespace WorkingHours.Desktop.ViewModel
         public ICommand GenerateReportCommand { get; }
 
         public ICommand NewWorkTimeCommand { get; }
+
+        public ICommand DeleteWorkTimeCommand { get; }
 
         private IssueViewModel selctedIssue;
 
@@ -195,6 +200,12 @@ namespace WorkingHours.Desktop.ViewModel
 
             await fileService.SaveByteArrayToFileAsync(fileName, result);
             fileService.OpenFile(fileName);
+            loadingService.HideIndicator();
+        }
+        private async void ExecuteDeleteWorkTimeCommand(WorkTimesViewModel obj)
+        {
+            loadingService.ShowIndicator("Deleting worktime...");
+            await workTimeManager.DeleteWorkTimeAsync(obj.CurrentWorkTime.WorkTimeDto.Id);
             loadingService.HideIndicator();
         }
     }
