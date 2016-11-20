@@ -124,7 +124,9 @@ namespace WorkingHours.Bll.Managers
                 member.User.Role = (member.User.Roles.Any(r => r.RoleId == managerRole.Id)) ? Roles.Manager : Roles.Employee;
             }
 
-            return Mapper.Map<ProjectInfo>(project);
+            var result = Mapper.Map<ProjectInfo>(project);
+            result.IsWriteable = result.Members.Any(x => x.Id == userId && x.IsActive);
+            return result;
         }
 
         public List<ProjectHeader> List(int userId)
@@ -141,7 +143,7 @@ namespace WorkingHours.Bll.Managers
             var result = Mapper.Map<List<ProjectHeader>>(projects);
             foreach (var projectHeader in result)
             {
-                projectHeader.IsActive = actives[projectHeader.Id];
+                projectHeader.IsWriteable = actives[projectHeader.Id];
             }
             return result;
         }

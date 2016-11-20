@@ -110,7 +110,10 @@ namespace WorkingHours.Bll.Managers
             var result = Mapper.Map<PagedResult<WorkTimeDto>>(list);
             foreach (var workTime in result.Items)
             {
-                workTime.CanUpdate = (timeService.Now - workTime.Date).TotalDays < configurationManager.WorkTimeUpdateIntervalInDays;
+                workTime.CanUpdate = (timeService.Now - workTime.Date).TotalDays <
+                                     configurationManager.WorkTimeUpdateIntervalInDays && !issue.IsClosed &&
+                                     !issue.Project.IsClosed &&
+                                     !issue.Project.AssociatedMembers.Any(x => x.UserId == userId && !x.IsActive);
             }
             return result;
         }

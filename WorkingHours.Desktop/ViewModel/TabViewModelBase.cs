@@ -14,14 +14,14 @@ namespace WorkingHours.Desktop.ViewModel
 {
     public abstract class TabViewModelBase : LoadAwareViewModelBase, ITabViewModel
     {
-        private bool isActive;
+        private bool isWriteable;
         private readonly LoginInfo loginInfo;
 
-        public virtual bool IsActive
+        public virtual bool IsWriteable
         {
-            get { return isActive; }
+            get { return isWriteable; }
 
-            protected set { Set(ref isActive, value); }
+            protected set { Set(ref isWriteable, value); }
         }
 
         protected ProjectInfo CurrentProject { get; private set; }
@@ -35,7 +35,7 @@ namespace WorkingHours.Desktop.ViewModel
         private async void ProjectLoaded(NotificationMessage<ProjectInfo> obj)
         {
             CurrentProject = obj.Content;
-            IsActive = CurrentProject.Members.Any(x => x.IsActive && x.Id == loginInfo.Id) && !CurrentProject.IsClosed;
+            IsWriteable = CurrentProject.Members.Any(x => x.IsActive && x.Id == loginInfo.Id) && !CurrentProject.IsClosed;
             await OnProjectChanged();
         }
 

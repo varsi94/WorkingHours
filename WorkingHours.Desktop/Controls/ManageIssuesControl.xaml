@@ -28,7 +28,7 @@
                 Cursor="Hand"
                 BorderThickness="0"
                 Background="White"
-                IsEnabled="{Binding IsActive}">
+                IsEnabled="{Binding IsWriteable}">
             <StackPanel Orientation="Horizontal">
                 <Image Source="../Assets/add.png"
                        Width="20"
@@ -83,7 +83,7 @@
             <TextBox Text="{Binding SelectedIssue.Name, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
                      Grid.Column="1"
                      Margin="10"
-                     IsEnabled="{Binding IsActive}"/>
+                     IsEnabled="{Binding IsWriteable}"/>
             <TextBlock Grid.Column="0"
                        Grid.Row="1"
                        Margin="10">Description:</TextBlock>
@@ -91,7 +91,7 @@
                      Grid.Column="1"
                      Text="{Binding SelectedIssue.Description, Mode=TwoWay}"
                      Margin="10"
-                     IsEnabled="{Binding IsActive}" />
+                     IsEnabled="{Binding IsWriteable}" />
             <TextBlock Grid.Column="0"
                        Grid.Row="2"
                        Margin="10">Deadline:</TextBlock>
@@ -99,7 +99,7 @@
                         Grid.Row="2"
                         Margin="10"
                         SelectedDate="{Binding SelectedIssue.Deadline, Mode=TwoWay}"
-                        IsEnabled="{Binding IsActive}" />
+                        IsEnabled="{Binding IsWriteable}" />
             <TextBlock Grid.Column="0"
                        Grid.Row="3"
                        Margin="10">Closed:</TextBlock>
@@ -108,7 +108,7 @@
                       Margin="10"
                       HorizontalAlignment="Center"
                       Grid.Column="1"
-                      IsEnabled="{Binding IsActive}" />
+                      IsEnabled="{Binding IsWriteable}" />
 
             <Button Command="{Binding SaveCommand}"
                     Grid.Row="4"
@@ -123,7 +123,7 @@
                     Padding="10"
                     Margin="10"
                     Grid.Column="1"
-                    IsEnabled="{Binding IsActive}">Discard changes</Button>
+                    IsEnabled="{Binding IsWriteable}">Discard changes</Button>
         </Grid>
     </Grid>
 </common:UserControlEx>

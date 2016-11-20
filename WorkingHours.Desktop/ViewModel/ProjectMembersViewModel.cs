@@ -60,13 +60,13 @@ namespace WorkingHours.Desktop.ViewModel
             }
         }
 
-        public override bool IsActive
+        public override bool IsWriteable
         {
-            get { return base.IsActive; }
+            get { return base.IsWriteable; }
 
             protected set
             {
-                base.IsActive = value && CurrentProject.Members.Any(m => m.Id == projectManager.LoginInfo.Id && m.RoleInProjectEnum == Roles.Manager);
+                base.IsWriteable = value && CurrentProject.Members.Any(m => m.Id == projectManager.LoginInfo.Id && m.RoleInProjectEnum == Roles.Manager);
             }
         }
 

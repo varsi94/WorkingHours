@@ -39,7 +39,7 @@ namespace WorkingHours.Client.Managers
                     }
                     else if (httpResult.StatusCode == HttpStatusCode.Unauthorized)
                     {
-                        throw new UnauthorizedAccessException((await httpResult.Content.ReadAsAsync<ErrorMessage>()).Message);
+                        throw new UnauthorizedAccessException(msg.Message);
                     }
                 }
             }

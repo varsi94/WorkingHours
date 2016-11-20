@@ -8,6 +8,6 @@ namespace WorkingHours.Desktop.Interfaces.ViewModels
 {
     public interface ITabViewModel : IViewModel
     {
-        bool IsActive { get; }
+        bool IsWriteable { get; }
     }
 }

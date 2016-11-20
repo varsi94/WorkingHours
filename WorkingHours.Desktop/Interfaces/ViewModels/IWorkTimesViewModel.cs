@@ -19,7 +19,9 @@ namespace WorkingHours.Desktop.Interfaces.ViewModels
 
         ICommand SaveCommand { get; }
 
-        ICommand DiscardChangedCommand { get; }
+        ICommand NewWorkTimeCommand { get; }
+
+        ICommand DiscardChangesCommand { get; }
         
         IssueViewModel SelectedIssue { get; set; }
 

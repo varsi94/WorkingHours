@@ -180,7 +180,7 @@ namespace WorkingHours.Desktop.ViewModel
 
         private void UpdateSaveEnabled()
         {
-            IsSaveEnabled = IsActive && (SelectedIssue?.IsValid ?? false);
+            IsSaveEnabled = IsWriteable && (SelectedIssue?.IsValid ?? false);
         }
     }
 }

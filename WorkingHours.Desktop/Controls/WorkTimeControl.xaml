@@ -53,6 +53,21 @@
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Right"
+                        Grid.Row="1">
+                <Button Command="{Binding NewWorkTimeCommand}"
+                        IsEnabled="{Binding IsWriteable}"
+                        Margin="10">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/Assets/add.png"
+                               Width="20"
+                               Height="20"
+                               RenderOptions.BitmapScalingMode="HighQuality" />
+                        <TextBlock>Add worktime</TextBlock>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
             <DataGrid ItemsSource="{Binding WorkTimes}"
                       CanUserAddRows="False"
                       CanUserDeleteRows="False"
@@ -121,7 +136,7 @@
             </Grid.ColumnDefinitions>
             <TextBlock>Name</TextBlock>
             <TextBox Grid.Column="1"
-                     Text="{Binding CurrentWorkTime.Name, Mode=TwoWay}"
+                     Text="{Binding CurrentWorkTime.Name, Mode=TwoWay, ValidatesOnNotifyDataErrors=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged}"
                      IsReadOnly="{Binding CurrentWorkTime.IsReadonly}" />
             <TextBlock Grid.Row="1">Description</TextBlock>
             <TextBox Grid.Row="1"
@@ -134,25 +149,27 @@
                         VerticalAlignment="Center"
                         Margin="10"
                         SelectedDate="{Binding CurrentWorkTime.Date, Mode=TwoWay}"
-                        IsEnabled="{Binding CurrentWorkTime.IsReadonly, Converter={StaticResource InverseBooleanConverter}}"/>
+                        IsEnabled="{Binding CurrentWorkTime.IsReadonly, Converter={StaticResource InverseBooleanConverter}}" />
             <TextBlock Grid.Row="3">Hours</TextBlock>
             <TextBox Grid.Row="3"
                      Grid.Column="1"
-                     Text="{Binding CurrentWorkTime.Hours, Mode=TwoWay}"
+                     Text="{Binding CurrentWorkTime.Hours, Mode=TwoWay, ValidatesOnNotifyDataErrors=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged}"
                      IsReadOnly="{Binding CurrentWorkTime.IsReadonly}" />
             <Button Grid.Row="4"
                     Padding="10"
                     Margin="10"
                     VerticalAlignment="Center"
                     HorizontalAlignment="Center"
-                    IsEnabled="{Binding CurrentWorkTime.IsReadonly, Converter={StaticResource InverseBooleanConverter}}">Save</Button>
+                    Visibility="{Binding CurrentWorkTime.IsReadonly, Converter={StaticResource InverseBooleanToVisibilityConverter}}"
+                    Command="{Binding SaveCommand}">Save</Button>
             <Button Grid.Row="4"
                     Grid.Column="1"
                     Padding="10"
                     Margin="10"
                     VerticalAlignment="Center"
                     HorizontalAlignment="Center"
-                    IsEnabled="{Binding CurrentWorkTime.IsReadonly, Converter={StaticResource InverseBooleanConverter}}">Discard changes</Button>
+                    Visibility="{Binding CurrentWorkTime.IsReadonly, Converter={StaticResource InverseBooleanToVisibilityConverter}}"
+                    Command="{Binding DiscardChangesCommand}">Discard changes</Button>
         </Grid>
         <DatePicker HorizontalAlignment="Left"
                     Margin="-233,6,0,0"

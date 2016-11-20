@@ -22,7 +22,7 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0"
-                    Visibility="{Binding IsActive, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    Visibility="{Binding IsWriteable, Converter={StaticResource BooleanToVisibilityConverter}}">
             <cntrl:AutoCompleteBox ItemsSource="{Binding Path=SearchResults}"
                                    MinimumPopulateDelay="500"
                                    x:Name="userNameBox"
@@ -30,7 +30,7 @@
                                    Populating="UserNameBox_OnPopulating"
                                    FilterMode="None"
                                    ValueMemberPath="FullName"
-                                   IsEnabled="{Binding IsActive}"
+                                   IsEnabled="{Binding IsWriteable}"
                                    SelectedItem="{Binding SelectedUser, Mode=TwoWay}"
                                    Margin="10">
                 <cntrl:AutoCompleteBox.ItemTemplate>
@@ -46,7 +46,7 @@
             <Button HorizontalAlignment="Right"
                     Command="{Binding AddCommand}"
                     CommandParameter="{Binding ElementName=userNameBox, Path=SelectedItem}"
-                    IsEnabled="{Binding IsActive}" Margin="10">Add member to project</Button>
+                    IsEnabled="{Binding IsWriteable}" Margin="10">Add member to project</Button>
         </StackPanel>
         <FrameworkElement x:Name="dummyElement" Visibility="Collapsed" />
         <DataGrid Grid.Row="1"
@@ -56,7 +56,7 @@
                   CanUserDeleteRows="False"
                   CanUserSortColumns="False"
                   CanUserReorderColumns="False"
-                  IsReadOnly="{Binding IsActive, Converter={StaticResource InverseBooleanConverter}}"
+                  IsReadOnly="{Binding IsWriteable, Converter={StaticResource InverseBooleanConverter}}"
                   Margin="10"
                   x:Name="grid">
             <DataGrid.Columns>
@@ -119,7 +119,7 @@
                 </DataGridTemplateColumn>
                 <DataGridTemplateColumn Header="Actions"
                                         IsReadOnly="True"
-                                        Visibility="{Binding DataContext.IsActive, Converter={StaticResource BooleanToVisibilityConverter}, Source={x:Reference dummyElement}}">
+                                        Visibility="{Binding DataContext.IsWriteable, Converter={StaticResource BooleanToVisibilityConverter}, Source={x:Reference dummyElement}}">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button HorizontalAlignment="Right"
@@ -127,7 +127,7 @@
                                     CommandParameter="{Binding}"
                                     BorderThickness="0"
                                     Background="White"
-                                    IsEnabled="{Binding ElementName=LayoutRoot, Path=DataContext.IsActive}"
+                                    IsEnabled="{Binding ElementName=LayoutRoot, Path=DataContext.IsWriteable}"
                                     Margin="10">
                                 <Grid>
                                     <Image Source="/Assets/erro.png"
@@ -152,7 +152,7 @@
 
         </DataGrid>
         <StackPanel Grid.Row="2"
-                    Visibility="{Binding IsActive, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    Visibility="{Binding IsWriteable, Converter={StaticResource BooleanToVisibilityConverter}}">
             <Button HorizontalAlignment="Right"
                     Command="{Binding SaveCommand}"
                     IsEnabled="{Binding IsActive}"

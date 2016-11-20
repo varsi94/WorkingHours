@@ -84,21 +84,22 @@
                                     <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
                                 <TextBlock Text="{Binding Name}" />
-                                <Image Grid.Column="1"
-                                       Source="/Assets/lock.png"
-                                       ToolTip="This project is closed!"
-                                       Visibility="{Binding IsClosed, Converter={StaticResource BooleanToVisibilityConverter}}"
-                                       Width="20"
-                                       Height="20"
-                                       RenderOptions.BitmapScalingMode="HighQuality" />
+                                <StackPanel Grid.Column="1"
+                                            Orientation="Horizontal">
+                                    <Image Source="/Assets/lock.png"
+                                           ToolTip="This project is closed!"
+                                           Visibility="{Binding IsClosed, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                           Width="20"
+                                           Height="20"
+                                           RenderOptions.BitmapScalingMode="HighQuality" />
 
-                                <Image Grid.Column="1"
-                                       Source="/Assets/erro.png"
-                                       ToolTip="You have been removed from this project! It is readonly"
-                                       Visibility="{Binding IsActive, Converter={StaticResource InverseBooleanToVisibilityConverter}}"
-                                       Width="20"
-                                       Height="20"
-                                       RenderOptions.BitmapScalingMode="HighQuality"/>
+                                    <Image Source="/Assets/erro.png"
+                                           ToolTip="You have been removed from this project! It is readonly"
+                                           Visibility="{Binding IsWriteable, Converter={StaticResource InverseBooleanToVisibilityConverter}}"
+                                           Width="20"
+                                           Height="20"
+                                           RenderOptions.BitmapScalingMode="HighQuality" />
+                                </StackPanel>
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>

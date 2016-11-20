@@ -16,28 +16,60 @@ namespace WorkingHours.Desktop.ViewModel
         private static readonly CultureInfo enUS = new CultureInfo("en-US");
 
         public WorkTimeDto WorkTimeDto { get; protected set; }
+        private WorkTimeDto copy;
+        private bool isEdit = false;
 
         public WorkTimeViewModel(WorkTimeDto workTime)
         {
-            this.WorkTimeDto = workTime;
+            WorkTimeDto = workTime;
         }
 
         public void BeginEdit()
         {
-            throw new NotImplementedException();
+            if (isEdit)
+            {
+                return;
+            }
+
+            copy = new WorkTimeDto
+            {
+                Date = WorkTimeDto.Date,
+                Description = WorkTimeDto.Description,
+                Name = WorkTimeDto.Name,
+                RowVersion = WorkTimeDto.RowVersion,
+                Hours = WorkTimeDto.Hours,
+                Id = WorkTimeDto.Id
+            };
+            isEdit = true;
         }
 
         public void CancelEdit()
         {
-            throw new NotImplementedException();
+            if (!isEdit)
+            {
+                return;
+            }
+
+            WorkTimeDto = copy;
+            isEdit = false;
+            foreach (var propertyInfo in GetType().GetProperties())
+            {
+                RaisePropertyChanged(propertyInfo.Name);
+            }
         }
 
         public void EndEdit()
         {
-            throw new NotImplementedException();
+            if (!isEdit)
+            {
+                return;
+            }
+
+            copy = null;
+            isEdit = false;
         }
 
-        [Required]
+        [Required(ErrorMessage = "Name is required!")]
         public string Name
         {
             get { return WorkTimeDto.Name; }
@@ -61,6 +93,7 @@ namespace WorkingHours.Desktop.ViewModel
 
         public string DateStr => Date.ToString(enUS.DateTimeFormat.LongDatePattern, enUS);
 
+        [Range(0, 24, ErrorMessage = "Hours must be between 0 and 24 hours!")]
         public double Hours
         {
             get { return WorkTimeDto.Hours; }
@@ -84,11 +117,9 @@ namespace WorkingHours.Desktop.ViewModel
         protected override void FillInProperties()
         {
             PropertiesToValidate.Add(nameof(Name), () => Name);
+            PropertiesToValidate.Add(nameof(Hours), () => Hours);
         }
 
-        public virtual bool IsReadonly
-        {
-            get { return (DateTime.Now - Date).TotalDays >= 8; }
-        }
+        public virtual bool IsReadonly => !WorkTimeDto.CanUpdate;
     }
 }
