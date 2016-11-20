@@ -26,7 +26,7 @@ namespace WorkingHours.Bll.Managers
                 throw new NotFoundException("Project not found!");
             }
 
-            if (project.AssociatedMembers.Any(x => x.UserId == managerId && x.Role.Name == Roles.Manager.ToString()))
+            if (!project.AssociatedMembers.Any(x => x.UserId == managerId && x.Role.Name == Roles.Manager.ToString()))
             {
                 throw new UnauthorizedException("You are not a manager in this project!");
             }

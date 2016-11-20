@@ -124,7 +124,7 @@
             </DataGrid>
         </Grid>
         <Grid Grid.Column="1"
-              Grid.Row="1"
+              Grid.Row="2"
               Visibility="{Binding IsDetailsVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
             <Grid.Resources>
                 <Style TargetType="TextBlock">

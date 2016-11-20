@@ -24,7 +24,5 @@ namespace WorkingHours.Desktop.Interfaces.ViewModels
         ICommand IssueSelectedCommand { get; }
 
         ICommand DiscardChangesCommand { get; }
-
-        bool IsSaveEnabled { get; }
     }
 }

@@ -40,19 +40,7 @@ namespace WorkingHours.Desktop.ViewModel
         {
             get { return selectedIssue; }
 
-            set
-            {
-                if (selectedIssue != null)
-                {
-                    selectedIssue.PropertyChanged -= SelectedIssuePropChanged;
-                }
-                Set(ref selectedIssue, value);
-                if (selectedIssue != null)
-                {
-                    selectedIssue.PropertyChanged += SelectedIssuePropChanged;
-                }
-                UpdateSaveEnabled();
-            }
+            set { Set(ref selectedIssue, value); }
         }
 
         private bool isEditorVisible;
@@ -71,13 +59,6 @@ namespace WorkingHours.Desktop.ViewModel
         public ICommand IssueSelectedCommand { get; }
 
         public ICommand DiscardChangesCommand { get; }
-
-        private bool isSaveEnabled;
-        public bool IsSaveEnabled
-        {
-            get { return isSaveEnabled; }
-            protected set { Set(ref isSaveEnabled, value); }
-        }
 
         public ManageIssuesViewModel(LoginInfo loginInfo, IIssueManager issueManager, ILoadingService loadingService, IDialogService dialogService) : base(loginInfo)
         {
@@ -169,18 +150,7 @@ namespace WorkingHours.Desktop.ViewModel
         {
             Issues =
                 new ObservableCollection<IssueViewModel>(CurrentProject.Issues.Select(x => new IssueViewModel(x)));
-            UpdateSaveEnabled();
             return base.OnProjectChanged();
-        }
-        
-        private void SelectedIssuePropChanged(object sender, PropertyChangedEventArgs e)
-        {
-            UpdateSaveEnabled();
-        }
-
-        private void UpdateSaveEnabled()
-        {
-            IsSaveEnabled = IsWriteable && (SelectedIssue?.IsValid ?? false);
         }
     }
 }
