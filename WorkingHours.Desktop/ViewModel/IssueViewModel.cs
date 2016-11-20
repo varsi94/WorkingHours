@@ -58,9 +58,16 @@ namespace WorkingHours.Desktop.ViewModel
             }
         }
 
+        public int Id => issue.Id;
+
         public IssueViewModel(IssueHeader issue)
         {
             this.issue = issue;
+        }
+
+        public IssueViewModel()
+        {
+            this.issue = new IssueHeader();
         }
 
         public IssueHeader GetIssueHeader()

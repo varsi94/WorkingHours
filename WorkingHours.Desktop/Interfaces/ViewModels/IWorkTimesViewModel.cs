@@ -20,7 +20,11 @@ namespace WorkingHours.Desktop.Interfaces.ViewModels
         ICommand SaveCommand { get; }
 
         ICommand DiscardChangedCommand { get; }
+        
+        IssueViewModel SelectedIssue { get; set; }
 
         WorkTimeViewModel CurrentWorkTime { get; set; }
+
+        bool IsDetailsVisible { get; }
     }
 }
