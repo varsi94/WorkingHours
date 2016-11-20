@@ -10,6 +10,7 @@ using WorkingHours.Client.Interfaces;
 using WorkingHours.Client.Model;
 using WorkingHours.Desktop.Interfaces.Services;
 using WorkingHours.Desktop.Interfaces.ViewModels;
+using WorkingHours.Shared.Dto;
 
 namespace WorkingHours.Desktop.ViewModel
 {
@@ -157,7 +158,18 @@ namespace WorkingHours.Desktop.ViewModel
             }
             else
             {
-                throw new NotImplementedException();
+                selectedIssueId = SelectedIssue.Id;
+                var updateWorkTimeDto = new UpdateWorkTimeDto()
+                {
+                    Id = CurrentWorkTime.WorkTimeDto.Id,
+                    Date = CurrentWorkTime.Date,
+                    Description = CurrentWorkTime.Description,
+                    Hours = CurrentWorkTime.Hours,
+                    Name = CurrentWorkTime.Name,
+                    RowVersion = CurrentWorkTime.WorkTimeDto.RowVersion
+                };
+                await workTimeManager.UpdateWorkTimeAsync(updateWorkTimeDto);
+                ReloadProject();
             }
         }
     }

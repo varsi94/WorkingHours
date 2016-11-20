@@ -155,7 +155,6 @@
                     Visibility="{Binding IsWriteable, Converter={StaticResource BooleanToVisibilityConverter}}">
             <Button HorizontalAlignment="Right"
                     Command="{Binding SaveCommand}"
-                    IsEnabled="{Binding IsActive}"
                     Margin="10">
                 Save project members
             </Button>

@@ -38,7 +38,8 @@ namespace WorkingHours.Desktop.ViewModel
                 Name = WorkTimeDto.Name,
                 RowVersion = WorkTimeDto.RowVersion,
                 Hours = WorkTimeDto.Hours,
-                Id = WorkTimeDto.Id
+                Id = WorkTimeDto.Id,
+                CanUpdate = WorkTimeDto.CanUpdate
             };
             isEdit = true;
         }
