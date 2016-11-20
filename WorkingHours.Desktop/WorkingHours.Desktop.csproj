@@ -106,10 +106,14 @@
     <Compile Include="Controls\ProjectMembersControl.xaml.cs">
       <DependentUpon>ProjectMembersControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\WorkTimeControl.xaml.cs">
+      <DependentUpon>WorkTimeControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Converters\InverseBooleanConverter.cs" />
     <Compile Include="Interfaces\IPopulatable.cs" />
     <Compile Include="Interfaces\ViewModels\IProjectMembersViewModel.cs" />
     <Compile Include="Interfaces\ViewModels\ITabViewModel.cs" />
+    <Compile Include="Interfaces\ViewModels\IWorkTimesViewModel.cs" />
     <Compile Include="Messaging\MessageTokens.cs" />
     <Compile Include="Common\UserControlEx.cs" />
     <Compile Include="Common\ValidatableViewModelBase.cs" />
@@ -170,6 +174,8 @@
     <Compile Include="ViewModel\SignUpViewModel.cs" />
     <Compile Include="ViewModel\TabViewModelBase.cs" />
     <Compile Include="ViewModel\UserViewModel.cs" />
+    <Compile Include="ViewModel\WorkTimesViewModel.cs" />
+    <Compile Include="ViewModel\WorkTimeViewModel.cs" />
     <Page Include="Controls\AddProjectControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -195,6 +201,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\SignUpControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\WorkTimeControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

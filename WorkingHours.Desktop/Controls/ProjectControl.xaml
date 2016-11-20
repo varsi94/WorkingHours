@@ -15,7 +15,7 @@
                     Grid.Row="1">
             <TabControl.Items>
                 <TabItem Header="Issues and worktime">
-
+                    <cntrl:WorkTimeControl />
                 </TabItem>
                 <TabItem Header="Associated members">
                     <cntrl:ProjectMembersControl />

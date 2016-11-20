@@ -38,6 +38,7 @@ namespace WorkingHours.Desktop.IoC
             Bind<INewProjectViewModel>().To<NewProjectDialogViewModel>().InTransientScope();
             Bind<IManageIssuesViewModel>().To<ManageIssuesViewModel>().InTransientScope();
             Bind<IProjectMembersViewModel>().To<ProjectMembersViewModel>().InTransientScope();
+            Bind<IWorkTimesViewModel>().To<WorkTimesViewModel>().InTransientScope();
         }
     }
 }
