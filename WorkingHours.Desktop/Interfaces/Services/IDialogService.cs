@@ -17,5 +17,9 @@ namespace WorkingHours.Desktop.Interfaces.Services
         Task<INewProjectViewModel> ShowAddProjectDialogAsync();
 
         void ShowManageUsersWindow();
+
+        Task<IReportIntervalViewModel> ShowReportIntervalDialogAsync();
+
+        string ShowSaveFileDialog(string title, Dictionary<string, string> extensions);
     }
 }

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,15 +21,23 @@ namespace WorkingHours.Desktop.ViewModel
         private const int PageSize = 20;
         private readonly IWorkTimeManager workTimeManager;
         private readonly ILoadingService loadingService;
+        private readonly IDialogService dialogService;
+        private readonly IProjectManager projectManager;
+        private readonly IFileService fileService;
         private bool isNew = false;
 
-        public WorkTimesViewModel(LoginInfo loginInfo, IWorkTimeManager workTimeManager, ILoadingService loadingService) : base(loginInfo)
+        public WorkTimesViewModel(LoginInfo loginInfo, IWorkTimeManager workTimeManager, ILoadingService loadingService,
+            IDialogService dialogService, IProjectManager projectManager, IFileService fileService) : base(loginInfo)
         {
             this.workTimeManager = workTimeManager;
             this.loadingService = loadingService;
+            this.dialogService = dialogService;
+            this.projectManager = projectManager;
+            this.fileService = fileService;
             NewWorkTimeCommand = new RelayCommand(ExecuteNewWorkTimeCommand);
             DiscardChangesCommand = new RelayCommand(ExecuteDiscardChangesCommand);
             SaveCommand = new RelayCommand(ExecuteSaveCommand);
+            GenerateReportCommand = new RelayCommand(ExecuteGenerateReportCommand);
         }
 
         private WorkTimeViewModel currentWorkTime;
@@ -171,6 +180,22 @@ namespace WorkingHours.Desktop.ViewModel
                 await workTimeManager.UpdateWorkTimeAsync(updateWorkTimeDto);
                 ReloadProject();
             }
+        }
+        
+        private async void ExecuteGenerateReportCommand()
+        {
+            var interval = await dialogService.ShowReportIntervalDialogAsync();
+            if (interval == null) { return; }
+
+            loadingService.ShowIndicator("Dowloading report...");
+            byte[] result = await projectManager.GetReportAsync(CurrentProject.Id, interval.StartDate, interval.EndDate);
+            string fileName = dialogService.ShowSaveFileDialog("Select a file to save the report!",
+                new Dictionary<string, string> {{"Word documents (*.docx)", "*.docx"}});
+            if (fileName == null) { return; }
+
+            await fileService.SaveByteArrayToFileAsync(fileName, result);
+            fileService.OpenFile(fileName);
+            loadingService.HideIndicator();
         }
     }
 }

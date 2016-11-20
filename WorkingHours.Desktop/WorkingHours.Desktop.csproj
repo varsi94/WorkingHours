@@ -106,12 +106,17 @@
     <Compile Include="Controls\ProjectMembersControl.xaml.cs">
       <DependentUpon>ProjectMembersControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ReportIntervalDialogControl.xaml.cs">
+      <DependentUpon>ReportIntervalDialogControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\WorkTimeControl.xaml.cs">
       <DependentUpon>WorkTimeControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\InverseBooleanConverter.cs" />
     <Compile Include="Interfaces\IPopulatable.cs" />
+    <Compile Include="Interfaces\Services\IFileService.cs" />
     <Compile Include="Interfaces\ViewModels\IProjectMembersViewModel.cs" />
+    <Compile Include="Interfaces\ViewModels\IReportIntervalViewModel.cs" />
     <Compile Include="Interfaces\ViewModels\ITabViewModel.cs" />
     <Compile Include="Interfaces\ViewModels\IWorkTimesViewModel.cs" />
     <Compile Include="Messaging\MessageTokens.cs" />
@@ -161,22 +166,24 @@
     <Compile Include="Model\SearchEventArgs.cs" />
     <Compile Include="Services\DialogService.cs" />
     <Compile Include="Interfaces\Services\ILoadingService.cs" />
+    <Compile Include="Services\FileService.cs" />
     <Compile Include="ViewModel\ChangePasswordViewModel.cs" />
-    <Compile Include="ViewModel\IssueViewModel.cs" />
+    <Compile Include="ViewModel\WrapperVM\IssueViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
-    <Compile Include="ViewModel\ManageIssuesViewModel.cs" />
+    <Compile Include="ViewModel\Tabs\ManageIssuesViewModel.cs" />
     <Compile Include="ViewModel\ManageUsersViewModel.cs" />
-    <Compile Include="ViewModel\NewProjectDialogViewModel.cs" />
+    <Compile Include="ViewModel\Dialogs\NewProjectDialogViewModel.cs" />
     <Compile Include="ViewModel\NewWorkTimeViewModel.cs" />
-    <Compile Include="ViewModel\ProjectMembersViewModel.cs" />
-    <Compile Include="ViewModel\ProjectMemberViewModel.cs" />
+    <Compile Include="ViewModel\Tabs\ProjectMembersViewModel.cs" />
+    <Compile Include="ViewModel\WrapperVM\ProjectMemberViewModel.cs" />
     <Compile Include="ViewModel\ProjectViewModel.cs" />
+    <Compile Include="ViewModel\Dialogs\ReportIntervalViewModel.cs" />
     <Compile Include="ViewModel\SignUpViewModel.cs" />
-    <Compile Include="ViewModel\TabViewModelBase.cs" />
-    <Compile Include="ViewModel\UserViewModel.cs" />
-    <Compile Include="ViewModel\WorkTimesViewModel.cs" />
-    <Compile Include="ViewModel\WorkTimeViewModel.cs" />
+    <Compile Include="ViewModel\Tabs\TabViewModelBase.cs" />
+    <Compile Include="ViewModel\WrapperVM\UserViewModel.cs" />
+    <Compile Include="ViewModel\Tabs\WorkTimesViewModel.cs" />
+    <Compile Include="ViewModel\WrapperVM\WorkTimeViewModel.cs" />
     <Page Include="Controls\AddProjectControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -198,6 +205,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\ProjectMembersControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ReportIntervalDialogControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -291,6 +302,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\erro.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\save.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -45,6 +46,31 @@ namespace WorkingHours.Desktop.Services
                 OldPassword = result.OldPassword,
                 NewPassword = result.NewPassword
             };
+        }
+
+        public async Task<IReportIntervalViewModel> ShowReportIntervalDialogAsync()
+        {
+            var dialogWrapper = new DialogWrapper<ReportIntervalDialogControl, IReportIntervalViewModel>("Report interval", 500, 280);
+            return await dialogWrapper.ShowDialogAsync();
+        }
+
+        public string ShowSaveFileDialog(string title, Dictionary<string, string> extensions)
+        {
+            SaveFileDialog dialog = new SaveFileDialog()
+            {
+                Title = title,
+                AddExtension = true,
+                DefaultExt = extensions.First().Value,
+                Filter = string.Join("|", extensions.Select(x => $"{x.Key}|{x.Value}"))
+            };
+            if (dialog.ShowDialog() == true)
+            {
+                return dialog.FileName;
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }

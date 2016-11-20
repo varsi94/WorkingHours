@@ -25,6 +25,7 @@ namespace WorkingHours.Desktop.IoC
         {
             Bind<IDialogService>().To<DialogService>().InTransientScope();
             Bind<ILoadingService>().ToMethod(x => (App)Application.Current);
+            Bind<IFileService>().To<FileService>().InTransientScope();
         }
 
         private void LoadViewModels()
@@ -39,6 +40,7 @@ namespace WorkingHours.Desktop.IoC
             Bind<IManageIssuesViewModel>().To<ManageIssuesViewModel>().InTransientScope();
             Bind<IProjectMembersViewModel>().To<ProjectMembersViewModel>().InTransientScope();
             Bind<IWorkTimesViewModel>().To<WorkTimesViewModel>().InTransientScope();
+            Bind<IReportIntervalViewModel>().To<ReportIntervalViewModel>().InTransientScope();
         }
     }
 }

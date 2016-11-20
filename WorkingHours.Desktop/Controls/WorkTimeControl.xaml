@@ -17,13 +17,29 @@
             <ColumnDefinition Width="3*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
+        <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Right"
+                    Grid.ColumnSpan="2">
+            <Button Margin="10"
+                    Command="{Binding GenerateReportCommand}">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/Assets/save.png"
+                           Width="20"
+                           Height="20"
+                           RenderOptions.BitmapScalingMode="HighQuality" />
+                    <TextBlock>Get report for this project!</TextBlock>
+                </StackPanel>
+            </Button>
+        </StackPanel>
         <ListView ItemsSource="{Binding Issues}"
                   SelectedItem="{Binding SelectedIssue, Mode=TwoWay}"
-                  Grid.RowSpan="2">
+                  Grid.RowSpan="2"
+                  Grid.Row="1">
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Setter Property="HorizontalContentAlignment"
@@ -48,7 +64,8 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <Grid Grid.Column="1">
+        <Grid Grid.Column="1"
+              Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
@@ -116,7 +133,8 @@
                     <Setter Property="Margin"
                             Value="10" />
                 </Style>
-                <Style TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
+                <Style TargetType="TextBox"
+                       BasedOn="{StaticResource {x:Type TextBox}}">
                     <Setter Property="Margin"
                             Value="10" />
                     <Setter Property="VerticalAlignment"
@@ -172,8 +190,5 @@
                     Visibility="{Binding CurrentWorkTime.IsReadonly, Converter={StaticResource InverseBooleanToVisibilityConverter}}"
                     Command="{Binding DiscardChangesCommand}">Discard changes</Button>
         </Grid>
-        <DatePicker HorizontalAlignment="Left"
-                    Margin="-233,6,0,0"
-                    VerticalAlignment="Top" />
     </Grid>
 </UserControl>
