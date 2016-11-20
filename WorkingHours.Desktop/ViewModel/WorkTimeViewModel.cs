@@ -86,7 +86,7 @@ namespace WorkingHours.Desktop.ViewModel
             PropertiesToValidate.Add(nameof(Name), () => Name);
         }
 
-        public bool IsReadonly
+        public virtual bool IsReadonly
         {
             get { return (DateTime.Now - Date).TotalDays >= 8; }
         }
