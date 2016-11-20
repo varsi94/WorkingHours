@@ -17,7 +17,7 @@ namespace WorkingHours.Desktop.ViewModel
         private bool isActive;
         private readonly LoginInfo loginInfo;
 
-        public bool IsActive
+        public virtual bool IsActive
         {
             get { return isActive; }
 

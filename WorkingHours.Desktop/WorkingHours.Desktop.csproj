@@ -106,6 +106,7 @@
     <Compile Include="Controls\ProjectMembersControl.xaml.cs">
       <DependentUpon>ProjectMembersControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\InverseBooleanConverter.cs" />
     <Compile Include="Interfaces\IPopulatable.cs" />
     <Compile Include="Interfaces\ViewModels\IProjectMembersViewModel.cs" />
     <Compile Include="Interfaces\ViewModels\ITabViewModel.cs" />

@@ -22,7 +22,5 @@ namespace WorkingHours.Desktop.Interfaces.ViewModels
         ICommand SaveCommand { get; }
 
         ObservableCollection<ProjectMemberViewModel> Members { get; }
-
-        bool IsReadonly { get; }
     }
 }

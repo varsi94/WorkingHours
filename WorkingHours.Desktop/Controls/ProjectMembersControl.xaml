@@ -22,7 +22,7 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0"
-                    Visibility="{Binding IsReadonly, Converter={StaticResource InverseBooleanToVisibilityConverter}}">
+                    Visibility="{Binding IsActive, Converter={StaticResource BooleanToVisibilityConverter}}">
             <cntrl:AutoCompleteBox ItemsSource="{Binding Path=SearchResults}"
                                    MinimumPopulateDelay="500"
                                    x:Name="userNameBox"
@@ -56,7 +56,7 @@
                   CanUserDeleteRows="False"
                   CanUserSortColumns="False"
                   CanUserReorderColumns="False"
-                  IsReadOnly="{Binding IsReadonly}"
+                  IsReadOnly="{Binding IsActive, Converter={StaticResource InverseBooleanConverter}}"
                   Margin="10"
                   x:Name="grid">
             <DataGrid.Columns>
@@ -119,7 +119,7 @@
                 </DataGridTemplateColumn>
                 <DataGridTemplateColumn Header="Actions"
                                         IsReadOnly="True"
-                                        Visibility="{Binding DataContext.IsReadonly, Converter={StaticResource InverseBooleanToVisibilityConverter}, Source={x:Reference dummyElement}}">
+                                        Visibility="{Binding DataContext.IsActive, Converter={StaticResource BooleanToVisibilityConverter}, Source={x:Reference dummyElement}}">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button HorizontalAlignment="Right"
@@ -152,7 +152,7 @@
 
         </DataGrid>
         <StackPanel Grid.Row="2"
-                    Visibility="{Binding IsReadonly, Converter={StaticResource InverseBooleanToVisibilityConverter}}">
+                    Visibility="{Binding IsActive, Converter={StaticResource BooleanToVisibilityConverter}}">
             <Button HorizontalAlignment="Right"
                     Command="{Binding SaveCommand}"
                     IsEnabled="{Binding IsActive}"

@@ -18,6 +18,8 @@ namespace WorkingHours.Desktop.ViewModel
 {
     public class ProjectMembersViewModel : TabViewModelBase, IProjectMembersViewModel
     {
+        private readonly IDialogService dialogService;
+        private readonly ILoadingService loadingService;
         private readonly IUserManager userManager;
 
         public ICommand AddCommand { get; }
@@ -45,19 +47,6 @@ namespace WorkingHours.Desktop.ViewModel
             protected set { Set(ref members, value); }
         }
 
-
-        private bool isReadonly;
-        private readonly IDialogService dialogService;
-        private readonly ILoadingService loadingService;
-
-        public bool IsReadonly
-        {
-            get { return isReadonly; }
-
-            set { Set(ref isReadonly, value); }
-        }
-
-
         private UserViewModel selectedUser;
 
         public UserViewModel SelectedUser
@@ -68,6 +57,16 @@ namespace WorkingHours.Desktop.ViewModel
             {
                 Set(ref selectedUser, value);
                 ((RelayCommand) AddCommand).RaiseCanExecuteChanged();
+            }
+        }
+
+        public override bool IsActive
+        {
+            get { return base.IsActive; }
+
+            protected set
+            {
+                base.IsActive = value && CurrentProject.Members.Any(m => m.Id == projectManager.LoginInfo.Id && m.RoleInProjectEnum == Roles.Manager);
             }
         }
 
@@ -137,8 +136,6 @@ namespace WorkingHours.Desktop.ViewModel
             {
                 member.IsChanged = false;
             }
-
-            IsReadonly = !(CurrentProject.Members.Any(m => m.Id == projectManager.LoginInfo.Id && m.RoleInProjectEnum == Roles.Manager) && IsActive);
             return base.OnProjectChanged();
         }
 
