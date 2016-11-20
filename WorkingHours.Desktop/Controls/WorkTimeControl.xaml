@@ -171,7 +171,7 @@
             <TextBlock Grid.Row="3">Hours</TextBlock>
             <TextBox Grid.Row="3"
                      Grid.Column="1"
-                     Text="{Binding CurrentWorkTime.Hours, Mode=TwoWay, ValidatesOnDataErrors=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged}"
+                     Text="{Binding CurrentWorkTime.Hours, Mode=TwoWay, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
                      IsReadOnly="{Binding CurrentWorkTime.IsReadonly}" />
             <Button Grid.Row="4"
                     Padding="10"
