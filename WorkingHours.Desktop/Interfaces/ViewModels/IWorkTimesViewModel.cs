@@ -23,6 +23,8 @@ namespace WorkingHours.Desktop.Interfaces.ViewModels
 
         ICommand DiscardChangesCommand { get; }
         
+        ICommand DeleteWorkTimeCommand { get; }
+
         IssueViewModel SelectedIssue { get; set; }
 
         WorkTimeViewModel CurrentWorkTime { get; set; }

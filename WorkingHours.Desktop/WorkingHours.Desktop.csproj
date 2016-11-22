@@ -112,6 +112,7 @@
     <Compile Include="Controls\WorkTimeControl.xaml.cs">
       <DependentUpon>WorkTimeControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\BooleanToBackgroundConverter.cs" />
     <Compile Include="Converters\InverseBooleanConverter.cs" />
     <Compile Include="Interfaces\IPopulatable.cs" />
     <Compile Include="Interfaces\Services\IFileService.cs" />

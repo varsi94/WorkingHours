@@ -15,7 +15,10 @@
                                      ManagerValue="Visible"
                                      EmployeeValue="Collapsed" />
     <local:RoleChangedEventArgsConverter x:Key="RoleChangedEventArgsConverter" />
-    <local:InverseBooleanConverter TrueValue="False"
-                                   FalseValue="True"
-                                   x:Key="InverseBooleanConverter"/>
+    <local:InverseBooleanConverter x:Key="InverseBooleanConverter"
+                                   TrueValue="False"
+                                   FalseValue="True"/>
+    <local:BooleanToBackgroundConverter x:Key="BooleanToBackgroundConverter"
+                                        TrueValue="Red"
+                                        FalseValue="Transparent"/>
 </ResourceDictionary>
