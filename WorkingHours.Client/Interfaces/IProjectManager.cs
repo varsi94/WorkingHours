@@ -12,6 +12,8 @@ namespace WorkingHours.Client.Interfaces
     {
         Task CreateAsync(ProjectHeader projectHeader);
 
+        Task UpdateAsync(ProjectHeader projectHeader);
+
         Task<List<ProjectHeader>> GetMyProjectsAsync();
 
         Task<ProjectInfo> GetProjectAsync(int id);

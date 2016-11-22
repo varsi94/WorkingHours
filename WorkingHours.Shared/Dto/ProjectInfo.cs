@@ -7,7 +7,5 @@ namespace WorkingHours.Shared.Dto
         public List<ProjectMemberDto> Members { get; set; }
 
         public List<IssueHeader> Issues { get; set; }
-
-        public byte[] RowVersion { get; set; }
     }
 }

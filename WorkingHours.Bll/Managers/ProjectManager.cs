@@ -9,6 +9,7 @@ using WorkingHours.Bll.Interfaces;
 using WorkingHours.Bll.Model;
 using WorkingHours.Model;
 using WorkingHours.Model.Common;
+using WorkingHours.Model.Exceptions;
 using WorkingHours.Model.UoW;
 using WorkingHours.Shared.Dto;
 
@@ -181,6 +182,40 @@ namespace WorkingHours.Bll.Managers
             };
 
             return reportingService.GetProjectWorkTimeReport(reportData);
+        }
+
+        public void UpdateProject(int userId, ProjectHeader projectHeader)
+        {
+            var projectInDb = UoW.Projects.GetById(projectHeader.Id, nameof(Project.AssociatedMembers) + ".Role");
+            if (projectInDb == null)
+            {
+                throw new NotFoundException("Project not found!");
+            }
+            var managerStr = Roles.Manager.ToString();
+            if (!projectInDb.AssociatedMembers.Any(m => m.UserId == userId && m.Role.Name == managerStr))
+            {
+                throw new UnauthorizedException("You are not a manager in this project!");
+            }
+
+            if (projectInDb.AssociatedMembers.Any(m => m.UserId == userId && !m.IsActive))
+            {
+                throw new UnauthorizedException("You are deactivated in this project!");
+            }
+
+            projectInDb.Name = projectHeader.Name;
+            projectInDb.IsClosed = projectHeader.IsClosed;
+            projectInDb.Deadline = projectHeader.Deadline;
+            projectInDb.RowVersion = projectHeader.RowVersion;
+
+            try
+            {
+                UoW.Projects.Update(projectInDb);
+                UoW.SaveChanges();
+            }
+            catch (ConcurrencyException)
+            {
+                throw new ConflictedException("Somebody already updated this project!");
+            }
         }
     }
 }
