@@ -41,6 +41,20 @@ namespace WorkingHours.Web.Controllers
             return Created<object>(Url.Route(nameof(GetProjectInfo), new {id = id}), null);
         }
 
+        [HttpPut]
+        [Route("api/projects/update")]
+        [AuthorizeRoles(Roles.Manager)]
+        public IHttpActionResult Update([FromBody] ProjectHeader projectHeader)
+        {
+            if (!ModelState.IsValid)
+            {
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState));
+            }
+
+            projectManager.UpdateProject(User.Identity.GetUserId(), projectHeader);
+            return Ok();
+        }
+
         [HttpGet]
         [Route("api/projects")]
         [Authorize]

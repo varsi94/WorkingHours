@@ -48,18 +48,29 @@
                                         CommandParameter="{Binding ElementName=issueListBox, Path=SelectedItem}" />
                 </i:EventTrigger>
             </i:Interaction.Triggers>
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                </Style>
+            </ListBox.ItemContainerStyle>
             <ListBox.ItemTemplate>
                 <DataTemplate DataType="{x:Type vm2:IssueViewModel}">
-                    <StackPanel Orientation="Horizontal">
-                        <Image Source="../Assets/lock.png"
+                    <Border Background="{Binding IsExpired, Converter={StaticResource BooleanToBackgroundConverter}}"
+                            HorizontalAlignment="Stretch">
+                        <Grid Height="20">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="{Binding Name}" />
+                            <Image Grid.Column="1"
+                               Source="/Assets/lock.png"
                                Width="20"
                                Height="20"
-                               RenderOptions.BitmapScalingMode="HighQuality"
-                               Visibility="{Binding IsClosed, Converter={StaticResource HiddenBoolToVisiblityConverter}}" />
-                        <TextBlock Text="{Binding Name}"
-                                   VerticalAlignment="Center"
-                                   Padding="2 0 0 0" />
-                    </StackPanel>
+                               Visibility="{Binding IsClosed, Converter={StaticResource BooleanToVisibilityConverter}}"
+                               RenderOptions.BitmapScalingMode="HighQuality" />
+                        </Grid>
+                    </Border>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>

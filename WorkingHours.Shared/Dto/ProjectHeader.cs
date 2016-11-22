@@ -15,5 +15,7 @@ namespace WorkingHours.Shared.Dto
         public bool IsClosed { get; set; }
 
         public bool IsWriteable { get; set; }
+
+        public byte[] RowVersion { get; set; }
     }
 }

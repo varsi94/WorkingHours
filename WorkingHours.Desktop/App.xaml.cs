@@ -17,9 +17,11 @@ namespace WorkingHours.Desktop
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
-    public partial class App : Application, ILoadingService
+    public partial class App : Application
     {
-        private MainWindow Window => (MainWindow) MainWindow;
+        public MainWindow Window => (MainWindow) MainWindow;
+
+        public static new App Current => (App) Application.Current;
 
         public App()
         {
@@ -40,15 +42,9 @@ namespace WorkingHours.Desktop
             HideIndicator();
         }
 
-        public void HideIndicator()
+        private void HideIndicator()
         {
             Window.LoadingGrid.Visibility = Visibility.Collapsed;
-        }
-
-        public void ShowIndicator(string message)
-        {
-            Window.LoadingMessage.Text = message;
-            Window.LoadingGrid.Visibility = Visibility.Visible;
         }
     }
 }

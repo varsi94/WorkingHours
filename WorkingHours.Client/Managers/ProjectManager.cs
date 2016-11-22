@@ -185,5 +185,39 @@ namespace WorkingHours.Client.Managers
                 }
             }
         }
+
+        public async Task UpdateAsync(ProjectHeader projectHeader)
+        {
+            if (LoginInfo.Role != Roles.Manager)
+            {
+                throw new UnauthorizedAccessException();
+            }
+
+            using (var client = GetAuthenticatedClient())
+            {
+                var httpResult = await client.PutAsJsonAsync("api/projects/update", projectHeader);
+                if (!httpResult.IsSuccessStatusCode)
+                {
+                    if (httpResult.StatusCode == HttpStatusCode.NotFound)
+                    {
+                        throw new NotFoundException("Project not found!");
+                    }
+                    else if (httpResult.StatusCode == HttpStatusCode.Unauthorized)
+                    {
+                        var errormsg = await httpResult.Content.ReadAsAsync<ErrorMessage>();
+                        throw new UnauthorizedAccessException(errormsg.Message);
+                    }
+                    else if (httpResult.StatusCode == HttpStatusCode.Conflict)
+                    {
+                        throw new ServerException("You have a conflicting edit! Try again after refresh!");
+                    }
+                    else if (httpResult.StatusCode == HttpStatusCode.BadRequest)
+                    {
+                        throw new ModelStateException("The project is invalid!",
+                            await httpResult.Content.ReadAsAsync<ModelState>());
+                    }
+                }
+            }
+        }
     }
 }

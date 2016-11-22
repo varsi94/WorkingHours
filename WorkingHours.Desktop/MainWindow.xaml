@@ -61,10 +61,16 @@
                         </StackPanel>
                     </Button>
                 </StackPanel>
+                <TextBlock Text="You have no projects yet. Contact your Manager!" Visibility="{Binding MyProjects.Count, Converter={StaticResource ProjectsCountToVisibilityConverter}, ConverterParameter=Text}"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Center"
+                           Grid.Row="1"
+                           Grid.Column="0"/>
                 <ListView ItemsSource="{Binding MyProjects}"
                           Grid.Row="1"
                           Grid.Column="0"
-                          x:Name="projectList">
+                          x:Name="projectList"
+                          Visibility="{Binding MyProjects.Count, Converter={StaticResource ProjectsCountToVisibilityConverter},ConverterParameter=List}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="SelectionChanged">
                             <cmd:EventToCommand Command="{Binding ProjectSelectedCommand}"
@@ -135,6 +141,7 @@
             <controls:ProjectControl Grid.Column="1"
                                      Grid.Row="1"
                                      Visibility="{Binding IsProjectControlVisible, Converter={StaticResource BooleanToVisibilityConverter}}" />
+            <Image Source="/Assets/working-hours.jpg" Grid.Column="1" Grid.Row="1" Visibility="{Binding IsProjectControlVisible,Converter={StaticResource InverseBooleanToVisibilityConverter}}"/>
         </Grid>
         <controls:LoginControl Visibility="{Binding IsLoginVisible, Converter={StaticResource BooleanToVisibilityConverter}}"
                                HorizontalAlignment="Center"

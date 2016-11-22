@@ -38,7 +38,7 @@ namespace WorkingHours.Desktop.ViewModel
             DiscardChangesCommand = new RelayCommand(ExecuteDiscardChangesCommand);
             SaveCommand = new RelayCommand(ExecuteSaveCommand);
             GenerateReportCommand = new RelayCommand(ExecuteGenerateReportCommand);
-            DeleteWorkTimeCommand = new RelayCommand<WorkTimesViewModel>(ExecuteDeleteWorkTimeCommand);
+            DeleteWorkTimeCommand = new RelayCommand<WorkTimeViewModel>(ExecuteDeleteWorkTimeCommand);
         }
 
        
@@ -128,7 +128,7 @@ namespace WorkingHours.Desktop.ViewModel
             SelectedIssue = (selectedIssueId == -1) ? Issues.FirstOrDefault() : Issues.FirstOrDefault(x => x.Id == selectedIssueId);
             return base.OnProjectChanged();
         }
-        
+
         private async void UpdateWorkTimes()
         {
             loadingService.ShowIndicator("Loading worktime...");
@@ -139,7 +139,7 @@ namespace WorkingHours.Desktop.ViewModel
             IsDetailsVisible = false;
             IsWriteable = CurrentProject.IsWriteable && !CurrentProject.IsClosed && !(SelectedIssue?.IsClosed ?? true);
         }
-        
+
         private void ExecuteNewWorkTimeCommand()
         {
             CurrentWorkTime = new NewWorkTimeViewModel(new Shared.Dto.WorkTimeDto
@@ -161,7 +161,7 @@ namespace WorkingHours.Desktop.ViewModel
                 isNew = false;
             }
         }
-        
+
         private async void ExecuteSaveCommand()
         {
             if (isNew)
@@ -186,7 +186,7 @@ namespace WorkingHours.Desktop.ViewModel
                 ReloadProject();
             }
         }
-        
+
         private async void ExecuteGenerateReportCommand()
         {
             var interval = await dialogService.ShowReportIntervalDialogAsync();
@@ -195,18 +195,20 @@ namespace WorkingHours.Desktop.ViewModel
             loadingService.ShowIndicator("Dowloading report...");
             byte[] result = await projectManager.GetReportAsync(CurrentProject.Id, interval.StartDate, interval.EndDate);
             string fileName = dialogService.ShowSaveFileDialog("Select a file to save the report!",
-                new Dictionary<string, string> {{"Word documents (*.docx)", "*.docx"}});
+                new Dictionary<string, string> { { "Word documents (*.docx)", "*.docx" } });
             if (fileName == null) { return; }
 
             await fileService.SaveByteArrayToFileAsync(fileName, result);
             fileService.OpenFile(fileName);
             loadingService.HideIndicator();
         }
-        private async void ExecuteDeleteWorkTimeCommand(WorkTimesViewModel obj)
+        private async void ExecuteDeleteWorkTimeCommand(WorkTimeViewModel obj)
         {
+            selectedIssueId = SelectedIssue.Id;
             loadingService.ShowIndicator("Deleting worktime...");
-            await workTimeManager.DeleteWorkTimeAsync(obj.CurrentWorkTime.WorkTimeDto.Id);
+            await workTimeManager.DeleteWorkTimeAsync(obj.WorkTimeDto.Id);
             loadingService.HideIndicator();
+            ReloadProject();
         }
     }
 }

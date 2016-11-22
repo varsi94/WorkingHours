@@ -24,6 +24,11 @@
                 <TabItem Header="Manage worktimes">
                     <cntrl:WorkTimeControl />
                 </TabItem>
+                <TabItem Visibility="{Binding RoleInProject, Converter={StaticResource RoleToVisibilityConverter}}"
+                         Header="Manage project">
+                    <cntrl:ManageProjectsControl VerticalAlignment="Top"
+                                                 HorizontalAlignment="Stretch"/>
+                </TabItem>
             </TabControl.Items>
         </TabControl>
     </Grid>

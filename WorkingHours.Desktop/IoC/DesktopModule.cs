@@ -9,6 +9,7 @@ using WorkingHours.Desktop.Interfaces.Services;
 using WorkingHours.Desktop.Interfaces.ViewModels;
 using WorkingHours.Desktop.Services;
 using WorkingHours.Desktop.ViewModel;
+using WorkingHours.Desktop.ViewModel.Tabs;
 
 namespace WorkingHours.Desktop.IoC
 {
@@ -24,7 +25,7 @@ namespace WorkingHours.Desktop.IoC
         private void LoadServices()
         {
             Bind<IDialogService>().To<DialogService>().InTransientScope();
-            Bind<ILoadingService>().ToMethod(x => (App)Application.Current);
+            Bind<ILoadingService>().To<LoadingService>().InTransientScope();
             Bind<IFileService>().To<FileService>().InTransientScope();
         }
 
@@ -41,6 +42,8 @@ namespace WorkingHours.Desktop.IoC
             Bind<IProjectMembersViewModel>().To<ProjectMembersViewModel>().InTransientScope();
             Bind<IWorkTimesViewModel>().To<WorkTimesViewModel>().InTransientScope();
             Bind<IReportIntervalViewModel>().To<ReportIntervalViewModel>().InTransientScope();
+
+            Bind<IManageProjectsViewModel>().To<ManageProjectsViewModel>().InTransientScope();
         }
     }
 }

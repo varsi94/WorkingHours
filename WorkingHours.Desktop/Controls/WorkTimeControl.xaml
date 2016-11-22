@@ -48,19 +48,21 @@
             </ListView.ItemContainerStyle>
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <Grid Height="20">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Text="{Binding Name}" />
-                        <Image Grid.Column="1"
+                    <Border Background="{Binding IsExpired, Converter={StaticResource BooleanToBackgroundConverter}}">
+                        <Grid Height="20">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="{Binding Name}" />
+                            <Image Grid.Column="1"
                                Source="/Assets/lock.png"
                                Width="20"
                                Height="20"
                                Visibility="{Binding IsClosed, Converter={StaticResource BooleanToVisibilityConverter}}"
                                RenderOptions.BitmapScalingMode="HighQuality" />
-                    </Grid>
+                        </Grid>
+                    </Border>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
@@ -125,12 +127,12 @@
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Button HorizontalAlignment="Right"
-                                    Command="{Binding DeleteWorkTimeCommand}"
+                                    Command="{Binding ElementName=LayoutRoot, Path= DataContext.DeleteWorkTimeCommand}"
                                     CommandParameter="{Binding}"
                                     BorderThickness="0"
                                     Background="White"
-                                    Margin="10">
-                                    <!--IsEnabled="{Binding ElementName=LayoutRoot, Path=DataContext.IsWriteable}"-->
+                                    Margin="10"
+                                    IsEnabled="{Binding IsReadonly, Converter={StaticResource InverseBooleanConverter}}">
                                     <Grid>
                                         <Image Source="/Assets/erro.png"
                                            Width="20"

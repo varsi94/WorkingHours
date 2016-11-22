@@ -16,6 +16,7 @@ namespace WorkingHours.Desktop.ViewModel
         private bool isEdit = false;
         private IssueHeader copy;
         private IssueHeader issue;
+        public bool IsExpired => Deadline < DateTime.Now;
 
         [Required(ErrorMessage = "Name field is required!")]
         public string Name
@@ -45,6 +46,7 @@ namespace WorkingHours.Desktop.ViewModel
             {
                 issue.Deadline = value;
                 RaisePropertyChanged();
+                RaisePropertyChanged(nameof(IsExpired));
             }
         }
 

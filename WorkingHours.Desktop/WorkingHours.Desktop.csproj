@@ -66,6 +66,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Controls.Input.Toolkit, Version=3.5.40128.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\WPFToolkit.3.5.50211.1\lib\System.Windows.Controls.Input.Toolkit.dll</HintPath>
       <Private>True</Private>
@@ -74,6 +75,7 @@
       <HintPath>..\packages\WPFToolkit.3.5.50211.1\lib\System.Windows.Controls.Layout.Toolkit.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.1.3.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
       <Private>True</Private>
@@ -103,6 +105,9 @@
     <Compile Include="Behaviors\PasswordBoxBinding.cs" />
     <Compile Include="Common\ILoadAware.cs" />
     <Compile Include="Common\LoadAwareViewModelBase.cs" />
+    <Compile Include="Controls\ManageProjectsControl.xaml.cs">
+      <DependentUpon>ManageProjectsControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ProjectMembersControl.xaml.cs">
       <DependentUpon>ProjectMembersControl.xaml</DependentUpon>
     </Compile>
@@ -112,9 +117,12 @@
     <Compile Include="Controls\WorkTimeControl.xaml.cs">
       <DependentUpon>WorkTimeControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\BooleanToBackgroundConverter.cs" />
     <Compile Include="Converters\InverseBooleanConverter.cs" />
+    <Compile Include="Converters\ProjectsCountToVisibilityConverter.cs" />
     <Compile Include="Interfaces\IPopulatable.cs" />
     <Compile Include="Interfaces\Services\IFileService.cs" />
+    <Compile Include="Interfaces\ViewModels\IManageProjectsViewModel.cs" />
     <Compile Include="Interfaces\ViewModels\IProjectMembersViewModel.cs" />
     <Compile Include="Interfaces\ViewModels\IReportIntervalViewModel.cs" />
     <Compile Include="Interfaces\ViewModels\ITabViewModel.cs" />
@@ -167,7 +175,10 @@
     <Compile Include="Services\DialogService.cs" />
     <Compile Include="Interfaces\Services\ILoadingService.cs" />
     <Compile Include="Services\FileService.cs" />
+    <Compile Include="Services\LoadingService.cs" />
     <Compile Include="ViewModel\ChangePasswordViewModel.cs" />
+    <Compile Include="ViewModel\Tabs\ManageProjectsViewModel.cs" />
+    <Compile Include="ViewModel\WrapperVM\UpdateProjectViewModel.cs" />
     <Compile Include="ViewModel\WrapperVM\IssueViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
@@ -197,6 +208,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\ManageIssuesControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ManageProjectsControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -305,6 +320,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\save.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\working-hours.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
