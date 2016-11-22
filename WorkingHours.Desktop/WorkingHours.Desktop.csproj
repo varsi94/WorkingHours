@@ -175,9 +175,10 @@
     <Compile Include="Services\DialogService.cs" />
     <Compile Include="Interfaces\Services\ILoadingService.cs" />
     <Compile Include="Services\FileService.cs" />
+    <Compile Include="Services\LoadingService.cs" />
     <Compile Include="ViewModel\ChangePasswordViewModel.cs" />
     <Compile Include="ViewModel\Tabs\ManageProjectsViewModel.cs" />
-    <Compile Include="ViewModel\Tabs\UpdateProjectViewModel.cs" />
+    <Compile Include="ViewModel\WrapperVM\UpdateProjectViewModel.cs" />
     <Compile Include="ViewModel\WrapperVM\IssueViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />

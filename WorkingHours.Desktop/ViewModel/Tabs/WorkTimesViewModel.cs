@@ -204,6 +204,7 @@ namespace WorkingHours.Desktop.ViewModel
         }
         private async void ExecuteDeleteWorkTimeCommand(WorkTimeViewModel obj)
         {
+            selectedIssueId = SelectedIssue.Id;
             loadingService.ShowIndicator("Deleting worktime...");
             await workTimeManager.DeleteWorkTimeAsync(obj.WorkTimeDto.Id);
             loadingService.HideIndicator();
