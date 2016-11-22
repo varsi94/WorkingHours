@@ -59,7 +59,8 @@ namespace WorkingHours.WebClient.Controllers
             }
             else
             {
-                return RedirectToAction("MyProjects", "Projects");
+                ModelState.AddModelError("loginError", "Invalid username or password!");
+                return View(new LoginModel());
             }
         }
 
@@ -100,7 +101,7 @@ namespace WorkingHours.WebClient.Controllers
             }
             catch (ServerException e)
             {
-                ModelState.AddModelError("", e.Message);
+                ModelState.AddModelError("SignUpError", e.Message);
                 return View(model);
             }
         }
