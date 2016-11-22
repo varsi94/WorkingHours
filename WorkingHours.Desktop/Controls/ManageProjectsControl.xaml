@@ -1,0 +1,63 @@
+﻿<common:UserControlEx x:Class="WorkingHours.Desktop.Controls.ManageProjectsControl"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WorkingHours.Desktop.Controls"
+        xmlns:ioc="clr-namespace:WorkingHours.Desktop.IoC"
+        xmlns:vm="clr-namespace:WorkingHours.Desktop.Interfaces.ViewModels"
+        xmlns:common="clr-namespace:WorkingHours.Desktop.Common"
+        mc:Ignorable="d"
+        Height="300" Width="300">
+    <Grid VerticalAlignment="Top"
+          HorizontalAlignment="Stretch">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="AUTO" />
+            <RowDefinition Height="AUTO" />
+            <RowDefinition Height="AUTO"/>
+            <RowDefinition Height="AUTO"/>
+        </Grid.RowDefinitions>
+        <TextBlock VerticalAlignment="Center"
+                   Margin="10">Project name:</TextBlock>
+        <TextBox Grid.Column="1"
+                 VerticalAlignment="Center"
+                 Text="{Binding Name, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" />
+        <TextBlock VerticalAlignment="Center"
+                   Grid.Row="1"
+                   Grid.Column="0"
+                   Margin="10">Deadline:</TextBlock>
+        <DatePicker SelectedDate="{Binding Deadline, Mode=TwoWay}"
+                    Margin="10"
+                    VerticalAlignment="Center"
+                    Grid.Column="1"
+                    Grid.Row="1" />
+        <TextBlock VerticalAlignment="Center"
+                   Grid.Row="3"
+                   Margin="10">Closed:</TextBlock>
+        <CheckBox IsChecked="{Binding SelectedIssue.IsClosed, Mode=TwoWay}"
+                      Grid.Row="3"
+                      Margin="10"
+                      HorizontalAlignment="Center"
+                      Grid.Column="1"/>
+        <Button Command="{Binding SaveCommand}"
+                    Grid.Row="4"
+                    Grid.Column="0"
+                    IsDefault="True"
+                    Margin="10"
+                    Padding="10"
+                    Visibility="{Binding IsWriteable, Converter={StaticResource BooleanToVisibilityConverter}}"
+                    IsEnabled="{Binding SelectedIssue.IsValid}">Save</Button>
+        <Button Command="{Binding DiscardChangesCommand}"
+                    Grid.Row="4"
+                    Padding="10"
+                    Margin="10"
+                    Grid.Column="1"
+                    Visibility="{Binding IsWriteable, Converter={StaticResource BooleanToVisibilityConverter}}">Discard changes</Button>
+    </Grid>
+</common:UserControlEx>
+
+
