@@ -114,6 +114,7 @@
     </Compile>
     <Compile Include="Converters\BooleanToBackgroundConverter.cs" />
     <Compile Include="Converters\InverseBooleanConverter.cs" />
+    <Compile Include="Converters\ProjectsCountToVisibilityConverter.cs" />
     <Compile Include="Interfaces\IPopulatable.cs" />
     <Compile Include="Interfaces\Services\IFileService.cs" />
     <Compile Include="Interfaces\ViewModels\IProjectMembersViewModel.cs" />
@@ -306,6 +307,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\save.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\working-hours.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

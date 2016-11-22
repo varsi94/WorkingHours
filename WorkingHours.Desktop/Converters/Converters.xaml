@@ -13,7 +13,7 @@
                                         TrueValue="Visible" />
     <local:RoleToVisibilityConverter x:Key="RoleToVisibilityConverter"
                                      ManagerValue="Visible"
-                                     EmployeeValue="Collapsed" />
+                                     EmployeeValue="Collapsed"/>
     <local:RoleChangedEventArgsConverter x:Key="RoleChangedEventArgsConverter" />
     <local:InverseBooleanConverter x:Key="InverseBooleanConverter"
                                    TrueValue="False"
@@ -21,4 +21,7 @@
     <local:BooleanToBackgroundConverter x:Key="BooleanToBackgroundConverter"
                                         TrueValue="Red"
                                         FalseValue="Transparent"/>
+    <local:ProjectsCountToVisibilityConverter x:Key="ProjectsCountToVisibilityConverter"
+                                              VisibleValue="Visible"
+                                              CollapsedValue="Collapsed"/>
 </ResourceDictionary>
