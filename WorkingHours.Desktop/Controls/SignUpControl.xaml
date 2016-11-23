@@ -21,12 +21,12 @@
         <TextBlock Margin="10">Password:</TextBlock>
         <PasswordBox Margin="10"
                      behaviors:PasswordBoxBinding.IsPasswordBound="True"
-                     behaviors:PasswordBoxBinding.BoundPassword="{Binding Path=Password, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" />
+                     behaviors:PasswordBoxBinding.BoundPassword="{Binding Path=Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" />
 
         <TextBlock Margin="10">Password confirmation:</TextBlock>
         <PasswordBox Margin="10"
                      behaviors:PasswordBoxBinding.IsPasswordBound="True"
-                     behaviors:PasswordBoxBinding.BoundPassword="{Binding Path=PasswordConfirmed, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" />
+                     behaviors:PasswordBoxBinding.BoundPassword="{Binding Path=PasswordConfirmed, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" />
 
         <TextBlock Margin="10">E-mail address:</TextBlock>
         <TextBox Margin="10"

@@ -98,6 +98,11 @@ namespace WorkingHours.Desktop.ViewModel
         private void ExecuteBackToLoginCommand()
         {
             MessengerInstance.Send(new NotificationMessage(null), MessageTokens.SignUpCompleted);
+            UserName = string.Empty;
+            Password = string.Empty;
+            PasswordConfirmed = string.Empty;
+            Email = string.Empty;
+            FullName = string.Empty;
         }
 
         private async void ExecuteSignUpCommand()

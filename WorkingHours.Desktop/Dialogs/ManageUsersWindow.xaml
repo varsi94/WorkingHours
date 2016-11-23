@@ -43,7 +43,8 @@
                     Grid.Column="2"
                     VerticalAlignment="Center"
                     Padding="10 5 10 5"
-                    Margin="10">Search!</Button>
+                    Margin="10"
+                    IsDefault="True">Search!</Button>
             <StackPanel Orientation="Horizontal"
                         HorizontalAlignment="Right"
                         Grid.Column="3">

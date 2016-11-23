@@ -156,7 +156,7 @@
             <Button HorizontalAlignment="Right"
                     Command="{Binding SaveCommand}"
                     Margin="10">
-                Save project members
+                Save project member roles
             </Button>
 
         </StackPanel>
