@@ -10,9 +10,12 @@
              mc:Ignorable="d"
              d:DesignHeight="300"
              d:DesignWidth="300">
-    <Grid DataContext="{ioc:ViewModel ViewModelType={x:Type vm:IProjectViewModel}}">
+    <Grid DataContext="{ioc:ViewModel ViewModelType={x:Type vm:IProjectViewModel}}"
+          IsVisibleChanged="OnVisibilityChanged"
+          x:Name="LayoutRoot">
         <TabControl Grid.Column="1"
-                    Grid.Row="1">
+                    Grid.Row="1"
+                    x:Name="TabControl">
             <TabControl.Items>
                 <TabItem Header="Associated members">
                     <cntrl:ProjectMembersControl />

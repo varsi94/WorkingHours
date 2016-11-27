@@ -34,6 +34,8 @@ namespace WorkingHours.Desktop.ViewModel
 
         private bool isActive;
 
+        public event Action OnProjectChanged;
+
         public bool IsActive
         {
             get { return isActive; }
@@ -82,6 +84,7 @@ namespace WorkingHours.Desktop.ViewModel
                 RoleInProject = selectedProject.Members.SingleOrDefault(x => x.Id == loginInfo.Id).RoleInProjectEnum;
                 IsActive = selectedProject.Members.Any(x => x.IsActive && x.Id == loginInfo.Id);
             }
+            OnProjectChanged?.Invoke();
         }
     }
 }
