@@ -13,5 +13,7 @@ namespace WorkingHours.Desktop.Interfaces.ViewModels
         Roles RoleInProject { get; }
 
         bool IsActive { get; }
+
+        event Action OnProjectChanged;
     }
 }
